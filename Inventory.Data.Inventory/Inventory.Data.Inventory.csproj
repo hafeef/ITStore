@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{863E77FA-03C6-48A2-9227-3A0D1E24D2F7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Inventory.Data.Inventory</RootNamespace>
+    <AssemblyName>Inventory.Data.Inventory</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminReferenceContext.cs" />
+    <Compile Include="InventoryContext.cs" />
+    <Compile Include="Migrations\201612300505241_InitDb.cs" />
+    <Compile Include="Migrations\201612300505241_InitDb.Designer.cs">
+      <DependentUpon>201612300505241_InitDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612300559066_ActiveItemsView.cs" />
+    <Compile Include="Migrations\201612300559066_ActiveItemsView.Designer.cs">
+      <DependentUpon>201612300559066_ActiveItemsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612300611121_ActiveVendorsView.cs" />
+    <Compile Include="Migrations\201612300611121_ActiveVendorsView.Designer.cs">
+      <DependentUpon>201612300611121_ActiveVendorsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612301044357_AddedFooProp.cs" />
+    <Compile Include="Migrations\201612301044357_AddedFooProp.Designer.cs">
+      <DependentUpon>201612301044357_AddedFooProp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612301049014_RemovedFooProp.cs" />
+    <Compile Include="Migrations\201612301049014_RemovedFooProp.Designer.cs">
+      <DependentUpon>201612301049014_RemovedFooProp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612310428378_AddedPoCreatedDateToPurchaseOrder.cs" />
+    <Compile Include="Migrations\201612310428378_AddedPoCreatedDateToPurchaseOrder.Designer.cs">
+      <DependentUpon>201612310428378_AddedPoCreatedDateToPurchaseOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612311500224_AddedReceivedDateAndFKReferenceBetweenPOLineItemAndReceivedLineItem.cs" />
+    <Compile Include="Migrations\201612311500224_AddedReceivedDateAndFKReferenceBetweenPOLineItemAndReceivedLineItem.Designer.cs">
+      <DependentUpon>201612311500224_AddedReceivedDateAndFKReferenceBetweenPOLineItemAndReceivedLineItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612311504374_AddedActiveWarehousesView.cs" />
+    <Compile Include="Migrations\201612311504374_AddedActiveWarehousesView.Designer.cs">
+      <DependentUpon>201612311504374_AddedActiveWarehousesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612311518152_AddedActiveLocationsView.cs" />
+    <Compile Include="Migrations\201612311518152_AddedActiveLocationsView.Designer.cs">
+      <DependentUpon>201612311518152_AddedActiveLocationsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612311521480_AddedActiveShelvesView.cs" />
+    <Compile Include="Migrations\201612311521480_AddedActiveShelvesView.Designer.cs">
+      <DependentUpon>201612311521480_AddedActiveShelvesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612311523568_AddedActiveRacksView.cs" />
+    <Compile Include="Migrations\201612311523568_AddedActiveRacksView.Designer.cs">
+      <DependentUpon>201612311523568_AddedActiveRacksView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612311609085_AddedPartNoInSelectListOfActiveItemsView.cs" />
+    <Compile Include="Migrations\201612311609085_AddedPartNoInSelectListOfActiveItemsView.Designer.cs">
+      <DependentUpon>201612311609085_AddedPartNoInSelectListOfActiveItemsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Common\Core.Common.csproj">
+      <Project>{8a3b856e-ad14-49eb-9f37-36ddce5e029d}</Project>
+      <Name>Core.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inventory.DomainClasses.Administration\Inventory.DomainClasses.Administration.csproj">
+      <Project>{51D6DF33-DC65-4169-86D0-979FBEF9D4F2}</Project>
+      <Name>Inventory.DomainClasses.Administration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inventory.DomainClasses.Inventory\Inventory.DomainClasses.Inventory.csproj">
+      <Project>{e172f6fb-c7de-405a-8279-856b5884119f}</Project>
+      <Name>Inventory.DomainClasses.Inventory</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612300505241_InitDb.resx">
+      <DependentUpon>201612300505241_InitDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612300559066_ActiveItemsView.resx">
+      <DependentUpon>201612300559066_ActiveItemsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612300611121_ActiveVendorsView.resx">
+      <DependentUpon>201612300611121_ActiveVendorsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612301044357_AddedFooProp.resx">
+      <DependentUpon>201612301044357_AddedFooProp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612301049014_RemovedFooProp.resx">
+      <DependentUpon>201612301049014_RemovedFooProp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612310428378_AddedPoCreatedDateToPurchaseOrder.resx">
+      <DependentUpon>201612310428378_AddedPoCreatedDateToPurchaseOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612311500224_AddedReceivedDateAndFKReferenceBetweenPOLineItemAndReceivedLineItem.resx">
+      <DependentUpon>201612311500224_AddedReceivedDateAndFKReferenceBetweenPOLineItemAndReceivedLineItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612311504374_AddedActiveWarehousesView.resx">
+      <DependentUpon>201612311504374_AddedActiveWarehousesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612311518152_AddedActiveLocationsView.resx">
+      <DependentUpon>201612311518152_AddedActiveLocationsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612311521480_AddedActiveShelvesView.resx">
+      <DependentUpon>201612311521480_AddedActiveShelvesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612311523568_AddedActiveRacksView.resx">
+      <DependentUpon>201612311523568_AddedActiveRacksView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612311609085_AddedPartNoInSelectListOfActiveItemsView.resx">
+      <DependentUpon>201612311609085_AddedPartNoInSelectListOfActiveItemsView.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
