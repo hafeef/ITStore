@@ -51,7 +51,6 @@ namespace Inventory.Repositories.Inventory
         }
 
 
-
         public PurchaseOrderVM FindPurchaseOrderByPoOrContractNumber(string poOrContractNumber)
         {
             try
@@ -59,6 +58,7 @@ namespace Inventory.Repositories.Inventory
                 var purchaseOrder = FindPurchaseOrder(poOrContractNumber);
                 using (AdminReferenceContext context = new AdminReferenceContext())
                 {
+                    string itemsIDs = string.Join(",", purchaseOrder.PurchaseOrderLineItems.Select(li => li.ItemID.ToString()));
                     purchaseOrder.PurchaseOrderLineItems = purchaseOrder.PurchaseOrderLineItems.Join(context.Items, li => li.ItemID, i => i.ItemID, (li, i) => { li.ItemDescription = i.Description; li.PartNumber = i.PartNumber; return li; }).ToList();
                 }
                 return AutoMapper.Mapper.Map<PurchaseOrderVM>(purchaseOrder);
@@ -75,11 +75,14 @@ namespace Inventory.Repositories.Inventory
             {
                 using (InventoryContext context = new InventoryContext())
                 {
-
                     var purchaseOrder = context.PurchaseOrders.FirstOrDefault(po => po.IsActive == true && po.PoOrContractNumber == poOrContractNumber);
                     if (purchaseOrder != null)
                     {
-                        context.Entry(purchaseOrder).Collection(po => po.PurchaseOrderLineItems).Query().Where(li => li.IsActive == true).Load();
+                        context.Entry(purchaseOrder)
+                               .Collection(po => po.PurchaseOrderLineItems)
+                               .Query()
+                               .Where(li => li.IsActive == true)
+                               .Load();
                     }
                     return purchaseOrder;
 

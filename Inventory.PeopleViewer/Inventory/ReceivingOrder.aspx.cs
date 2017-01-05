@@ -12,7 +12,7 @@ using Core.Common.BaseTypes;
 
 namespace Inventory.PeopleViewer.Inventory
 {
-    public partial class ReceivingOrder : System.Web.UI.Page
+    public partial class ReceivingOrder : Page
     {
         IPurchaseOrderRepository _purchaseOrderRepository = new PurchaseOrderRepository(new InventoryContext());
 
@@ -21,7 +21,7 @@ namespace Inventory.PeopleViewer.Inventory
         List<WareHouseVM> _Warehouses = null;
         List<RackVM> _Racks = null;
         List<ShelfVM> _Shelves = null;
-        List<PurchaseOrderLineItemVM> _LineItems = new List<PurchaseOrderLineItemVM>();
+        List<PurchaseOrderLineItemVM> _PurchaseOrderLineItems = new List<PurchaseOrderLineItemVM>();
         PurchaseOrderVM _PurchaseOrder = null;
 
 
@@ -29,6 +29,11 @@ namespace Inventory.PeopleViewer.Inventory
         DropDownList _DropDownRacks = null;
         DropDownList _DropDownShelves = null;
         DropDownList _DropDownWarehouses = null;
+        TextBox _TextBoxSerialNo = null;
+        TextBox _TextBoxReceivingQuantity = null;
+        TextBox _TextBoxReceivedDate = null;
+        TextBox _TextBoxWarrantyDate = null;
+        TextBox _TextBoxExpiryDate = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -76,9 +81,9 @@ namespace Inventory.PeopleViewer.Inventory
         private void BindLineItems()
         {
             GetLineItemsFromViewState();
-            if (_LineItems.Count == 0)
+            if (_PurchaseOrderLineItems.Count == 0)
             {
-                _LineItems = new List<PurchaseOrderLineItemVM>
+                _PurchaseOrderLineItems = new List<PurchaseOrderLineItemVM>
                 {
                     new PurchaseOrderLineItemVM()
                 };
@@ -87,19 +92,19 @@ namespace Inventory.PeopleViewer.Inventory
             else
                 ViewState[ViewStateKeys.IsEmpty] = false;
 
-            gridLineItems.DataSource = _LineItems.Where(li => li.IsActive == true).ToList();
+            gridLineItems.DataSource = _PurchaseOrderLineItems.Where(li => li.IsActive == true).ToList();
             gridLineItems.DataBind();
         }
 
         private void GetLineItemsFromViewState()
         {
             if (ViewState[ViewStateKeys.OrderLineItems] != null)
-                _LineItems = ViewState[ViewStateKeys.OrderLineItems] as List<PurchaseOrderLineItemVM>;
+                _PurchaseOrderLineItems = ViewState[ViewStateKeys.OrderLineItems] as List<PurchaseOrderLineItemVM>;
         }
 
         private void PutLineItemsBackToViewState()
         {
-            ViewState[ViewStateKeys.OrderLineItems] = _LineItems;
+            ViewState[ViewStateKeys.OrderLineItems] = _PurchaseOrderLineItems;
         }
 
         protected void linkButtonSearch_Click(object sender, EventArgs e)
@@ -116,8 +121,8 @@ namespace Inventory.PeopleViewer.Inventory
                     ddlVendors.SelectedValue = _PurchaseOrder.VendorID.ToString();
                     ddlPOType.SelectedValue = _PurchaseOrder.POTypeValue.ToString();
                     gridLineItems.Visible = true;
-                    _LineItems.Clear();
-                    _LineItems = _PurchaseOrder.PurchaseOrderLineItems;
+                    _PurchaseOrderLineItems.Clear();
+                    _PurchaseOrderLineItems = _PurchaseOrder.PurchaseOrderLineItems;
                     PutLineItemsBackToViewState();
                     txtPoCreatedDate.Text = _PurchaseOrder.POCreatedDate.ToString("yyyy-MM-dd");
                     //GetLocations();
@@ -139,16 +144,106 @@ namespace Inventory.PeopleViewer.Inventory
 
         protected void linkButtonCreate_Click(object sender, EventArgs e)
         {
-            foreach (GridViewRow row in gridLineItems.Rows)
+            try
             {
-                var textbox = row.FindControl("txtSerialNos") as TextBox;
-                string[] serials = textbox.Text.Trim().Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+                foreach (GridViewRow row in gridLineItems.Rows)
+                {
+                    FindPurchaseOrderLineItemsControls(row);
+                    ValidateReceivingLinteItems(row);
+                    //string[] serialNos = _TextBoxSerialNo.Text.Trim().Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+                    //if (serialNos.Length != int.Parse(_TextBoxReceivingQuantity.Text))
+                    //{
+
+                    //}
+                }
             }
+            catch (ApplicationException Ae)
+            {
+
+                ucInformation.ShowErrorMessage(Ae.Message);
+            }
+            catch (Exception)
+            {
+                ucInformation.ShowErrorMessage();
+            }
+        }
+
+        private void ValidateReceivingLinteItems(GridViewRow row)
+        {
+            var isValid = false;
+
+            if (string.IsNullOrWhiteSpace(_TextBoxExpiryDate.Text) && string.IsNullOrWhiteSpace(_TextBoxReceivedDate.Text) &&
+                string.IsNullOrWhiteSpace(_TextBoxReceivingQuantity.Text) && string.IsNullOrWhiteSpace(_TextBoxSerialNo.Text) &&
+                string.IsNullOrWhiteSpace(_TextBoxWarrantyDate.Text) && _DropDownRacks.SelectedIndex == 0 &&
+                _DropDownShelves.SelectedIndex == 0 && _DropDownWarehouses.SelectedIndex == 0)
+            {
+                isValid = true;
+            }
+            else if (!string.IsNullOrWhiteSpace(_TextBoxExpiryDate.Text) && !string.IsNullOrWhiteSpace(_TextBoxReceivedDate.Text) &&
+                !string.IsNullOrWhiteSpace(_TextBoxReceivingQuantity.Text) && !string.IsNullOrWhiteSpace(_TextBoxSerialNo.Text) &&
+                !string.IsNullOrWhiteSpace(_TextBoxWarrantyDate.Text) && _DropDownRacks.SelectedIndex > 0 &&
+                _DropDownShelves.SelectedIndex > 0 && _DropDownWarehouses.SelectedIndex > 0)
+            {
+                isValid = true;
+            }
+
+            else
+                isValid = false;
+
+            if (!isValid)
+            {
+                row.CssClass = "danger";
+                throw new ApplicationException("Please provide all details in order to receive an item.");
+            }
+
+
         }
 
         protected void linkButtonReset_Click(object sender, EventArgs e)
         {
+            ClearFormData();
+        }
 
+        private void ClearFormData()
+        {
+            try
+            {
+                txtPoCreatedDate.Text = txtPoOrContractNumber.Text = string.Empty;
+                ddlPOType.ClearSelection();
+                ddlVendors.ClearSelection();
+                _PurchaseOrderLineItems.Clear();
+                gridLineItems.Visible = false;
+                foreach (GridViewRow row in gridLineItems.Rows)
+                {
+                    FindPurchaseOrderLineItemsControls(row);
+                    ClearPurchaseOrderLineItemsControls();
+                }
+            }
+            catch (Exception)
+            {
+                ucInformation.ShowErrorMessage();
+            }
+        }
+
+        private void ClearPurchaseOrderLineItemsControls()
+        {
+            _TextBoxWarrantyDate.Text = _TextBoxSerialNo.Text =
+                _TextBoxReceivingQuantity.Text = _TextBoxReceivedDate.Text = _TextBoxExpiryDate.Text = string.Empty;
+            _DropDownWarehouses.ClearSelection();
+            _DropDownShelves.ClearSelection();
+            _DropDownRacks.ClearSelection();
+        }
+
+        private void FindPurchaseOrderLineItemsControls(GridViewRow row)
+        {
+            _TextBoxSerialNo = row.FindControl("txtSerialNos") as TextBox;
+            _TextBoxExpiryDate = row.FindControl("txtExpiry") as TextBox;
+            _TextBoxReceivedDate = row.FindControl("txtReceivedDate") as TextBox;
+            _TextBoxWarrantyDate = row.FindControl("txtWarrantyYear") as TextBox;
+            _TextBoxReceivingQuantity = row.FindControl("txtQuantity") as TextBox;
+            _DropDownRacks = row.FindControl("ddlRacks") as DropDownList;
+            _DropDownShelves = row.FindControl("ddlShelves") as DropDownList;
+            _DropDownWarehouses = row.FindControl("ddlWarehouses") as DropDownList;
         }
 
         protected void gridLineItems_RowDataBound(object sender, GridViewRowEventArgs e)

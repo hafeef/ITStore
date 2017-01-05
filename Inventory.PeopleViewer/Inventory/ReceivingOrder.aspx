@@ -64,9 +64,9 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12 table-responsive">
                                 <asp:GridView Visible="false" DataKeyNames="PurchaseOrderLineItemID" ID="gridLineItems" AutoGenerateColumns="false"
-                                    CssClass="table table-responsive table-striped table-bordered table-hover"
+                                    CssClass="table table-striped table-bordered table-hover"
                                     runat="server" OnRowDataBound="gridLineItems_RowDataBound">
                                     <Columns>
                                         <asp:TemplateField HeaderText="Item">
@@ -74,14 +74,22 @@
                                                 <%# Eval("ItemDescription") %>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Serial Nos">
-                                            <ItemTemplate>
-                                                <asp:TextBox runat="server" ID="txtSerialNos" ValidationGroup="Create" Columns="20" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Part No">
                                             <ItemTemplate>
                                                 <%# Eval("PartNumber") %>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Qty">
+                                            <ItemTemplate>
+                                                <%# Eval("Quantity") %>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField ItemStyle-CssClass="col-xs-2" HeaderText="Serial Nos">
+                                            <ItemTemplate>
+                                                <asp:TextBox runat="server" ID="txtSerialNos" placeholder="Serial Numbers" ValidationGroup="Create" Columns="30"
+                                                    CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                                <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="txtSerialNos"
+                                                    CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The serial no is required." />--%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <%-- <asp:TemplateField HeaderText="Location">
@@ -90,52 +98,59 @@
                                                 </asp:DropDownList>
                                             </ItemTemplate>
                                         </asp:TemplateField>--%>
-                                        <asp:TemplateField HeaderText="Rack">
+                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Rack">
                                             <ItemTemplate>
                                                 <asp:DropDownList runat="server" ID="ddlRacks" ValidationGroup="Create" DataValueField="RackID" DataTextField="Name" CssClass="form-control">
                                                 </asp:DropDownList>
+                                                <%--<asp:RequiredFieldValidator InitialValue="0" runat="server" ControlToValidate="ddlRacks"
+                                                    CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The rack is required." />--%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Shelf">
+                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Shelf">
                                             <ItemTemplate>
                                                 <asp:DropDownList runat="server" ID="ddlShelves" ValidationGroup="Create" DataValueField="ShelfID" DataTextField="Name" CssClass="form-control">
                                                 </asp:DropDownList>
+                                                <%--<asp:RequiredFieldValidator InitialValue="0" runat="server" ControlToValidate="ddlShelves"
+                                                    CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The shelf is required." />--%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Warehouse">
+                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Warehouse">
                                             <ItemTemplate>
                                                 <asp:DropDownList runat="server" ID="ddlWarehouses" ValidationGroup="Create" DataValueField="WarehouseID" DataTextField="Name" CssClass="form-control">
                                                 </asp:DropDownList>
+                                                <%--<asp:RequiredFieldValidator InitialValue="0" runat="server" ControlToValidate="ddlWarehouses"
+                                                    CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The warehouse is required." />--%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Received Date">
                                             <ItemTemplate>
                                                 <asp:TextBox runat="server" ID="txtReceivedDate" ValidationGroup="Create" CssClass="form-control" TextMode="Date"></asp:TextBox>
+                                                <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="txtReceivedDate"
+                                                    CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The received date is required." />--%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Warranty Year">
+                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Warranty Date">
                                             <ItemTemplate>
                                                 <asp:TextBox runat="server" ID="txtWarrantyYear" ValidationGroup="Create" CssClass="form-control" TextMode="Date"></asp:TextBox>
+                                                <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="txtWarrantyYear"
+                                                    CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The warranty date is required." />--%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Expiry">
+                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Expiry Date">
                                             <ItemTemplate>
                                                 <asp:TextBox runat="server" ID="txtExpiry" ValidationGroup="Create" CssClass="form-control" TextMode="Date"></asp:TextBox>
+                                                <%--  <asp:RequiredFieldValidator runat="server" ControlToValidate="txtExpiry"
+                                                    CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The expiry date is required." />--%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Unit Price">
+                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Receiving Quantity">
                                             <ItemTemplate>
-                                                <asp:TextBox runat="server" ID="txtUnit" ValidationGroup="Create" CssClass="form-control" TextMode="Number"></asp:TextBox>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Quantity">
-                                            <ItemTemplate>
-                                                <asp:TextBox runat="server" ID="txtQuantity" ValidationGroup="Create" CssClass="form-control" TextMode="Number"></asp:TextBox>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Total">
-                                            <ItemTemplate>
-                                                <%# Eval("Price","{0:f3}") %>
+                                                <asp:TextBox runat="server" ID="txtQuantity" placeholder="Quantity" ValidationGroup="Create" CssClass="form-control" TextMode="Number">
+                                                </asp:TextBox>
+                                                <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="txtQuantity"
+                                                    CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The quantity is required." />--%>
+                                                <asp:RangeValidator ControlToValidate="txtQuantity" ValidationGroup="Create" CssClass="text-danger" MinimumValue="1" MaximumValue='<%# Eval("Quantity") %>' Type="Integer"
+                                                    Text="Invalid Quantity" runat="server" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
