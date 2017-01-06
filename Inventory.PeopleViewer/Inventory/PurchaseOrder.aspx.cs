@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace Inventory.PeopleViewer.Inventory
 {
-    public partial class PurchaseOrder : System.Web.UI.Page
+    public partial class PurchaseOrder : Page
     {
         IPurchaseOrderRepository _purchaseOrderRepository = new PurchaseOrderRepository(new InventoryContext());
 
@@ -153,7 +153,7 @@ namespace Inventory.PeopleViewer.Inventory
             }
             lineItem.SrNo = lineItemID;
             lineItem.ItemID = int.Parse(hiddenFieldItemID.Value);
-            lineItem.Quantity = int.Parse(txtQuantity.Text.Trim());
+            lineItem.PurchasedQuantity = int.Parse(txtQuantity.Text.Trim());
             lineItem.Price = Convert.ToDouble(txtPrice.Text.Trim());
             lineItem.Total = int.Parse(txtQuantity.Text.Trim()) * Convert.ToDouble(txtPrice.Text.Trim());
             lineItem.ItemDescription = txtItemDescription.Text.Trim();
@@ -424,6 +424,10 @@ namespace Inventory.PeopleViewer.Inventory
                     _LineItems = _PurchaseOrder.PurchaseOrderLineItems;
                     PutLineItemsBackToViewState();
                     BindLineItems();
+                }
+                else
+                {
+                    ucInformation.ShowErrorMessage("There is no purchase ordere in the database with this PO/Contract number.");
                 }
             }
             catch (ApplicationException Ae)

@@ -58,8 +58,11 @@ namespace Inventory.Repositories.Inventory
                 var purchaseOrder = FindPurchaseOrder(poOrContractNumber);
                 using (AdminReferenceContext context = new AdminReferenceContext())
                 {
-                    string itemsIDs = string.Join(",", purchaseOrder.PurchaseOrderLineItems.Select(li => li.ItemID.ToString()));
-                    purchaseOrder.PurchaseOrderLineItems = purchaseOrder.PurchaseOrderLineItems.Join(context.Items, li => li.ItemID, i => i.ItemID, (li, i) => { li.ItemDescription = i.Description; li.PartNumber = i.PartNumber; return li; }).ToList();
+                    if (purchaseOrder != null)
+                    {
+                        string itemsIDs = string.Join(",", purchaseOrder.PurchaseOrderLineItems.Select(li => li.ItemID.ToString()));
+                        purchaseOrder.PurchaseOrderLineItems = purchaseOrder.PurchaseOrderLineItems.Join(context.Items, li => li.ItemID, i => i.ItemID, (li, i) => { li.ItemDescription = i.Description; li.PartNumber = i.PartNumber; return li; }).ToList();
+                    }
                 }
                 return AutoMapper.Mapper.Map<PurchaseOrderVM>(purchaseOrder);
             }

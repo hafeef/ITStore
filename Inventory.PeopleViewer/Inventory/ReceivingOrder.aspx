@@ -65,7 +65,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 table-responsive">
-                                <asp:GridView Visible="false" DataKeyNames="PurchaseOrderLineItemID" ID="gridLineItems" AutoGenerateColumns="false"
+                                <asp:GridView Visible="false" DataKeyNames="PurchaseOrderLineItemID,PurchaseOrderID,ItemID" ID="gridLineItems" AutoGenerateColumns="false"
                                     CssClass="table table-striped table-bordered table-hover"
                                     runat="server" OnRowDataBound="gridLineItems_RowDataBound">
                                     <Columns>
@@ -81,7 +81,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Qty">
                                             <ItemTemplate>
-                                                <%# Eval("Quantity") %>
+                                                <%# Eval("PurchasedQuantity") %>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField ItemStyle-CssClass="col-xs-2" HeaderText="Serial Nos">
@@ -149,7 +149,7 @@
                                                 </asp:TextBox>
                                                 <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="txtQuantity"
                                                     CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The quantity is required." />--%>
-                                                <asp:RangeValidator ControlToValidate="txtQuantity" ValidationGroup="Create" CssClass="text-danger" MinimumValue="1" MaximumValue='<%# Eval("Quantity") %>' Type="Integer"
+                                                <asp:RangeValidator ControlToValidate="txtQuantity" ValidationGroup="Create" CssClass="text-danger" MinimumValue="1" MaximumValue='<%# Eval("PurchasedQuantity") %>' Type="Integer"
                                                     Text="Invalid Quantity" runat="server" />
                                             </ItemTemplate>
                                         </asp:TemplateField>

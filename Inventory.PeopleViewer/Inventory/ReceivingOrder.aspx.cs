@@ -9,6 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Inventory.ViewModels.Inventory;
 using Core.Common.BaseTypes;
+using Core.Common.Enums;
 
 namespace Inventory.PeopleViewer.Inventory
 {
@@ -21,9 +22,9 @@ namespace Inventory.PeopleViewer.Inventory
         List<WareHouseVM> _Warehouses = null;
         List<RackVM> _Racks = null;
         List<ShelfVM> _Shelves = null;
-        List<PurchaseOrderLineItemVM> _PurchaseOrderLineItems = new List<PurchaseOrderLineItemVM>();
+        PurchaseOrderLineItemVM _POLineItem = null;
+        List<ReceivedLineItemVM> _ReceivedLineItems = new List<ReceivedLineItemVM>();
         PurchaseOrderVM _PurchaseOrder = null;
-
 
         DropDownList _DropDownLocations = null;
         DropDownList _DropDownRacks = null;
@@ -34,6 +35,12 @@ namespace Inventory.PeopleViewer.Inventory
         TextBox _TextBoxReceivedDate = null;
         TextBox _TextBoxWarrantyDate = null;
         TextBox _TextBoxExpiryDate = null;
+
+        private bool IsEmptyGridRow { get; set; } = false;
+        private bool IsValidGridRow { get; set; } = false;
+        private string[] SerialNumbers { get; set; } = null;
+
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -80,31 +87,20 @@ namespace Inventory.PeopleViewer.Inventory
 
         private void BindLineItems()
         {
-            GetLineItemsFromViewState();
-            if (_PurchaseOrderLineItems.Count == 0)
-            {
-                _PurchaseOrderLineItems = new List<PurchaseOrderLineItemVM>
-                {
-                    new PurchaseOrderLineItemVM()
-                };
-                ViewState[ViewStateKeys.IsEmpty] = true;
-            }
-            else
-                ViewState[ViewStateKeys.IsEmpty] = false;
-
-            gridLineItems.DataSource = _PurchaseOrderLineItems.Where(li => li.IsActive == true).ToList();
+            GetPurchaseOrderFromViewState();
+            gridLineItems.DataSource = _PurchaseOrder.PurchaseOrderLineItems.ToList();
             gridLineItems.DataBind();
         }
 
-        private void GetLineItemsFromViewState()
+        private void GetPurchaseOrderFromViewState()
         {
-            if (ViewState[ViewStateKeys.OrderLineItems] != null)
-                _PurchaseOrderLineItems = ViewState[ViewStateKeys.OrderLineItems] as List<PurchaseOrderLineItemVM>;
+            if (ViewState[ViewStateKeys.PurchaseOrder] != null)
+                _PurchaseOrder = ViewState[ViewStateKeys.PurchaseOrder] as PurchaseOrderVM;
         }
 
-        private void PutLineItemsBackToViewState()
+        private void PutPurchaseOrderBackToViewState()
         {
-            ViewState[ViewStateKeys.OrderLineItems] = _PurchaseOrderLineItems;
+            ViewState[ViewStateKeys.PurchaseOrder] = _PurchaseOrder;
         }
 
         protected void linkButtonSearch_Click(object sender, EventArgs e)
@@ -121,11 +117,8 @@ namespace Inventory.PeopleViewer.Inventory
                     ddlVendors.SelectedValue = _PurchaseOrder.VendorID.ToString();
                     ddlPOType.SelectedValue = _PurchaseOrder.POTypeValue.ToString();
                     gridLineItems.Visible = true;
-                    _PurchaseOrderLineItems.Clear();
-                    _PurchaseOrderLineItems = _PurchaseOrder.PurchaseOrderLineItems;
-                    PutLineItemsBackToViewState();
+                    PutPurchaseOrderBackToViewState();
                     txtPoCreatedDate.Text = _PurchaseOrder.POCreatedDate.ToString("yyyy-MM-dd");
-                    //GetLocations();
                     GetRacks();
                     GetShelves();
                     GetWarehouses();
@@ -146,20 +139,18 @@ namespace Inventory.PeopleViewer.Inventory
         {
             try
             {
+                GetPurchaseOrderFromViewState();
                 foreach (GridViewRow row in gridLineItems.Rows)
                 {
+                    SetRowCssClassToEmpty(row);
                     FindPurchaseOrderLineItemsControls(row);
                     ValidateReceivingLinteItems(row);
-                    //string[] serialNos = _TextBoxSerialNo.Text.Trim().Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-                    //if (serialNos.Length != int.Parse(_TextBoxReceivingQuantity.Text))
-                    //{
-
-                    //}
+                    if (IsValidGridRow && !IsEmptyGridRow)
+                        CreateReceivedLineItems(row);
                 }
             }
             catch (ApplicationException Ae)
             {
-
                 ucInformation.ShowErrorMessage(Ae.Message);
             }
             catch (Exception)
@@ -168,35 +159,75 @@ namespace Inventory.PeopleViewer.Inventory
             }
         }
 
+        private void CreateReceivedLineItems(GridViewRow row)
+        {
+            var itemID = int.Parse(gridLineItems.DataKeys[row.RowIndex]["ItemID"].ToString());
+            var purchaseOrderID = int.Parse(gridLineItems.DataKeys[row.RowIndex]["PurchaseOrderID"].ToString());
+            var purchaseOrderLineItemID = int.Parse(gridLineItems.DataKeys[row.RowIndex]["PurchaseOrderLineItemID"].ToString());
+
+            var recevideLineItems = SerialNumbers.Select(srNo => new ReceivedLineItemVM
+            {
+                EntityState = ObjectState.Added,
+                ItemID = itemID,
+                PurchaseOrderID = purchaseOrderID,
+                PurchaseOrderLineItemID = purchaseOrderLineItemID,
+                SerialNo = srNo,
+                ReceivedDate = Convert.ToDateTime(_TextBoxReceivedDate.Text),
+                RackID = int.Parse(_DropDownRacks.SelectedValue),
+                WarehouseID = int.Parse(_DropDownWarehouses.SelectedValue),
+                ShelfID = int.Parse(_DropDownShelves.SelectedValue)
+            });
+            _POLineItem = _PurchaseOrder.PurchaseOrderLineItems.Find(poli => poli.PurchaseOrderLineItemID == purchaseOrderLineItemID);
+            _POLineItem.ReceivedQuatity = int.Parse(_TextBoxReceivingQuantity.Text);
+            _POLineItem.ReceivedLineItems.AddRange(recevideLineItems);
+            _PurchaseOrder.ReceivedTotal = _PurchaseOrder.PurchaseOrderLineItems.Sum(poli => poli.ReceivedQuatity * poli.Price);
+            _POLineItem.EntityState = ObjectState.Modified;
+            _PurchaseOrder.EntityState = ObjectState.Modified;
+        }
+
         private void ValidateReceivingLinteItems(GridViewRow row)
         {
-            var isValid = false;
+
 
             if (string.IsNullOrWhiteSpace(_TextBoxExpiryDate.Text) && string.IsNullOrWhiteSpace(_TextBoxReceivedDate.Text) &&
                 string.IsNullOrWhiteSpace(_TextBoxReceivingQuantity.Text) && string.IsNullOrWhiteSpace(_TextBoxSerialNo.Text) &&
                 string.IsNullOrWhiteSpace(_TextBoxWarrantyDate.Text) && _DropDownRacks.SelectedIndex == 0 &&
                 _DropDownShelves.SelectedIndex == 0 && _DropDownWarehouses.SelectedIndex == 0)
             {
-                isValid = true;
+                IsEmptyGridRow = IsValidGridRow = true;
             }
             else if (!string.IsNullOrWhiteSpace(_TextBoxExpiryDate.Text) && !string.IsNullOrWhiteSpace(_TextBoxReceivedDate.Text) &&
                 !string.IsNullOrWhiteSpace(_TextBoxReceivingQuantity.Text) && !string.IsNullOrWhiteSpace(_TextBoxSerialNo.Text) &&
                 !string.IsNullOrWhiteSpace(_TextBoxWarrantyDate.Text) && _DropDownRacks.SelectedIndex > 0 &&
                 _DropDownShelves.SelectedIndex > 0 && _DropDownWarehouses.SelectedIndex > 0)
             {
-                isValid = true;
+                SerialNumbers = _TextBoxSerialNo.Text.Trim().Split(Environment.NewLine.ToCharArray());
+                if (SerialNumbers.Length > int.Parse(_TextBoxReceivingQuantity.Text) || SerialNumbers.Length < int.Parse(_TextBoxReceivingQuantity.Text))
+                {
+                    SetRowCssClassToDanger(row);
+                    throw new ApplicationException("Serial numbers should be equal to the receiving quantity of an item.");
+                }
+                IsValidGridRow = true;
+                IsEmptyGridRow = false;
             }
 
             else
-                isValid = false;
+                IsValidGridRow = false;
 
-            if (!isValid)
+            if (!IsValidGridRow)
             {
-                row.CssClass = "danger";
+                SetRowCssClassToDanger(row);
                 throw new ApplicationException("Please provide all details in order to receive an item.");
             }
+        }
 
-
+        private static void SetRowCssClassToDanger(GridViewRow row)
+        {
+            row.CssClass = "danger";
+        }
+        private static void SetRowCssClassToEmpty(GridViewRow row)
+        {
+            row.CssClass = string.Empty;
         }
 
         protected void linkButtonReset_Click(object sender, EventArgs e)
@@ -211,7 +242,6 @@ namespace Inventory.PeopleViewer.Inventory
                 txtPoCreatedDate.Text = txtPoOrContractNumber.Text = string.Empty;
                 ddlPOType.ClearSelection();
                 ddlVendors.ClearSelection();
-                _PurchaseOrderLineItems.Clear();
                 gridLineItems.Visible = false;
                 foreach (GridViewRow row in gridLineItems.Rows)
                 {

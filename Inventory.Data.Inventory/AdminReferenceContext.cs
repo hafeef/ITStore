@@ -7,6 +7,7 @@ namespace Inventory.Data.Inventory
     {
         public AdminReferenceContext() : base("Inventory")
         {
+            this.Configuration.LazyLoadingEnabled = false;
             Database.SetInitializer<AdminReferenceContext>(null);
         }
         public DbSet<Item> Items { get; set; }

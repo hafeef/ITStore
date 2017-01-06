@@ -10,7 +10,7 @@ namespace Inventory.Data.Inventory
     {
         public InventoryContext() : base("Inventory")
         {
-
+            this.Configuration.LazyLoadingEnabled = false;
         }
         public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public DbSet<PurchaseOrderLineItem> PurchaseOrderLineItems { get; set; }
@@ -41,7 +41,7 @@ namespace Inventory.Data.Inventory
         {
             modelBuilder.Entity<PurchaseOrderLineItem>().Ignore(li => li.ItemDescription);
             modelBuilder.Entity<PurchaseOrderLineItem>().Ignore(li => li.PartNumber);
-            modelBuilder.Entity<ReceivedLineItem>().HasRequired(rli => rli.PurchaseOrderLineItem).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<ReceivedLineItem>().HasRequired(rli => rli.PurchaseOrderLineItem).WithMany(poli => poli.ReceivedLineItems).HasForeignKey(rli => rli.PurchaseOrderLineItemID).WillCascadeOnDelete(false);
             modelBuilder.HasDefaultSchema("Inventory");
         }
     }

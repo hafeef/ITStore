@@ -103,7 +103,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Quantity">
                                             <ItemTemplate>
-                                                <%# Eval("Quantity") %>
+                                                <%# Eval("PurchasedQuantity") %>
                                             </ItemTemplate>
                                             <FooterTemplate>
                                                 <asp:TextBox ID="txtQuantity" placeholder="Quantity" TextMode="Number" ValidationGroup="Create" CssClass="form-control" runat="server" />
@@ -111,7 +111,7 @@
                                                     CssClass="text-danger" ErrorMessage="The quantity is required." />
                                             </FooterTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtQuantity" placeholder="Quantity" TextMode="Number" Text='<%# Eval("Quantity") %>' ValidationGroup="Update" CssClass="form-control" runat="server" />
+                                                <asp:TextBox ID="txtQuantity" placeholder="Quantity" TextMode="Number" Text='<%# Eval("PurchasedQuantity") %>' ValidationGroup="Update" CssClass="form-control" runat="server" />
                                                 <asp:RequiredFieldValidator ValidationGroup="Add" runat="server" ControlToValidate="txtQuantity"
                                                     CssClass="text-danger" ErrorMessage="The quantity is required." />
                                             </EditItemTemplate>

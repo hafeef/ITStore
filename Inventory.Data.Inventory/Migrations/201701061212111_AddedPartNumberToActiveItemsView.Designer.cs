@@ -7,13 +7,13 @@ namespace Inventory.Data.Inventory.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddedFooProp : IMigrationMetadata
+    public sealed partial class AddedPartNumberToActiveItemsView : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedFooProp));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedPartNumberToActiveItemsView));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612301044357_AddedFooProp"; }
+            get { return "201701061212111_AddedPartNumberToActiveItemsView"; }
         }
         
         string IMigrationMetadata.Source

@@ -10,7 +10,7 @@ namespace Inventory.Data.Administration
     {
         public AdminContext() : base("Inventory")
         {
-
+            this.Configuration.LazyLoadingEnabled = false;
         }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Category> Categories { get; set; }

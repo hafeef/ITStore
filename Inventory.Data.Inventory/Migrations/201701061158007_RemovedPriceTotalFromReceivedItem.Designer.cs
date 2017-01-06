@@ -7,13 +7,13 @@ namespace Inventory.Data.Inventory.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddedActiveWarehousesView : IMigrationMetadata
+    public sealed partial class RemovedPriceTotalFromReceivedItem : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedActiveWarehousesView));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RemovedPriceTotalFromReceivedItem));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612311504374_AddedActiveWarehousesView"; }
+            get { return "201701061158007_RemovedPriceTotalFromReceivedItem"; }
         }
         
         string IMigrationMetadata.Source

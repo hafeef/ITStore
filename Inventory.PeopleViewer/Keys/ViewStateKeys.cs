@@ -6,5 +6,6 @@
         public const string IsEmpty = "IsEmpty";
 
         public const string OrderLineItems = "OrderLineItems";
+        public const string PurchaseOrder = "PurchaseOrder";
     }
 }

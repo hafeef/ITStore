@@ -13,9 +13,9 @@ namespace Inventory.DomainClasses.Inventory
         public PurchaseOrderLineItem PurchaseOrderLineItem { get; set; }
         public DateTime ReceivedDate { get; set; }
         public int ItemID { get; set; }
-        public int Quantity { get; set; }
-        public double Price { get; set; }
-        public double Total { get; set; }
         public string SerialNo { get; set; }
+        public int WareHouseID { get; set; }
+        public int ShelfID { get; set; }
+        public int RackID { get; set; }
     }
 }

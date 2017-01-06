@@ -49,53 +49,17 @@
   <ItemGroup>
     <Compile Include="AdminReferenceContext.cs" />
     <Compile Include="InventoryContext.cs" />
-    <Compile Include="Migrations\201612300505241_InitDb.cs" />
-    <Compile Include="Migrations\201612300505241_InitDb.Designer.cs">
-      <DependentUpon>201612300505241_InitDb.cs</DependentUpon>
+    <Compile Include="Migrations\201701061141193_InventoryInitialDb.cs" />
+    <Compile Include="Migrations\201701061141193_InventoryInitialDb.Designer.cs">
+      <DependentUpon>201701061141193_InventoryInitialDb.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612300559066_ActiveItemsView.cs" />
-    <Compile Include="Migrations\201612300559066_ActiveItemsView.Designer.cs">
-      <DependentUpon>201612300559066_ActiveItemsView.cs</DependentUpon>
+    <Compile Include="Migrations\201701061158007_RemovedPriceTotalFromReceivedItem.cs" />
+    <Compile Include="Migrations\201701061158007_RemovedPriceTotalFromReceivedItem.Designer.cs">
+      <DependentUpon>201701061158007_RemovedPriceTotalFromReceivedItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612300611121_ActiveVendorsView.cs" />
-    <Compile Include="Migrations\201612300611121_ActiveVendorsView.Designer.cs">
-      <DependentUpon>201612300611121_ActiveVendorsView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612301044357_AddedFooProp.cs" />
-    <Compile Include="Migrations\201612301044357_AddedFooProp.Designer.cs">
-      <DependentUpon>201612301044357_AddedFooProp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612301049014_RemovedFooProp.cs" />
-    <Compile Include="Migrations\201612301049014_RemovedFooProp.Designer.cs">
-      <DependentUpon>201612301049014_RemovedFooProp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612310428378_AddedPoCreatedDateToPurchaseOrder.cs" />
-    <Compile Include="Migrations\201612310428378_AddedPoCreatedDateToPurchaseOrder.Designer.cs">
-      <DependentUpon>201612310428378_AddedPoCreatedDateToPurchaseOrder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612311500224_AddedReceivedDateAndFKReferenceBetweenPOLineItemAndReceivedLineItem.cs" />
-    <Compile Include="Migrations\201612311500224_AddedReceivedDateAndFKReferenceBetweenPOLineItemAndReceivedLineItem.Designer.cs">
-      <DependentUpon>201612311500224_AddedReceivedDateAndFKReferenceBetweenPOLineItemAndReceivedLineItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612311504374_AddedActiveWarehousesView.cs" />
-    <Compile Include="Migrations\201612311504374_AddedActiveWarehousesView.Designer.cs">
-      <DependentUpon>201612311504374_AddedActiveWarehousesView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612311518152_AddedActiveLocationsView.cs" />
-    <Compile Include="Migrations\201612311518152_AddedActiveLocationsView.Designer.cs">
-      <DependentUpon>201612311518152_AddedActiveLocationsView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612311521480_AddedActiveShelvesView.cs" />
-    <Compile Include="Migrations\201612311521480_AddedActiveShelvesView.Designer.cs">
-      <DependentUpon>201612311521480_AddedActiveShelvesView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612311523568_AddedActiveRacksView.cs" />
-    <Compile Include="Migrations\201612311523568_AddedActiveRacksView.Designer.cs">
-      <DependentUpon>201612311523568_AddedActiveRacksView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612311609085_AddedPartNoInSelectListOfActiveItemsView.cs" />
-    <Compile Include="Migrations\201612311609085_AddedPartNoInSelectListOfActiveItemsView.Designer.cs">
-      <DependentUpon>201612311609085_AddedPartNoInSelectListOfActiveItemsView.cs</DependentUpon>
+    <Compile Include="Migrations\201701061212111_AddedPartNumberToActiveItemsView.cs" />
+    <Compile Include="Migrations\201701061212111_AddedPartNumberToActiveItemsView.Designer.cs">
+      <DependentUpon>201701061212111_AddedPartNumberToActiveItemsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,41 +83,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612300505241_InitDb.resx">
-      <DependentUpon>201612300505241_InitDb.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701061141193_InventoryInitialDb.resx">
+      <DependentUpon>201701061141193_InventoryInitialDb.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612300559066_ActiveItemsView.resx">
-      <DependentUpon>201612300559066_ActiveItemsView.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701061158007_RemovedPriceTotalFromReceivedItem.resx">
+      <DependentUpon>201701061158007_RemovedPriceTotalFromReceivedItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612300611121_ActiveVendorsView.resx">
-      <DependentUpon>201612300611121_ActiveVendorsView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612301044357_AddedFooProp.resx">
-      <DependentUpon>201612301044357_AddedFooProp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612301049014_RemovedFooProp.resx">
-      <DependentUpon>201612301049014_RemovedFooProp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612310428378_AddedPoCreatedDateToPurchaseOrder.resx">
-      <DependentUpon>201612310428378_AddedPoCreatedDateToPurchaseOrder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612311500224_AddedReceivedDateAndFKReferenceBetweenPOLineItemAndReceivedLineItem.resx">
-      <DependentUpon>201612311500224_AddedReceivedDateAndFKReferenceBetweenPOLineItemAndReceivedLineItem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612311504374_AddedActiveWarehousesView.resx">
-      <DependentUpon>201612311504374_AddedActiveWarehousesView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612311518152_AddedActiveLocationsView.resx">
-      <DependentUpon>201612311518152_AddedActiveLocationsView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612311521480_AddedActiveShelvesView.resx">
-      <DependentUpon>201612311521480_AddedActiveShelvesView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612311523568_AddedActiveRacksView.resx">
-      <DependentUpon>201612311523568_AddedActiveRacksView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612311609085_AddedPartNoInSelectListOfActiveItemsView.resx">
-      <DependentUpon>201612311609085_AddedPartNoInSelectListOfActiveItemsView.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701061212111_AddedPartNumberToActiveItemsView.resx">
+      <DependentUpon>201701061212111_AddedPartNumberToActiveItemsView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

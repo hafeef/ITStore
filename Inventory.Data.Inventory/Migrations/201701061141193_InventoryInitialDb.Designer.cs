@@ -7,13 +7,13 @@ namespace Inventory.Data.Inventory.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddedPartNoInSelectListOfActiveItemsView : IMigrationMetadata
+    public sealed partial class InventoryInitialDb : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedPartNoInSelectListOfActiveItemsView));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InventoryInitialDb));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612311609085_AddedPartNoInSelectListOfActiveItemsView"; }
+            get { return "201701061141193_InventoryInitialDb"; }
         }
         
         string IMigrationMetadata.Source
