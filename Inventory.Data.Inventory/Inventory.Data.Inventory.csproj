@@ -61,6 +61,14 @@
     <Compile Include="Migrations\201701061212111_AddedPartNumberToActiveItemsView.Designer.cs">
       <DependentUpon>201701061212111_AddedPartNumberToActiveItemsView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701070949309_RenamedPOLineItemsProperty.cs" />
+    <Compile Include="Migrations\201701070949309_RenamedPOLineItemsProperty.Designer.cs">
+      <DependentUpon>201701070949309_RenamedPOLineItemsProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701071707286_AddedExpireAndWarrantyDatesToReceivedItems.cs" />
+    <Compile Include="Migrations\201701071707286_AddedExpireAndWarrantyDatesToReceivedItems.Designer.cs">
+      <DependentUpon>201701071707286_AddedExpireAndWarrantyDatesToReceivedItems.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -91,6 +99,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701061212111_AddedPartNumberToActiveItemsView.resx">
       <DependentUpon>201701061212111_AddedPartNumberToActiveItemsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701070949309_RenamedPOLineItemsProperty.resx">
+      <DependentUpon>201701070949309_RenamedPOLineItemsProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701071707286_AddedExpireAndWarrantyDatesToReceivedItems.resx">
+      <DependentUpon>201701071707286_AddedExpireAndWarrantyDatesToReceivedItems.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

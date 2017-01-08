@@ -17,5 +17,6 @@ namespace Inventory.ViewModels.Inventory
         public double ReceivedTotal { get; set; }
         public DateTime POCreatedDate { get; set; }
         public List<PurchaseOrderLineItemVM> PurchaseOrderLineItems { get; set; }
+        public List<ReceivedLineItemVM> ReceivedLineItems { get; set; }
     }
 }

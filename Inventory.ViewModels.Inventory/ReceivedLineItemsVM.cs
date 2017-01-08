@@ -12,9 +12,16 @@ namespace Inventory.ViewModels.Inventory
         public int PurchaseOrderLineItemID { get; set; }
         public DateTime ReceivedDate { get; set; }
         public int ItemID { get; set; }
+        public string ItemDescription { get; set; }
         public string SerialNo { get; set; }
+        public string PartNumber { get; set; }
         public int WarehouseID { get; set; }
+        public string WarehouseName { get; set; }
         public int RackID { get; set; }
+        public string RackName { get; set; }
         public int ShelfID { get; set; }
+        public string ShelfName { get; set; }
+        public DateTime WarrantyDate { get; set; }
+        public DateTime ExpiryDate { get; set; }
     }
 }

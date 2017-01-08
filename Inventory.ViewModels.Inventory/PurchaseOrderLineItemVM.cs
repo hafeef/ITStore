@@ -21,7 +21,8 @@ namespace Inventory.ViewModels.Inventory
         public int PurchasedQuantity { get; set; }
         public double Price { get; set; }
         public double Total { get; set; }
-        public int ReceivedQuatity { get; set; }
+        public int ReceivedQuantity { get; set; }
+        public int RemainingQuantity { get { return PurchasedQuantity - ReceivedQuantity; } }
         public List<ReceivedLineItemVM> ReceivedLineItems { get; set; }
     }
 }

@@ -7,6 +7,7 @@ namespace Inventory.Contracts.Inventory
     {
         void CreatePurchaseOrder(PurchaseOrderVM newPurchaseOrder);
         PurchaseOrderVM FindPurchaseOrderByPoOrContractNumber(string poOrContractNumber);
+        PurchaseOrderVM FindPurchaseOrderIncludeReceivedItemsByPoOrContractNumber(string poOrContractNumber);
         void UpdatePurchaseOrder(PurchaseOrderVM newPurchaseOrder);
         List<VendorVM> GetAllVendors();
         List<ItemVM> GetItemByDescription(string itemDescription);

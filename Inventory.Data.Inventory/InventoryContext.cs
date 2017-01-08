@@ -42,6 +42,8 @@ namespace Inventory.Data.Inventory
             modelBuilder.Entity<PurchaseOrderLineItem>().Ignore(li => li.ItemDescription);
             modelBuilder.Entity<PurchaseOrderLineItem>().Ignore(li => li.PartNumber);
             modelBuilder.Entity<ReceivedLineItem>().HasRequired(rli => rli.PurchaseOrderLineItem).WithMany(poli => poli.ReceivedLineItems).HasForeignKey(rli => rli.PurchaseOrderLineItemID).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ReceivedLineItem>().Ignore(rli => rli.ItemDescription);
+            modelBuilder.Entity<ReceivedLineItem>().Ignore(rli => rli.PartNumber);
             modelBuilder.HasDefaultSchema("Inventory");
         }
     }

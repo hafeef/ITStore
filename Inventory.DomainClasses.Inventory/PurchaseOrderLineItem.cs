@@ -14,7 +14,7 @@ namespace Inventory.DomainClasses.Inventory
         public int PurchasedQuantity { get; set; }
         public double Price { get; set; }
         public double Total { get; set; }
-        public int ReceivedQuatity { get; set; }
+        public int ReceivedQuantity { get; set; }
         public IList<ReceivedLineItem> ReceivedLineItems { get; set; }
     }
 }

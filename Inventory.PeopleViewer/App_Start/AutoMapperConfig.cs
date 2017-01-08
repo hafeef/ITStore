@@ -77,6 +77,10 @@ namespace Inventory.PeopleViewer.App_Start
                 config.CreateMap<PurchaseOrderLineItemVM, PurchaseOrderLineItem>();
                 config.CreateMap<PurchaseOrderLineItem, PurchaseOrderLineItemVM>();
                 config.CreateMap<PurchaseOrderLineItemVM, PurchaseOrderLineItemVM>();
+
+                config.CreateMap<ReceivedLineItemVM, ReceivedLineItem>();
+                config.CreateMap<ReceivedLineItem, ReceivedLineItemVM>();
+                config.CreateMap<ReceivedLineItemVM, ReceivedLineItemVM>();
                 #endregion
 
 

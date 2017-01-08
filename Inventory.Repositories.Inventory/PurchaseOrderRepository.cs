@@ -60,8 +60,33 @@ namespace Inventory.Repositories.Inventory
                 {
                     if (purchaseOrder != null)
                     {
-                        string itemsIDs = string.Join(",", purchaseOrder.PurchaseOrderLineItems.Select(li => li.ItemID.ToString()));
-                        purchaseOrder.PurchaseOrderLineItems = purchaseOrder.PurchaseOrderLineItems.Join(context.Items, li => li.ItemID, i => i.ItemID, (li, i) => { li.ItemDescription = i.Description; li.PartNumber = i.PartNumber; return li; }).ToList();
+                        int[] itemsIDs = purchaseOrder.PurchaseOrderLineItems.Select(li => li.ItemID).ToArray();
+                        var items = context.Items.Where(i => itemsIDs.Contains(i.ItemID)).ToList();
+                        purchaseOrder.PurchaseOrderLineItems = purchaseOrder.PurchaseOrderLineItems.Join(items, li => li.ItemID, i => i.ItemID, (li, i) => { li.ItemDescription = i.Description; li.PartNumber = i.PartNumber; return li; }).ToList();
+                    }
+                }
+                return AutoMapper.Mapper.Map<PurchaseOrderVM>(purchaseOrder);
+            }
+            catch (Exception Ex)
+            {
+                throw Ex;
+            }
+        }
+
+        public PurchaseOrderVM FindPurchaseOrderIncludeReceivedItemsByPoOrContractNumber(string poOrContractNumber)
+        {
+            try
+            {
+                var purchaseOrder = FindPurchaseOrder(poOrContractNumber);
+                using (AdminReferenceContext context = new AdminReferenceContext())
+                {
+                    if (purchaseOrder != null)
+                    {
+                        int[] itemsIDs = purchaseOrder.PurchaseOrderLineItems.Select(li => li.ItemID).ToArray();
+                        var items = context.Items.Where(i => itemsIDs.Contains(i.ItemID)).ToList();
+                        purchaseOrder.PurchaseOrderLineItems.Join(items, li => li.ItemID, i => i.ItemID, (li, i) => { li.ItemDescription = i.Description; li.PartNumber = i.PartNumber; return li; }).ToList();
+                        if (purchaseOrder.ReceivedLineItems != null && purchaseOrder.ReceivedLineItems.Count > 0)
+                            purchaseOrder.ReceivedLineItems.Join(items, rli => rli.ItemID, i => i.ItemID, (rli, i) => { rli.ItemDescription = i.Description; rli.PartNumber = i.PartNumber; return rli; }).ToList();
                     }
                 }
                 return AutoMapper.Mapper.Map<PurchaseOrderVM>(purchaseOrder);
@@ -86,9 +111,13 @@ namespace Inventory.Repositories.Inventory
                                .Query()
                                .Where(li => li.IsActive == true)
                                .Load();
+                        context.Entry(purchaseOrder)
+                          .Collection(po => po.ReceivedLineItems)
+                          .Query()
+                          .Where(rli => rli.IsActive == true)
+                          .Load();
                     }
                     return purchaseOrder;
-
                 }
             }
             catch (Exception Ex)
