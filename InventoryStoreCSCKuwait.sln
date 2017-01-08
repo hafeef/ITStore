@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26014.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Common", "Core.Common\Core.Common.csproj", "{8A3B856E-AD14-49EB-9F37-36DDCE5E029D}"
 EndProject
@@ -58,8 +58,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Repositories.Inventory", "Inventory.Repositories.Inventory\Inventory.Repositories.Inventory.csproj", "{5CF1CB0F-DB9F-4D77-8E0F-ADFB809573F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.ViewModels.Inventory", "Inventory.ViewModels.Inventory\Inventory.ViewModels.Inventory.csproj", "{13314C3C-D6C4-4AAE-BE7B-CDAC4CE1F260}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{30D5E318-B9FA-4AE3-B453-B7B57F68C397}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
