@@ -106,7 +106,7 @@ namespace Inventory.PeopleViewer.Inventory
             if (e.Row.RowType == DataControlRowType.Footer)
             {
                 if (!Convert.ToBoolean(ViewState[ViewStateKeys.IsEmpty]))
-                    e.Row.Cells[3].Text = string.Format("<b>{0:0.000}</b>", _LineItems.Sum(li => li.Total));
+                    e.Row.Cells[3].Text = string.Format("<b>{0:0.000}</b>", _LineItems.Where(li => li.IsActive == true).Sum(li => li.Total));
             }
         }
 
