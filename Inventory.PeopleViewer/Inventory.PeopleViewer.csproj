@@ -492,6 +492,11 @@
       <DependentUpon>ReceivingOrder.aspx</DependentUpon>
     </Compile>
     <Compile Include="Keys\ViewStateKeys.cs" />
+    <Compile Include="Migrations\201701091514094_InitDb.cs" />
+    <Compile Include="Migrations\201701091514094_InitDb.Designer.cs">
+      <DependentUpon>201701091514094_InitDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AutoCompleteService.asmx.cs">
@@ -566,6 +571,11 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201701091514094_InitDb.resx">
+      <DependentUpon>201701091514094_InitDb.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

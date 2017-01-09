@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -24,16 +25,22 @@ namespace Inventory.PeopleViewer.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class SecurityContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+        public SecurityContext()
+            : base("Inventory")
         {
         }
 
-        public static ApplicationDbContext Create()
+        public static SecurityContext Create()
         {
-            return new ApplicationDbContext();
+            return new SecurityContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("Security");
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
