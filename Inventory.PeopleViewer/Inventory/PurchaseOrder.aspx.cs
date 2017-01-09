@@ -254,7 +254,6 @@ namespace Inventory.PeopleViewer.Inventory
                 SetGridRowIndexToMinusOne();
                 SetHiddenFieldValuesToEmpty();
                 BindLineItems();
-                ucInformation.ShowModifyInfomationMessage();
             }
             catch (ApplicationException Ae)
             {
@@ -305,7 +304,6 @@ namespace Inventory.PeopleViewer.Inventory
                 PutLineItemsBackToViewState();
                 SetGridRowIndexToMinusOne();
                 BindLineItems();
-                ucInformation.ShowDeleteInfomationMessage();
             }
             catch (ApplicationException Ae)
             {
@@ -338,13 +336,19 @@ namespace Inventory.PeopleViewer.Inventory
                     ValidatePurchaseOrder();
                     _PurchaseOrder = CreatePurchaseOrder();
                     if (string.IsNullOrWhiteSpace(hiddenFieldPurchaseOrderID.Value))
+                    {
                         _purchaseOrderRepository.CreatePurchaseOrder(_PurchaseOrder);
+                        ucInformation.ShowSaveInfomationMessage();
+                    }
                     else
+                    {
                         _purchaseOrderRepository.UpdatePurchaseOrder(_PurchaseOrder);
+                        ucInformation.ShowModifyInfomationMessage();
+                    }
                     SetGridRowIndexToMinusOne();
                     ClearFormData();
                     BindLineItems();
-                    ucInformation.ShowSaveInfomationMessage();
+
                 }
 
             }

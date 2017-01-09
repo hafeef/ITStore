@@ -1,8 +1,10 @@
 ﻿using Core.Common.BaseTypes;
+using System;
 using System.Collections.Generic;
 
 namespace Inventory.DomainClasses.Inventory
 {
+    [Serializable]
     public class PurchaseOrderLineItem : EntityBase
     {
         public int PurchaseOrderLineItemID { get; set; }
@@ -15,6 +17,5 @@ namespace Inventory.DomainClasses.Inventory
         public double Price { get; set; }
         public double Total { get; set; }
         public int ReceivedQuantity { get; set; }
-        public IList<ReceivedLineItem> ReceivedLineItems { get; set; }
     }
 }

@@ -69,6 +69,14 @@
     <Compile Include="Migrations\201701071707286_AddedExpireAndWarrantyDatesToReceivedItems.Designer.cs">
       <DependentUpon>201701071707286_AddedExpireAndWarrantyDatesToReceivedItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701081441256_AddedUniqueIndexToSerialNoProp.cs" />
+    <Compile Include="Migrations\201701081441256_AddedUniqueIndexToSerialNoProp.Designer.cs">
+      <DependentUpon>201701081441256_AddedUniqueIndexToSerialNoProp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701081459128_RemovedRelationshipsBetweenPOLineItemsAndReceivedItems.cs" />
+    <Compile Include="Migrations\201701081459128_RemovedRelationshipsBetweenPOLineItemsAndReceivedItems.Designer.cs">
+      <DependentUpon>201701081459128_RemovedRelationshipsBetweenPOLineItemsAndReceivedItems.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -105,6 +113,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701071707286_AddedExpireAndWarrantyDatesToReceivedItems.resx">
       <DependentUpon>201701071707286_AddedExpireAndWarrantyDatesToReceivedItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701081441256_AddedUniqueIndexToSerialNoProp.resx">
+      <DependentUpon>201701081441256_AddedUniqueIndexToSerialNoProp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701081459128_RemovedRelationshipsBetweenPOLineItemsAndReceivedItems.resx">
+      <DependentUpon>201701081459128_RemovedRelationshipsBetweenPOLineItemsAndReceivedItems.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

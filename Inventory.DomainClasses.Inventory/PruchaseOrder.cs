@@ -15,7 +15,7 @@ namespace Inventory.DomainClasses.Inventory
         public double GrandTotal { get; set; }
         public double ReceivedTotal { get; set; }
         public DateTime POCreatedDate { get; set; }
-        public IList<PurchaseOrderLineItem> PurchaseOrderLineItems { get; set; }
-        public IList<ReceivedLineItem> ReceivedLineItems { get; set; }
+        public ICollection<PurchaseOrderLineItem> PurchaseOrderLineItems { get; set; }
+        public ICollection<ReceivedLineItem> ReceivedLineItems { get; set; }
     }
 }

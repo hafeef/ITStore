@@ -88,7 +88,7 @@ namespace Inventory.PeopleViewer.Inventory
         private void BindPurchasedLineItems()
         {
             GetPurchaseOrderFromViewState();
-            gridLineItems.DataSource = _PurchaseOrder.PurchaseOrderLineItems.ToList();
+            gridLineItems.DataSource = _PurchaseOrder.PurchaseOrderLineItems.Where(poli => poli.PurchasedQuantity > poli.ReceivedQuantity).ToList();
             gridLineItems.DataBind();
         }
 
@@ -165,7 +165,6 @@ namespace Inventory.PeopleViewer.Inventory
                     if (IsValidGridRow && !IsEmptyGridRow)
                         CreateReceivedLineItems(row);
                 }
-                _PurchaseOrder.ReceivedLineItems.Clear();
                 _purchaseOrderRepository.UpdatePurchaseOrder(_PurchaseOrder);
                 ucInformation.ShowSaveInfomationMessage();
             }
@@ -200,7 +199,7 @@ namespace Inventory.PeopleViewer.Inventory
             });
             _POLineItem = _PurchaseOrder.PurchaseOrderLineItems.Find(poli => poli.PurchaseOrderLineItemID == purchaseOrderLineItemID);
             _POLineItem.ReceivedQuantity = int.Parse(_TextBoxReceivingQuantity.Text);
-            _POLineItem.ReceivedLineItems.AddRange(recevideLineItems);
+            _PurchaseOrder.ReceivedLineItems.AddRange(recevideLineItems);
             _PurchaseOrder.ReceivedTotal = _PurchaseOrder.PurchaseOrderLineItems.Sum(poli => poli.ReceivedQuantity * poli.Price);
             _POLineItem.EntityState = ObjectState.Modified;
             _PurchaseOrder.EntityState = ObjectState.Modified;

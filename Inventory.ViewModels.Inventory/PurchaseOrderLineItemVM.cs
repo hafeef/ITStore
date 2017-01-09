@@ -8,10 +8,6 @@ namespace Inventory.ViewModels.Inventory
     [Serializable, DebuggerDisplay("PurchaseOrderID:{PurchaseOrderID}, LineItemID:{PurchaseOrderLineItemID}, ItemID:{ItemID}, ItemDescription:{ItemDescription}, Quantity:{PurchasedQuantity}, Price:{Price}, Total:{Total}, ReceivedQuatity:{ReceivedQuatity}")]
     public class PurchaseOrderLineItemVM : EntityBaseVM
     {
-        public PurchaseOrderLineItemVM()
-        {
-            ReceivedLineItems = new List<ReceivedLineItemVM>();
-        }
         public int SrNo { get; set; }
         public int PurchaseOrderLineItemID { get; set; }
         public int PurchaseOrderID { get; set; }
@@ -23,6 +19,5 @@ namespace Inventory.ViewModels.Inventory
         public double Total { get; set; }
         public int ReceivedQuantity { get; set; }
         public int RemainingQuantity { get { return PurchasedQuantity - ReceivedQuantity; } }
-        public List<ReceivedLineItemVM> ReceivedLineItems { get; set; }
     }
 }

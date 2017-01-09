@@ -10,7 +10,6 @@ namespace Inventory.DomainClasses.Inventory
         public int PurchaseOrderID { get; set; }
         public PurchaseOrder PurchaseOrder { get; set; }
         public int PurchaseOrderLineItemID { get; set; }
-        public PurchaseOrderLineItem PurchaseOrderLineItem { get; set; }
         public DateTime ReceivedDate { get; set; }
         public int ItemID { get; set; }
         public string ItemDescription { get; set; }

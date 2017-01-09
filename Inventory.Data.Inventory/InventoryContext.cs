@@ -3,6 +3,8 @@ using Inventory.DomainClasses.Inventory;
 using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Data.Entity.Infrastructure.Annotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Inventory.Data.Inventory
 {
@@ -41,9 +43,10 @@ namespace Inventory.Data.Inventory
         {
             modelBuilder.Entity<PurchaseOrderLineItem>().Ignore(li => li.ItemDescription);
             modelBuilder.Entity<PurchaseOrderLineItem>().Ignore(li => li.PartNumber);
-            modelBuilder.Entity<ReceivedLineItem>().HasRequired(rli => rli.PurchaseOrderLineItem).WithMany(poli => poli.ReceivedLineItems).HasForeignKey(rli => rli.PurchaseOrderLineItemID).WillCascadeOnDelete(false);
             modelBuilder.Entity<ReceivedLineItem>().Ignore(rli => rli.ItemDescription);
             modelBuilder.Entity<ReceivedLineItem>().Ignore(rli => rli.PartNumber);
+            modelBuilder.Entity<ReceivedLineItem>().Property(rli => rli.SerialNo).HasMaxLength(100);
+            modelBuilder.Entity<ReceivedLineItem>().Property(rli => rli.SerialNo).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
             modelBuilder.HasDefaultSchema("Inventory");
         }
     }

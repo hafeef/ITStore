@@ -6,6 +6,8 @@ using Inventory.DomainClasses.Inventory;
 using Inventory.Data.Inventory;
 using Inventory.ViewModels.Inventory;
 using System.Collections.Generic;
+using System.Transactions;
+using Core.Common.Resolvers;
 
 namespace Inventory.Repositories.Inventory
 {
@@ -37,11 +39,19 @@ namespace Inventory.Repositories.Inventory
         {
             try
             {
-                using (DbContextTransaction transaction = _context.Database.BeginTransaction())
+                using (InventoryContext context = new InventoryContext())
                 {
-                    var purchaseOrder = AutoMapper.Mapper.Map<PurchaseOrder>(newPurchaseOrder);
-                    UpdateGraph(purchaseOrder);
-                    transaction.Commit();
+                    using (var scope = new TransactionScope(TransactionScopeOption.Required))
+                    {
+                        var purchaseOrder = AutoMapper.Mapper.Map<PurchaseOrder>(newPurchaseOrder);
+                        foreach (var item in purchaseOrder.PurchaseOrderLineItems)
+                            context.Entry(item).State = StateResolver.Resolve(item.EntityState);
+                        foreach (var item in purchaseOrder.ReceivedLineItems)
+                            context.Entry(item).State = StateResolver.Resolve(item.EntityState);
+                        context.Entry(purchaseOrder).State = StateResolver.Resolve(purchaseOrder.EntityState);
+                        context.SaveChanges();
+                        scope.Complete();
+                    }
                 }
             }
             catch (Exception Ex)
