@@ -83,7 +83,7 @@
                                                 <asp:RequiredFieldValidator ValidationGroup="Add" runat="server" ControlToValidate="txtItemDescription"
                                                     CssClass="text-danger" ErrorMessage="The item field is required." />
                                                 <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtenderItemDescription" TargetControlID="txtItemDescription"
-                                                    ServiceMethod="GetItemDescription" MinimumPrefixLength="2" CompletionInterval="100"
+                                                    ServiceMethod="GetItemDescription" MinimumPrefixLength="2" CompletionInterval="10"
                                                     EnableCaching="true" FirstRowSelected="false" OnClientItemSelected="ClientItemSelected"
                                                     CompletionSetCount="20" ServicePath="~/Services/AutoCompleteService.asmx" ShowOnlyCurrentWordInCompletionListItem="true"
                                                     runat="server">
@@ -94,7 +94,7 @@
                                                 <asp:RequiredFieldValidator ValidationGroup="Add" runat="server" ControlToValidate="txtItemDescription"
                                                     CssClass="text-danger" ErrorMessage="The item field is required." />
                                                 <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtenderItemDescription" TargetControlID="txtItemDescription"
-                                                    ServiceMethod="GetItemDescription" MinimumPrefixLength="2" CompletionInterval="300"
+                                                    ServiceMethod="GetItemDescription" MinimumPrefixLength="2" CompletionInterval="10"
                                                     EnableCaching="true" FirstRowSelected="false" OnClientItemSelected="ClientItemSelected"
                                                     CompletionSetCount="20" ServicePath="~/Services/AutoCompleteService.asmx" ShowOnlyCurrentWordInCompletionListItem="true"
                                                     runat="server">
@@ -107,13 +107,18 @@
                                             </ItemTemplate>
                                             <FooterTemplate>
                                                 <asp:TextBox ID="txtQuantity" placeholder="Quantity" TextMode="Number" ValidationGroup="Create" CssClass="form-control" runat="server" />
-                                                <asp:RequiredFieldValidator ValidationGroup="Add" runat="server" ControlToValidate="txtQuantity"
+                                                <asp:RequiredFieldValidator ValidationGroup="Add" runat="server" ControlToValidate="txtQuantity" Display="Dynamic"
                                                     CssClass="text-danger" ErrorMessage="The quantity is required." />
+                                                <asp:RangeValidator ControlToValidate="txtQuantity" ValidationGroup="Add" Display="Dynamic" CssClass="text-danger" MinimumValue="1" MaximumValue="2147483647" Type="Integer"
+                                                    Text="Invalid Quantity" runat="server" />
+
                                             </FooterTemplate>
                                             <EditItemTemplate>
                                                 <asp:TextBox ID="txtQuantity" placeholder="Quantity" TextMode="Number" Text='<%# Eval("PurchasedQuantity") %>' ValidationGroup="Update" CssClass="form-control" runat="server" />
-                                                <asp:RequiredFieldValidator ValidationGroup="Add" runat="server" ControlToValidate="txtQuantity"
+                                                <asp:RequiredFieldValidator ValidationGroup="Add" runat="server" Display="Dynamic" ControlToValidate="txtQuantity"
                                                     CssClass="text-danger" ErrorMessage="The quantity is required." />
+                                                <asp:RangeValidator ControlToValidate="txtQuantity" Display="Dynamic" ValidationGroup="Add" CssClass="text-danger" MinimumValue="1" MaximumValue="2147483647" Type="Integer"
+                                                    Text="Invalid Quantity" runat="server" />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Price">
@@ -122,13 +127,17 @@
                                             </ItemTemplate>
                                             <FooterTemplate>
                                                 <asp:TextBox ID="txtPrice" placeholder="Price" TextMode="Number" ValidationGroup="Create" CssClass="form-control" runat="server" />
-                                                <asp:RequiredFieldValidator ValidationGroup="Add" runat="server" ControlToValidate="txtPrice"
+                                                <asp:RequiredFieldValidator ValidationGroup="Add" Display="Dynamic" runat="server" ControlToValidate="txtPrice"
                                                     CssClass="text-danger" ErrorMessage="The price is required." />
+                                                <asp:RangeValidator ControlToValidate="txtPrice" Display="Dynamic" ValidationGroup="Add" CssClass="text-danger" MinimumValue="0" MaximumValue="2147483647.999" Type="Double"
+                                                    Text="Invalid Price" runat="server" />
                                             </FooterTemplate>
                                             <EditItemTemplate>
                                                 <asp:TextBox ID="txtPrice" placeholder="Price" TextMode="Number" Text='<%# Eval("Price","{0:f3}") %>' ValidationGroup="Update" CssClass="form-control" runat="server" />
                                                 <asp:RequiredFieldValidator ValidationGroup="Add" runat="server" ControlToValidate="txtPrice"
                                                     CssClass="text-danger" ErrorMessage="The price is required." />
+                                                <asp:RangeValidator ControlToValidate="txtPrice" Display="Dynamic" ValidationGroup="Add" CssClass="text-danger" MinimumValue="0" MaximumValue="2147483647.999" Type="Double"
+                                                    Text="Invalid Price" runat="server" />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Total">

@@ -70,7 +70,7 @@ namespace Inventory.Repositories.Inventory
                 {
                     if (purchaseOrder != null)
                     {
-                        int[] itemsIDs = purchaseOrder.PurchaseOrderLineItems.Select(li => li.ItemID).ToArray();
+                        int[] itemsIDs = purchaseOrder.PurchaseOrderLineItems.Select(li => li.ItemID).Distinct().ToArray();
                         var items = context.Items.Where(i => itemsIDs.Contains(i.ItemID)).ToList();
                         purchaseOrder.PurchaseOrderLineItems = purchaseOrder.PurchaseOrderLineItems.Join(items, li => li.ItemID, i => i.ItemID, (li, i) => { li.ItemDescription = i.Description; li.PartNumber = i.PartNumber; return li; }).ToList();
                     }
@@ -92,7 +92,7 @@ namespace Inventory.Repositories.Inventory
                 {
                     if (purchaseOrder != null)
                     {
-                        int[] itemsIDs = purchaseOrder.PurchaseOrderLineItems.Select(li => li.ItemID).ToArray();
+                        int[] itemsIDs = purchaseOrder.PurchaseOrderLineItems.Select(li => li.ItemID).Distinct().ToArray();
                         var items = context.Items.Where(i => itemsIDs.Contains(i.ItemID)).ToList();
                         purchaseOrder.PurchaseOrderLineItems.Join(items, li => li.ItemID, i => i.ItemID, (li, i) => { li.ItemDescription = i.Description; li.PartNumber = i.PartNumber; return li; }).ToList();
                         if (purchaseOrder.ReceivedLineItems != null && purchaseOrder.ReceivedLineItems.Count > 0)
@@ -121,11 +121,6 @@ namespace Inventory.Repositories.Inventory
                                .Query()
                                .Where(li => li.IsActive == true)
                                .Load();
-                        context.Entry(purchaseOrder)
-                          .Collection(po => po.ReceivedLineItems)
-                          .Query()
-                          .Where(rli => rli.IsActive == true)
-                          .Load();
                     }
                     return purchaseOrder;
                 }
