@@ -35,6 +35,7 @@ namespace Inventory.PeopleViewer.Inventory
         TextBox _TextBoxReceivedDate = null;
         TextBox _TextBoxWarrantyDate = null;
         TextBox _TextBoxExpiryDate = null;
+        private ReceivedLineItemVM _ReceivedLineItem;
 
         private bool IsEmptyGridRow { get; set; } = false;
         private bool IsValidGridRow { get; set; } = false;
@@ -115,24 +116,27 @@ namespace Inventory.PeopleViewer.Inventory
                 {
                     ddlVendors.SelectedValue = _PurchaseOrder.VendorID.ToString();
                     ddlPOType.SelectedValue = _PurchaseOrder.POTypeValue.ToString();
-                    PutPurchaseOrderBackToViewState();
                     txtPoCreatedDate.Text = _PurchaseOrder.POCreatedDate.ToString("yyyy-MM-dd");
                     GetRacks();
                     GetShelves();
                     GetWarehouses();
-                    if (_PurchaseOrder.PurchaseOrderLineItems.Count > 0)
-                    {
-                        gridLineItems.Visible = true;
-                        BindPurchasedLineItems();
-                    }
+                    PutPurchaseOrderBackToViewState();
                     if (_PurchaseOrder.ReceivedLineItems.Count > 0)
                     {
                         _PurchaseOrder.ReceivedLineItems.Join(_Warehouses, rli => rli.WarehouseID, wh => wh.WareHouseID, (rli, w) => { rli.WarehouseName = w.Name; return rli; }).ToList();
                         _PurchaseOrder.ReceivedLineItems.Join(_Shelves, rli => rli.ShelfID, sh => sh.ShelfID, (rli, sh) => { rli.ShelfName = sh.Name; return rli; }).ToList();
                         _PurchaseOrder.ReceivedLineItems.Join(_Racks, rli => rli.RackID, r => r.RackID, (rli, r) => { rli.RackName = r.Name; return rli; }).ToList();
                         GridViewReceivedItems.Visible = true;
+                        divReceivedItems.Visible = true;
+                        PutPurchaseOrderBackToViewState();
                         BindReceivedItems();
                     }
+                    if (_PurchaseOrder.PurchaseOrderLineItems.Count > 0)
+                    {
+                        gridLineItems.Visible = true;
+                        BindPurchasedLineItems();
+                    }
+
 
                 }
             }
@@ -148,7 +152,8 @@ namespace Inventory.PeopleViewer.Inventory
 
         private void BindReceivedItems()
         {
-            GridViewReceivedItems.DataSource = _PurchaseOrder.ReceivedLineItems;
+            GetPurchaseOrderFromViewState();
+            GridViewReceivedItems.DataSource = _PurchaseOrder.ReceivedLineItems.Where(rli => rli.IsActive == true);
             GridViewReceivedItems.DataBind();
         }
 
@@ -198,7 +203,7 @@ namespace Inventory.PeopleViewer.Inventory
                 WarrantyDate = Convert.ToDateTime(_TextBoxWarrantyDate.Text),
             });
             _POLineItem = _PurchaseOrder.PurchaseOrderLineItems.Find(poli => poli.PurchaseOrderLineItemID == purchaseOrderLineItemID);
-            _POLineItem.ReceivedQuantity = int.Parse(_TextBoxReceivingQuantity.Text);
+            _POLineItem.ReceivedQuantity += int.Parse(_TextBoxReceivingQuantity.Text);
             _PurchaseOrder.ReceivedLineItems.AddRange(recevideLineItems);
             _PurchaseOrder.ReceivedTotal = _PurchaseOrder.PurchaseOrderLineItems.Sum(poli => poli.ReceivedQuantity * poli.Price);
             _POLineItem.EntityState = ObjectState.Modified;
@@ -263,11 +268,8 @@ namespace Inventory.PeopleViewer.Inventory
                 ddlPOType.ClearSelection();
                 ddlVendors.ClearSelection();
                 gridLineItems.Visible = false;
-                foreach (GridViewRow row in gridLineItems.Rows)
-                {
-                    FindPurchaseOrderLineItemsControls(row);
-                    ClearPurchaseOrderLineItemsControls();
-                }
+                GridViewReceivedItems.Visible = false;
+                ViewState[ViewStateKeys.PurchaseOrder] = null;
             }
             catch (Exception)
             {
@@ -319,6 +321,66 @@ namespace Inventory.PeopleViewer.Inventory
             _DropDownRacks = e.Row.FindControl("ddlRacks") as DropDownList;
             _DropDownShelves = e.Row.FindControl("ddlShelves") as DropDownList;
             _DropDownWarehouses = e.Row.FindControl("ddlWarehouses") as DropDownList;
+        }
+
+        protected void GridViewReceivedItems_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            try
+            {
+                SetGridViewReceivedItemsEditRowIndexToMinusOne();
+                BindReceivedItems();
+            }
+            catch (Exception Ex)
+            {
+                ucInformation.ShowErrorMessage();
+            }
+        }
+
+        void SetGridViewReceivedItemsEditRowIndexToMinusOne()
+        {
+            GridViewReceivedItems.EditIndex = -1;
+        }
+
+        protected void GridViewReceivedItems_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            try
+            {
+                GetPurchaseOrderFromViewState();
+                var receivedLineItemdID = int.Parse(e.Keys["ReceivedLineItemID"].ToString());
+                var purchaseOrderLineItemdID = int.Parse(e.Keys["PurchaseOrderLineItemID"].ToString());
+                _POLineItem = _PurchaseOrder.PurchaseOrderLineItems.Find(li => li.PurchaseOrderLineItemID == purchaseOrderLineItemdID);
+                _POLineItem.EntityState = ObjectState.Modified;
+                _POLineItem.ReceivedQuantity--;
+                //_PurchaseOrder.PurchaseOrderLineItems.Find(li => li.PurchaseOrderLineItemID == purchaseOrderLineItemdID).ReceivedQuantity--;
+                _ReceivedLineItem = _PurchaseOrder.ReceivedLineItems.Find(rli => rli.ReceivedLineItemID == receivedLineItemdID);
+                _ReceivedLineItem.IsActive = false;
+                _ReceivedLineItem.EntityState = ObjectState.Modified;
+                //_PurchaseOrder.ReceivedLineItems.Find(rli => rli.ReceivedLineItemID == receivedLineItemdID).EntityState = ObjectState.Modified;
+                PutPurchaseOrderBackToViewState();
+                BindReceivedItems();
+            }
+            catch (Exception)
+            {
+                ucInformation.ShowErrorMessage();
+            }
+
+
+        }
+
+        protected void GridViewReceivedItems_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridViewReceivedItems.EditIndex = e.NewEditIndex;
+            BindReceivedItems();
+        }
+
+        protected void GridViewReceivedItems_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+
+        }
+
+        protected void GridViewReceivedItems_DataBound(object sender, EventArgs e)
+        {
+
         }
     }
 }

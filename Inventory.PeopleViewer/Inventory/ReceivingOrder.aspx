@@ -144,8 +144,7 @@
                     </div>
                 </div>
             </div>
-            <hr />
-            <div class="form-horizontal">
+            <div class="form-horizontal" runat="server" visible="false" id="divReceivedItems">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <b>Received Items</b>
@@ -153,9 +152,9 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12 table-responsive">
-                                <asp:GridView Visible="false" DataKeyNames="PurchaseOrderLineItemID,PurchaseOrderID,ItemID" ID="GridViewReceivedItems" AutoGenerateColumns="false"
-                                    CssClass="table table-striped table-bordered table-hover"
-                                    runat="server">
+                                <asp:GridView Visible="false" DataKeyNames="PurchaseOrderLineItemID,PurchaseOrderID,ItemID,ReceivedLineItemID" ID="GridViewReceivedItems" AutoGenerateColumns="false"
+                                    CssClass="table table-striped table-bordered table-hover" OnRowCancelingEdit="GridViewReceivedItems_RowCancelingEdit" OnRowDeleting="GridViewReceivedItems_RowDeleting"
+                                    runat="server" OnRowEditing="GridViewReceivedItems_RowEditing" OnDataBound="GridViewReceivedItems_DataBound" OnRowUpdating="GridViewReceivedItems_RowUpdating">
                                     <Columns>
                                         <asp:TemplateField HeaderText="Item">
                                             <ItemTemplate>

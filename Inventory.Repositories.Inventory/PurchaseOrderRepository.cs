@@ -121,6 +121,11 @@ namespace Inventory.Repositories.Inventory
                                .Query()
                                .Where(li => li.IsActive == true)
                                .Load();
+                        context.Entry(purchaseOrder)
+                               .Collection(po => po.ReceivedLineItems)
+                               .Query()
+                               .Where(li => li.IsActive == true)
+                               .Load();
                     }
                     return purchaseOrder;
                 }
