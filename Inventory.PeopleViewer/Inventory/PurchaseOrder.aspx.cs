@@ -44,26 +44,41 @@ namespace Inventory.PeopleViewer.Inventory
 
         private void BindLineItems()
         {
-            GetLineItemsFromViewState();
-            if (_LineItems.Count == 0)
+            GetPurchaseOrderFromViewState();
+
+            if (!IsPostBack)
             {
-                _LineItems = new List<PurchaseOrderLineItemVM>
+                _PurchaseOrder = new PurchaseOrderVM();
+                _PurchaseOrder.PurchaseOrderLineItems = new List<PurchaseOrderLineItemVM>
                 {
                     new PurchaseOrderLineItemVM()
                 };
-                ViewState[ViewStateKeys.IsEmpty] = true;
+                AreLineItemsEmpty(true);
             }
-            else
-                ViewState[ViewStateKeys.IsEmpty] = false;
-
-            gridLineItems.DataSource = _LineItems.Where(li => li.IsActive == true).ToList();
+            gridLineItems.DataSource = _PurchaseOrder.PurchaseOrderLineItems.Where(li => li.EntityState != ObjectState.Deleted).ToList();
             gridLineItems.DataBind();
+
+            if (!IsPostBack || Convert.ToBoolean(ViewState[ViewStateKeys.IsEmpty]))
+            {
+                ClearPurchaseOrderLineItems();
+                PutPurchaseOrderBackToViewState();
+            }
         }
 
-        private void GetLineItemsFromViewState()
+        private void AreLineItemsEmpty(bool value)
         {
-            if (ViewState[ViewStateKeys.OrderLineItems] != null)
-                _LineItems = ViewState[ViewStateKeys.OrderLineItems] as List<PurchaseOrderLineItemVM>;
+            ViewState[ViewStateKeys.IsEmpty] = value;
+        }
+
+        private void ClearPurchaseOrderLineItems()
+        {
+            _PurchaseOrder.PurchaseOrderLineItems.Clear();
+        }
+
+        private void GetPurchaseOrderFromViewState()
+        {
+            if (ViewState[ViewStateKeys.PurchaseOrder] != null)
+                _PurchaseOrder = ViewState[ViewStateKeys.PurchaseOrder] as PurchaseOrderVM;
         }
 
         private void SetFooterData()
@@ -106,7 +121,7 @@ namespace Inventory.PeopleViewer.Inventory
             if (e.Row.RowType == DataControlRowType.Footer)
             {
                 if (!Convert.ToBoolean(ViewState[ViewStateKeys.IsEmpty]))
-                    e.Row.Cells[3].Text = string.Format("<b>{0:0.000}</b>", _LineItems.Where(li => li.IsActive == true).Sum(li => li.Total));
+                    e.Row.Cells[3].Text = string.Format("<b>{0:0.000}</b>", _PurchaseOrder.PurchaseOrderLineItems.Where(li => li.EntityState != ObjectState.Deleted).Sum(li => li.Total));
             }
         }
 
@@ -116,11 +131,13 @@ namespace Inventory.PeopleViewer.Inventory
             {
                 SetFooterData();
                 ValidateLineItem();
-                GetLineItemsFromViewState();
-                _LineItems.Add(CreateLineItem(_LineItems.Count + 1));
-                PutLineItemsBackToViewState();
+                GetPurchaseOrderFromViewState();
+                _PurchaseOrder.PurchaseOrderLineItems.Add(CreateLineItem(_PurchaseOrder.PurchaseOrderLineItems.Count + 1));
+                PutPurchaseOrderBackToViewState();
+                AreLineItemsEmpty(false);
                 BindLineItems();
                 SetHiddenFieldValuesToEmpty();
+
             }
             catch (ApplicationException Ae)
             {
@@ -138,9 +155,9 @@ namespace Inventory.PeopleViewer.Inventory
             hiddenFieldLineItemID.Value = string.Empty;
         }
 
-        private void PutLineItemsBackToViewState()
+        private void PutPurchaseOrderBackToViewState()
         {
-            ViewState[ViewStateKeys.OrderLineItems] = _LineItems;
+            ViewState[ViewStateKeys.PurchaseOrder] = _PurchaseOrder;
         }
 
         private PurchaseOrderLineItemVM CreateLineItem(int lineItemID)
@@ -219,7 +236,7 @@ namespace Inventory.PeopleViewer.Inventory
         {
             try
             {
-                GetLineItemsFromViewState();
+                GetPurchaseOrderFromViewState();
                 SetEditData(e);
                 ValidateLineItem();
                 int lineItemID = default(int);
@@ -227,30 +244,30 @@ namespace Inventory.PeopleViewer.Inventory
                 var lineItem = default(PurchaseOrderLineItemVM);
                 if (string.IsNullOrWhiteSpace(hiddenFieldPurchaseOrderID.Value))
                 {
-                    lineItemID = int.Parse(gridLineItems.DataKeys[e.RowIndex]["SrNo"].ToString());
-                    lineItem = _LineItems.Find(li => li.SrNo == lineItemID);
-                    lineItemIndex = _LineItems.FindIndex(li => li.SrNo == lineItemID);
+                    lineItemID = int.Parse(e.Keys["SrNo"].ToString());
+                    lineItem = _PurchaseOrder.PurchaseOrderLineItems.Find(li => li.SrNo == lineItemID);
+                    lineItemIndex = _PurchaseOrder.PurchaseOrderLineItems.FindIndex(li => li.SrNo == lineItemID);
                 }
                 else
                 {
                     if (int.Parse(hiddenFieldLineItemID.Value) > 0)
                     {
-                        lineItemID = int.Parse(gridLineItems.DataKeys[e.RowIndex]["PurchaseOrderLineItemID"].ToString());
-                        lineItem = _LineItems.Find(li => li.PurchaseOrderLineItemID == lineItemID);
-                        lineItemIndex = _LineItems.FindIndex(li => li.PurchaseOrderLineItemID == lineItemID);
+                        lineItemID = int.Parse(e.Keys["PurchaseOrderLineItemID"].ToString());
+                        lineItem = _PurchaseOrder.PurchaseOrderLineItems.Find(li => li.PurchaseOrderLineItemID == lineItemID);
+                        lineItemIndex = _PurchaseOrder.PurchaseOrderLineItems.FindIndex(li => li.PurchaseOrderLineItemID == lineItemID);
                     }
                     else
                     {
-                        lineItemID = int.Parse(gridLineItems.DataKeys[e.RowIndex]["SrNo"].ToString());
-                        lineItem = _LineItems.FirstOrDefault(li => li.SrNo == lineItemID);
-                        lineItemIndex = _LineItems.FindIndex(li => li.SrNo == lineItemID);
+                        lineItemID = int.Parse(e.Keys["SrNo"].ToString());
+                        lineItem = _PurchaseOrder.PurchaseOrderLineItems.FirstOrDefault(li => li.SrNo == lineItemID);
+                        lineItemIndex = _PurchaseOrder.PurchaseOrderLineItems.FindIndex(li => li.SrNo == lineItemID);
                     }
                 }
 
-                _LineItems.Remove(lineItem);
-                _LineItems.Insert(lineItemIndex, CreateLineItem(lineItemID));
+                _PurchaseOrder.PurchaseOrderLineItems.Remove(lineItem);
+                _PurchaseOrder.PurchaseOrderLineItems.Insert(lineItemIndex, CreateLineItem(lineItemID));
 
-                PutLineItemsBackToViewState();
+                PutPurchaseOrderBackToViewState();
                 SetGridRowIndexToMinusOne();
                 SetHiddenFieldValuesToEmpty();
                 BindLineItems();
@@ -276,32 +293,39 @@ namespace Inventory.PeopleViewer.Inventory
         {
             try
             {
-                GetLineItemsFromViewState();
+                GetPurchaseOrderFromViewState();
                 int lineItemID = default(int);
                 var lineItem = default(PurchaseOrderLineItemVM);
                 if (string.IsNullOrWhiteSpace(hiddenFieldPurchaseOrderID.Value))
                 {
                     lineItemID = int.Parse(gridLineItems.DataKeys[e.RowIndex]["SrNo"].ToString());
-                    lineItem = _LineItems.FirstOrDefault(li => li.SrNo == lineItemID);
-                    _LineItems.Remove(lineItem);
+                    lineItem = _PurchaseOrder.PurchaseOrderLineItems.FirstOrDefault(li => li.SrNo == lineItemID);
+                    _PurchaseOrder.PurchaseOrderLineItems.Remove(lineItem);
                 }
                 else
                 {
-                    lineItemID = int.Parse(gridLineItems.DataKeys[e.RowIndex]["PurchaseOrderLineItemID"].ToString());
+                    lineItemID = int.Parse(e.Keys["PurchaseOrderLineItemID"].ToString());
                     if (lineItemID > 0)
                     {
-                        _LineItems.Find(li => li.PurchaseOrderLineItemID == lineItemID).IsActive = false;
-                        _LineItems.Find(li => li.PurchaseOrderLineItemID == lineItemID).EntityState = ObjectState.Modified;
-
+                        _PurchaseOrder.PurchaseOrderLineItems.Find(li => li.PurchaseOrderLineItemID == lineItemID).EntityState = ObjectState.Deleted;
+                        if (_PurchaseOrder.ReceivedLineItems.Any(rli => rli.PurchaseOrderLineItemID == lineItemID))
+                        {
+                            _PurchaseOrder.ReceivedLineItems.Where(rli => rli.PurchaseOrderLineItemID == lineItemID).ToList().ForEach(rli => rli.EntityState = ObjectState.Deleted);
+                        }
                     }
                     else
                     {
-                        lineItemID = int.Parse(gridLineItems.DataKeys[e.RowIndex]["SrNo"].ToString());
-                        lineItem = _LineItems.FirstOrDefault(li => li.SrNo == lineItemID);
-                        _LineItems.Remove(lineItem);
+                        lineItemID = int.Parse(e.Keys["SrNo"].ToString());
+                        lineItem = _PurchaseOrder.PurchaseOrderLineItems.FirstOrDefault(li => li.SrNo == lineItemID);
+                        _PurchaseOrder.PurchaseOrderLineItems.Remove(lineItem);
                     }
                 }
-                PutLineItemsBackToViewState();
+                if (_PurchaseOrder.PurchaseOrderLineItems.Count == 0)
+                {
+                    AreLineItemsEmpty(true);
+                    _PurchaseOrder.PurchaseOrderLineItems.Add(new PurchaseOrderLineItemVM());
+                }
+                PutPurchaseOrderBackToViewState();
                 SetGridRowIndexToMinusOne();
                 BindLineItems();
             }
@@ -332,9 +356,9 @@ namespace Inventory.PeopleViewer.Inventory
                 }
                 else
                 {
-                    GetLineItemsFromViewState();
+                    GetPurchaseOrderFromViewState();
                     ValidatePurchaseOrder();
-                    _PurchaseOrder = CreatePurchaseOrder();
+                    CreatePurchaseOrder();
                     if (string.IsNullOrWhiteSpace(hiddenFieldPurchaseOrderID.Value))
                     {
                         _purchaseOrderRepository.CreatePurchaseOrder(_PurchaseOrder);
@@ -363,20 +387,19 @@ namespace Inventory.PeopleViewer.Inventory
 
         }
 
-        private PurchaseOrderVM CreatePurchaseOrder()
+        private void CreatePurchaseOrder()
         {
-            return new PurchaseOrderVM()
+            if (_PurchaseOrder != null && _PurchaseOrder.PurchaseOrderLineItems.Count > 0)
             {
-                PurchaseOrderID = int.Parse(hiddenFieldPurchaseOrderID.Value == string.Empty ? "0" : hiddenFieldPurchaseOrderID.Value),
-                POTypeValue = int.Parse(ddlPOType.SelectedItem.Value),
-                VendorID = int.Parse(ddlVendors.SelectedItem.Value),
-                PoOrContractNumber = txtPoOrContractNumber.Text,
-                POTypeText = ddlPOType.SelectedItem.Text,
-                GrandTotal = _LineItems.Where(li => li.IsActive == true).Sum(li => li.Total),
-                PurchaseOrderLineItems = _LineItems,
-                EntityState = hiddenFieldPurchaseOrderID.Value == string.Empty ? ObjectState.Added : ObjectState.Modified,
-                POCreatedDate = Convert.ToDateTime(txtPoCreatedDate.Text)
-            };
+                _PurchaseOrder.PurchaseOrderID = int.Parse(hiddenFieldPurchaseOrderID.Value == string.Empty ? "0" : hiddenFieldPurchaseOrderID.Value);
+                _PurchaseOrder.POTypeValue = int.Parse(ddlPOType.SelectedItem.Value);
+                _PurchaseOrder.VendorID = int.Parse(ddlVendors.SelectedItem.Value);
+                _PurchaseOrder.PoOrContractNumber = txtPoOrContractNumber.Text;
+                _PurchaseOrder.POTypeText = ddlPOType.SelectedItem.Text;
+                _PurchaseOrder.GrandTotal = _PurchaseOrder.PurchaseOrderLineItems.Where(li => li.EntityState != ObjectState.Deleted).Sum(li => li.Total);
+                _PurchaseOrder.EntityState = hiddenFieldPurchaseOrderID.Value == string.Empty ? ObjectState.Added : ObjectState.Modified;
+                _PurchaseOrder.POCreatedDate = Convert.ToDateTime(txtPoCreatedDate.Text);
+            }
         }
 
         protected void linkButtonReset_Click(object sender, EventArgs e)
@@ -387,7 +410,8 @@ namespace Inventory.PeopleViewer.Inventory
 
         private void ClearFormData()
         {
-            ViewState[ViewStateKeys.OrderLineItems] = null;
+            ViewState[ViewStateKeys.PurchaseOrder] = null;
+            ViewState[ViewStateKeys.IsEmpty] = true;
             ddlPOType.SelectedIndex = 0;
             ddlVendors.SelectedIndex = 0;
             txtPoOrContractNumber.Text = string.Empty;
@@ -397,7 +421,6 @@ namespace Inventory.PeopleViewer.Inventory
             txtPoCreatedDate.Text = string.Empty;
             SetFooterData();
             ClearFooterData();
-            _LineItems.Clear();
         }
 
         private void ClearFooterData()
@@ -417,16 +440,16 @@ namespace Inventory.PeopleViewer.Inventory
                 if (string.IsNullOrWhiteSpace(txtPoOrContractNumber.Text.Trim()))
                     throw new ApplicationException("The po or contract no is required.");
 
-                _PurchaseOrder = _purchaseOrderRepository.FindPurchaseOrderByPoOrContractNumber(txtPoOrContractNumber.Text.Trim());
+                _PurchaseOrder = _purchaseOrderRepository.FindPurchaseOrderIncludeReceivedItemsByPoOrContractNumber(txtPoOrContractNumber.Text.Trim());
                 if (_PurchaseOrder != null)
                 {
                     hiddenFieldPurchaseOrderID.Value = _PurchaseOrder.PurchaseOrderID.ToString();
                     ddlVendors.SelectedValue = _PurchaseOrder.VendorID.ToString();
                     ddlPOType.SelectedValue = _PurchaseOrder.POTypeValue.ToString();
                     txtPoCreatedDate.Text = _PurchaseOrder.POCreatedDate.ToString("yyyy-MM-dd");
-                    _LineItems.Clear();
-                    _LineItems = _PurchaseOrder.PurchaseOrderLineItems;
-                    PutLineItemsBackToViewState();
+                    if (_PurchaseOrder.PurchaseOrderLineItems.Count > 0)
+                        AreLineItemsEmpty(false);
+                    PutPurchaseOrderBackToViewState();
                     BindLineItems();
                 }
                 else

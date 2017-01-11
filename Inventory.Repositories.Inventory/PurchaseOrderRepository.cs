@@ -48,6 +48,7 @@ namespace Inventory.Repositories.Inventory
                             context.Entry(item).State = StateResolver.Resolve(item.EntityState);
                         foreach (var item in purchaseOrder.ReceivedLineItems)
                             context.Entry(item).State = StateResolver.Resolve(item.EntityState);
+                        context.SaveChanges();
                         context.Entry(purchaseOrder).State = StateResolver.Resolve(purchaseOrder.EntityState);
                         context.SaveChanges();
                         scope.Complete();
