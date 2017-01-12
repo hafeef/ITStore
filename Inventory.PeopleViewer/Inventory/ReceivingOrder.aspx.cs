@@ -10,6 +10,8 @@ using System.Web.UI.WebControls;
 using Inventory.ViewModels.Inventory;
 using Core.Common.BaseTypes;
 using Core.Common.Enums;
+using System.Globalization;
+using System.Threading;
 
 namespace Inventory.PeopleViewer.Inventory
 {
@@ -153,7 +155,7 @@ namespace Inventory.PeopleViewer.Inventory
         private void BindReceivedItems()
         {
             GetPurchaseOrderFromViewState();
-            GridViewReceivedItems.DataSource = _PurchaseOrder.ReceivedLineItems.Where(rli => rli.IsActive == true);
+            GridViewReceivedItems.DataSource = _PurchaseOrder.ReceivedLineItems.Where(rli => rli.EntityState != ObjectState.Deleted);
             GridViewReceivedItems.DataBind();
         }
 
@@ -235,7 +237,6 @@ namespace Inventory.PeopleViewer.Inventory
                 IsValidGridRow = true;
                 IsEmptyGridRow = false;
             }
-
             else
                 IsValidGridRow = false;
 
@@ -269,6 +270,7 @@ namespace Inventory.PeopleViewer.Inventory
                 ddlVendors.ClearSelection();
                 gridLineItems.Visible = false;
                 GridViewReceivedItems.Visible = false;
+                divReceivedItems.Visible = false;
                 ViewState[ViewStateKeys.PurchaseOrder] = null;
             }
             catch (Exception)
@@ -351,11 +353,7 @@ namespace Inventory.PeopleViewer.Inventory
                 _POLineItem = _PurchaseOrder.PurchaseOrderLineItems.Find(li => li.PurchaseOrderLineItemID == purchaseOrderLineItemdID);
                 _POLineItem.EntityState = ObjectState.Modified;
                 _POLineItem.ReceivedQuantity--;
-                //_PurchaseOrder.PurchaseOrderLineItems.Find(li => li.PurchaseOrderLineItemID == purchaseOrderLineItemdID).ReceivedQuantity--;
-                _ReceivedLineItem = _PurchaseOrder.ReceivedLineItems.Find(rli => rli.ReceivedLineItemID == receivedLineItemdID);
-                _ReceivedLineItem.IsActive = false;
-                _ReceivedLineItem.EntityState = ObjectState.Modified;
-                //_PurchaseOrder.ReceivedLineItems.Find(rli => rli.ReceivedLineItemID == receivedLineItemdID).EntityState = ObjectState.Modified;
+                _PurchaseOrder.ReceivedLineItems.Find(rli => rli.ReceivedLineItemID == receivedLineItemdID).EntityState = ObjectState.Deleted;
                 PutPurchaseOrderBackToViewState();
                 BindReceivedItems();
             }
@@ -363,8 +361,6 @@ namespace Inventory.PeopleViewer.Inventory
             {
                 ucInformation.ShowErrorMessage();
             }
-
-
         }
 
         protected void GridViewReceivedItems_RowEditing(object sender, GridViewEditEventArgs e)
@@ -375,12 +371,71 @@ namespace Inventory.PeopleViewer.Inventory
 
         protected void GridViewReceivedItems_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-
+            try
+            {
+                var receivedLineItem = int.Parse(e.Keys["ReceivedLineItemID"].ToString());
+                GetPurchaseOrderFromViewState();
+                _ReceivedLineItem = _PurchaseOrder.ReceivedLineItems.Find(rli => rli.ReceivedLineItemID == receivedLineItem);
+                FindReceivedLineItemControls(e);
+            }
+            catch (Exception)
+            {
+                ucInformation.ShowErrorMessage();
+            }
         }
 
-        protected void GridViewReceivedItems_DataBound(object sender, EventArgs e)
+        private void FindReceivedLineItemControls(GridViewUpdateEventArgs e)
         {
+            var row = GridViewReceivedItems.Rows[e.RowIndex];
+            _TextBoxSerialNo = row.FindControl("txtSerialNos") as TextBox;
+            _TextBoxReceivedDate = row.FindControl("txtReceivedDate") as TextBox;
+            _TextBoxWarrantyDate = row.FindControl("txtWarrantyYear") as TextBox;
+            _TextBoxExpiryDate = row.FindControl("txtExpiry") as TextBox;
+            _DropDownRacks = row.FindControl("ddlRacks") as DropDownList;
+            _DropDownShelves = row.FindControl("ddlShelves") as DropDownList;
+            _DropDownWarehouses = row.FindControl("ddlWarehouses") as DropDownList;
+        }
 
+        protected void GridViewReceivedItems_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            try
+            {
+                if (e.Row.RowType == DataControlRowType.DataRow && GridViewReceivedItems.EditIndex == e.Row.RowIndex)
+                {
+                    GetRacks();
+                    GetWarehouses();
+                    GetShelves();
+
+                    var rackID = GridViewReceivedItems.DataKeys[e.Row.RowIndex].Values["RackID"].ToString();
+                    var warehouseID = GridViewReceivedItems.DataKeys[e.Row.RowIndex].Values["WarehouseID"].ToString();
+                    var shelfID = GridViewReceivedItems.DataKeys[e.Row.RowIndex].Values["ShelfID"].ToString();
+
+                    BindDropDownLists(e, "ddlRacks", rackID, _Racks);
+                    BindDropDownLists(e, "ddlWarehouses", warehouseID, _Warehouses);
+                    BindDropDownLists(e, "ddlShelves", shelfID, _Shelves);
+                }
+            }
+            catch (Exception)
+            {
+                ucInformation.ShowErrorMessage();
+            }
+        }
+
+        private void BindDropDownLists(GridViewRowEventArgs e, string dropDownID, string selectedValue, IEnumerable<EntityBaseVM> dropDownSource)
+        {
+            try
+            {
+                var dropDownList = e.Row.FindControl(dropDownID) as DropDownList;
+                dropDownList.DataSource = dropDownSource;
+                dropDownList.DataBind();
+                dropDownList.Items.Insert(0, new ListItem("-- Select --", "0"));
+                if (!string.IsNullOrWhiteSpace(selectedValue))
+                    dropDownList.SelectedValue = selectedValue;
+            }
+            catch (Exception)
+            {
+                ucInformation.ShowErrorMessage();
+            }
         }
     }
 }

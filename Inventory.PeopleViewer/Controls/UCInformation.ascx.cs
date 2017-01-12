@@ -35,7 +35,7 @@ namespace Inventory.PeopleViewer.Controls
         private void ShowInformationMessage(string message)
         {
             lblInformation.Text = $"<strong>{Page.Title}{message}</strong>";
-            lblInformation.CssClass = "text-info col-md-offset-1";
+            lblInformation.CssClass = "text-success col-md-offset-1";
             RegisterClientScript();
         }
 

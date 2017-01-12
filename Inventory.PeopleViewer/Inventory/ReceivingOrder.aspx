@@ -152,9 +152,11 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12 table-responsive">
-                                <asp:GridView Visible="false" DataKeyNames="PurchaseOrderLineItemID,PurchaseOrderID,ItemID,ReceivedLineItemID" ID="GridViewReceivedItems" AutoGenerateColumns="false"
-                                    CssClass="table table-striped table-bordered table-hover" OnRowCancelingEdit="GridViewReceivedItems_RowCancelingEdit" OnRowDeleting="GridViewReceivedItems_RowDeleting"
-                                    runat="server" OnRowEditing="GridViewReceivedItems_RowEditing" OnDataBound="GridViewReceivedItems_DataBound" OnRowUpdating="GridViewReceivedItems_RowUpdating">
+                                <asp:GridView Visible="false" DataKeyNames="PurchaseOrderLineItemID,PurchaseOrderID,ItemID,ReceivedLineItemID,WarehouseID,RackID,ShelfID"
+                                    ID="GridViewReceivedItems" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover"
+                                    OnRowCancelingEdit="GridViewReceivedItems_RowCancelingEdit" OnRowDeleting="GridViewReceivedItems_RowDeleting"
+                                    runat="server" OnRowEditing="GridViewReceivedItems_RowEditing" OnRowDataBound="GridViewReceivedItems_RowDataBound"
+                                    OnRowUpdating="GridViewReceivedItems_RowUpdating">
                                     <Columns>
                                         <asp:TemplateField HeaderText="Item">
                                             <ItemTemplate>
@@ -166,37 +168,37 @@
                                                 <%# Eval("PartNumber") %>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Serial No">
+                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Serial No">
                                             <EditItemTemplate>
-                                                <asp:TextBox runat="server" ID="txtSerialNos" placeholder="Serial Numbers" ValidationGroup="Create" Columns="30"
+                                                <asp:TextBox runat="server" ID="txtSerialNos" Text='<%# Eval("SerialNo") %>' placeholder="Serial Numbers" ValidationGroup="Edit"
                                                     CssClass="form-control"></asp:TextBox>
                                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="txtSerialNos"
-                                                    CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The serial no is required." />
+                                                    CssClass="text-danger"  ValidationGroup="Edit" ErrorMessage="Serial no is required." />
                                             </EditItemTemplate>
                                             <ItemTemplate>
                                                 <%# Eval("SerialNo") %>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Rack">
+                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Rack">
                                             <ItemTemplate>
                                                 <%# Eval("RackName") %>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:DropDownList runat="server" ID="ddlRacks" ValidationGroup="Create" DataValueField="RackID" DataTextField="Name" CssClass="form-control">
+                                                <asp:DropDownList runat="server" ID="ddlRacks" ValidationGroup="Edit" DataValueField="RackID" DataTextField="Name" CssClass="form-control">
                                                 </asp:DropDownList>
                                                 <asp:RequiredFieldValidator InitialValue="0" runat="server" ControlToValidate="ddlRacks"
-                                                    CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The rack is required." />
+                                                    CssClass="text-danger"  ValidationGroup="Edit" ErrorMessage="Rack is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Shelf">
+                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Shelf">
                                             <ItemTemplate>
                                                 <%# Eval("ShelfName") %>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:DropDownList runat="server" ID="ddlShelves" ValidationGroup="Create" DataValueField="ShelfID" DataTextField="Name" CssClass="form-control">
+                                                <asp:DropDownList runat="server" ID="ddlShelves" ValidationGroup="Edit" DataValueField="ShelfID" DataTextField="Name" CssClass="form-control">
                                                 </asp:DropDownList>
                                                 <asp:RequiredFieldValidator InitialValue="0" runat="server" ControlToValidate="ddlShelves"
-                                                    CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The shelf is required." />
+                                                    CssClass="text-danger"  ValidationGroup="Edit" ErrorMessage="Shelf is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Warehouse">
@@ -204,58 +206,58 @@
                                                 <%# Eval("WarehouseName") %>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:DropDownList runat="server" ID="ddlWarehouses" ValidationGroup="Create" DataValueField="WarehouseID" DataTextField="Name" CssClass="form-control">
+                                                <asp:DropDownList runat="server" ID="ddlWarehouses" ValidationGroup="Edit" DataValueField="WarehouseID" DataTextField="Name" CssClass="form-control">
                                                 </asp:DropDownList>
                                                 <asp:RequiredFieldValidator InitialValue="0" runat="server" ControlToValidate="ddlWarehouses"
-                                                    CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The warehouse is required." />
+                                                    CssClass="text-danger"  ValidationGroup="Edit" ErrorMessage="Warehouse is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Received Date">
+                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Received Date">
                                             <ItemTemplate>
                                                 <%# Eval("ReceivedDate", "{0:dd-MMM-yyyy}") %>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox runat="server" ID="txtReceivedDate" ValidationGroup="Create" CssClass="form-control" TextMode="Date"></asp:TextBox>
+                                                <asp:TextBox runat="server" ID="txtReceivedDate" ValidationGroup="Edit" Text='<%# Eval("ReceivedDate", "{0:yyyy-MM-dd}") %>' CssClass="form-control" TextMode="Date"></asp:TextBox>
                                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="txtReceivedDate"
-                                                    CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The received date is required." />
+                                                    CssClass="text-danger"  ValidationGroup="Edit" ErrorMessage="Received date is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Warranty Date">
+                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Warranty Date">
                                             <ItemTemplate>
                                                 <%# Eval("WarrantyDate", "{0:dd-MMM-yyyy}") %>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox runat="server" ID="txtWarrantyYear" ValidationGroup="Create" CssClass="form-control" TextMode="Date"></asp:TextBox>
+                                                <asp:TextBox runat="server" ID="txtWarrantyYear" ValidationGroup="Edit" Text='<%# Eval("WarrantyDate", "{0:yyyy-MM-dd}") %>' CssClass="form-control" TextMode="Date"></asp:TextBox>
                                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="txtWarrantyYear"
-                                                    CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The warranty date is required." />
+                                                    CssClass="text-danger"  ValidationGroup="Edit" ErrorMessage="Warranty date is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Expiry Date">
+                                        <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Expiry Date">
                                             <ItemTemplate>
                                                 <%# Eval("ExpiryDate", "{0:dd-MMM-yyyy}") %>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox runat="server" ID="txtExpiry" ValidationGroup="Create" CssClass="form-control" TextMode="Date"></asp:TextBox>
+                                                <asp:TextBox runat="server" ID="txtExpiry" ValidationGroup="Edit" Text='<%# Eval("ExpiryDate", "{0:yyyy-MM-dd}") %>' CssClass="form-control" TextMode="Date"></asp:TextBox>
                                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="txtExpiry"
-                                                    CssClass="text-danger" ValidationGroup="Create" ErrorMessage="The expiry date is required." />
+                                                    CssClass="text-danger"  ValidationGroup="Edit" ErrorMessage="Expiry date is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Action Links">
+                                        <asp:TemplateField  HeaderText="Action Links">
                                             <ItemTemplate>
-                                                <asp:LinkButton CommandName="Delete" CssClass="btn btn-primary" CausesValidation="false" ID="linkButtonDelete" runat="server">
+                                                <asp:LinkButton CommandName="Delete" CssClass="btn btn-primary btn-sm" CausesValidation="false" ID="linkButtonDelete" runat="server">
                                         <span class="glyphicon glyphicon-trash"></span> Delete
                                                 </asp:LinkButton>
                                                 &nbsp;&nbsp;
-                                    <asp:LinkButton CommandName="Edit" CssClass="btn btn-primary" CausesValidation="false" ID="linkButtonEdit" runat="server">
+                                    <asp:LinkButton CommandName="Edit" CssClass="btn btn-primary btn-sm" CausesValidation="false" ID="linkButtonEdit" runat="server">
                                         <span class="glyphicon glyphicon-edit"></span> Edit
                                     </asp:LinkButton>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:LinkButton CommandName="Update" CssClass="btn btn-primary" ValidationGroup="Update" ID="linkButtonSave" runat="server">
+                                                <asp:LinkButton CommandName="Update" CssClass="btn btn-primary btn-sm" ValidationGroup="Edit" ID="linkButtonSave" runat="server">
                                         <span class="glyphicon glyphicon-floppy-save"></span> Update
                                                 </asp:LinkButton>
                                                 &nbsp;&nbsp;
-                                    <asp:LinkButton CommandName="Cancel" CssClass="btn btn-primary" CausesValidation="false" ID="linkButtonCancel" runat="server">
+                                    <asp:LinkButton CommandName="Cancel" CssClass="btn btn-primary btn-sm" CausesValidation="false" ID="linkButtonCancel" runat="server">
                                         <span class="glyphicon glyphicon-floppy-remove"></span> Cancel
                                     </asp:LinkButton>
                                             </EditItemTemplate>

@@ -20,9 +20,8 @@ namespace Inventory.PeopleViewer.Inventory
         TextBox txtItemDescription = null;
         TextBox txtQuantity = null;
         TextBox txtPrice = null;
-
+        private int ReceivedQuantity { get; set; }
         List<VendorVM> _vendors = null;
-        List<PurchaseOrderLineItemVM> _LineItems = new List<PurchaseOrderLineItemVM>();
         PurchaseOrderVM _PurchaseOrder = null;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -175,6 +174,7 @@ namespace Inventory.PeopleViewer.Inventory
             lineItem.Total = int.Parse(txtQuantity.Text.Trim()) * Convert.ToDouble(txtPrice.Text.Trim());
             lineItem.ItemDescription = txtItemDescription.Text.Trim();
             lineItem.EntityState = hiddenFieldLineItemID.Value == string.Empty ? ObjectState.Added : ObjectState.Modified;
+            lineItem.ReceivedQuantity = ReceivedQuantity;
             return lineItem;
         }
 
@@ -255,6 +255,7 @@ namespace Inventory.PeopleViewer.Inventory
                         lineItemID = int.Parse(e.Keys["PurchaseOrderLineItemID"].ToString());
                         lineItem = _PurchaseOrder.PurchaseOrderLineItems.Find(li => li.PurchaseOrderLineItemID == lineItemID);
                         lineItemIndex = _PurchaseOrder.PurchaseOrderLineItems.FindIndex(li => li.PurchaseOrderLineItemID == lineItemID);
+                        ReceivedQuantity = lineItem.ReceivedQuantity;
                     }
                     else
                     {

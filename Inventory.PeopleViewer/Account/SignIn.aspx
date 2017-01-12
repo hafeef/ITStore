@@ -11,7 +11,7 @@
 </head>
 <body style="background-image: url('../Images/bg.png');">
     <div class="container">
-        <form id="form1" class="form-signin" runat="server">
+        <form id="form1" runat="server">
             <div class="row">
                 <div class="col-md-offset-4 col-md-4" style="margin-top: 100px;">
                     <div class="panel panel-primary">
@@ -22,7 +22,7 @@
                         </div>
                         <div class="panel-body">
                             <section id="loginForm">
-                                <div class="col-md-offset-1 form-group">
+                                <div class="col-md-offset-1 form-group input-group">
                                     <asp:Label runat="server" AssociatedControlID="Email" CssClass="control-label">Email</asp:Label>
                                     <asp:TextBox runat="server" ID="Email" placeholder="Email address" CssClass="form-control input-lg" TextMode="Email" />
                                     <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
