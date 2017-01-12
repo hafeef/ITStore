@@ -64,6 +64,7 @@
                                 <li><a runat="server" href="~/Administration/Vendors.aspx">Vendors</a></li>
                                 <li><a runat="server" href="~/Administration/Racks.aspx">Racks</a></li>
                                 <li><a runat="server" href="~/Administration/Shelves.aspx">Shelves</a></li>
+                                <li><a runat="server" href="~/Administration/Employees.aspx">Employees</a></li>
                                 <%-- <li class="dropdown dropdown-submenu">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown2 Link 4</a>
                                     <ul class="dropdown-menu">

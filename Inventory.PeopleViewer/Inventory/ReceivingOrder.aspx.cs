@@ -377,11 +377,56 @@ namespace Inventory.PeopleViewer.Inventory
                 GetPurchaseOrderFromViewState();
                 _ReceivedLineItem = _PurchaseOrder.ReceivedLineItems.Find(rli => rli.ReceivedLineItemID == receivedLineItem);
                 FindReceivedLineItemControls(e);
+                ValidateReceivedLineItemControls();
+                UpdateReceivedLineItem();
+                PutPurchaseOrderBackToViewState();
+                SetGridViewReceivedItemsEditRowIndexToMinusOne();
+                BindReceivedItems();
+            }
+            catch (ApplicationException Ae)
+            {
+                ucInformation.ShowErrorMessage(Ae.Message);
             }
             catch (Exception)
             {
                 ucInformation.ShowErrorMessage();
             }
+        }
+
+
+
+        private void UpdateReceivedLineItem()
+        {
+            _ReceivedLineItem.EntityState = ObjectState.Modified;
+            _ReceivedLineItem.SerialNo = _TextBoxSerialNo.Text.Trim();
+            _ReceivedLineItem.ExpiryDate = Convert.ToDateTime(_TextBoxExpiryDate.Text);
+            _ReceivedLineItem.WarehouseID = int.Parse(_DropDownWarehouses.SelectedValue);
+            _ReceivedLineItem.WarehouseName = _DropDownWarehouses.SelectedItem.Text;
+            _ReceivedLineItem.WarrantyDate = Convert.ToDateTime(_TextBoxWarrantyDate.Text);
+            _ReceivedLineItem.ReceivedDate = Convert.ToDateTime(_TextBoxReceivedDate.Text);
+            _ReceivedLineItem.RackID = int.Parse(_DropDownRacks.SelectedValue);
+            _ReceivedLineItem.RackName = _DropDownRacks.SelectedItem.Text;
+            _ReceivedLineItem.ShelfID = int.Parse(_DropDownShelves.SelectedValue);
+            _ReceivedLineItem.ShelfName = _DropDownShelves.SelectedItem.Text;
+        }
+
+        private void ValidateReceivedLineItemControls()
+        {
+            if (_TextBoxExpiryDate == null && string.IsNullOrWhiteSpace(_TextBoxExpiryDate.Text))
+                throw new ApplicationException("The expiry date field is required.");
+            if (_TextBoxReceivedDate == null && string.IsNullOrWhiteSpace(_TextBoxReceivedDate.Text))
+                throw new ApplicationException("The received date field is required.");
+            if (_TextBoxWarrantyDate == null && string.IsNullOrWhiteSpace(_TextBoxWarrantyDate.Text))
+                throw new ApplicationException("The warranty date field is required.");
+            if (_TextBoxSerialNo == null && string.IsNullOrWhiteSpace(_TextBoxSerialNo.Text))
+                throw new ApplicationException("The serial no field is required.");
+            if (_DropDownRacks == null && _DropDownRacks.SelectedIndex == 0)
+                throw new ApplicationException("The rack field is required.");
+            if (_DropDownShelves == null && _DropDownShelves.SelectedIndex == 0)
+                throw new ApplicationException("The shelf field is required.");
+            if (_DropDownWarehouses == null && _DropDownWarehouses.SelectedIndex == 0)
+                throw new ApplicationException("The warehouse field is required.");
+
         }
 
         private void FindReceivedLineItemControls(GridViewUpdateEventArgs e)
