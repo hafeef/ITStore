@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="UCInformation.ascx.cs" Inherits="Inventory.PeopleViewer.Controls.UCInformation" %>
-<div class="col-md-5">
+<div class="col-md-10">
     <asp:Label ID="lblInformation" runat="server" />
 </div>
 <script type="text/javascript">

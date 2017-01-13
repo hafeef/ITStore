@@ -15,5 +15,6 @@ namespace Inventory.Contracts.Inventory
         List<WareHouseVM> GetAllWarehouses();
         List<RackVM> GetAllRacks();
         List<ShelfVM> GetAllShelves();
+        bool IsPurchaseOrderExists(string poOrContractNumber);
     }
 }

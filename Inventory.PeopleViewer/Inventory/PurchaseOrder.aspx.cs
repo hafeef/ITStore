@@ -47,12 +47,7 @@ namespace Inventory.PeopleViewer.Inventory
 
             if (!IsPostBack)
             {
-                _PurchaseOrder = new PurchaseOrderVM();
-                _PurchaseOrder.PurchaseOrderLineItems = new List<PurchaseOrderLineItemVM>
-                {
-                    new PurchaseOrderLineItemVM()
-                };
-                AreLineItemsEmpty(true);
+                InitializePurchaseOrder();
             }
             gridLineItems.DataSource = _PurchaseOrder.PurchaseOrderLineItems.Where(li => li.EntityState != ObjectState.Deleted).ToList();
             gridLineItems.DataBind();
@@ -62,6 +57,16 @@ namespace Inventory.PeopleViewer.Inventory
                 ClearPurchaseOrderLineItems();
                 PutPurchaseOrderBackToViewState();
             }
+        }
+
+        private void InitializePurchaseOrder()
+        {
+            _PurchaseOrder = new PurchaseOrderVM();
+            _PurchaseOrder.PurchaseOrderLineItems = new List<PurchaseOrderLineItemVM>
+                {
+                    new PurchaseOrderLineItemVM()
+                };
+            AreLineItemsEmpty(true);
         }
 
         private void AreLineItemsEmpty(bool value)
@@ -357,6 +362,8 @@ namespace Inventory.PeopleViewer.Inventory
                 }
                 else
                 {
+                    if (_purchaseOrderRepository.IsPurchaseOrderExists(txtPoOrContractNumber.Text.Trim()))
+                        throw new ApplicationException("The purchase order already exists in database with this PO/Contract number.");
                     GetPurchaseOrderFromViewState();
                     ValidatePurchaseOrder();
                     CreatePurchaseOrder();
@@ -411,8 +418,8 @@ namespace Inventory.PeopleViewer.Inventory
 
         private void ClearFormData()
         {
-            ViewState[ViewStateKeys.PurchaseOrder] = null;
-            ViewState[ViewStateKeys.IsEmpty] = true;
+            InitializePurchaseOrder();
+            PutPurchaseOrderBackToViewState();
             ddlPOType.SelectedIndex = 0;
             ddlVendors.SelectedIndex = 0;
             txtPoOrContractNumber.Text = string.Empty;
@@ -448,6 +455,7 @@ namespace Inventory.PeopleViewer.Inventory
                     ddlVendors.SelectedValue = _PurchaseOrder.VendorID.ToString();
                     ddlPOType.SelectedValue = _PurchaseOrder.POTypeValue.ToString();
                     txtPoCreatedDate.Text = _PurchaseOrder.POCreatedDate.ToString("yyyy-MM-dd");
+                    txtPoOrContractNumber.Text = _PurchaseOrder.PoOrContractNumber;
                     if (_PurchaseOrder.PurchaseOrderLineItems.Count > 0)
                         AreLineItemsEmpty(false);
                     PutPurchaseOrderBackToViewState();
@@ -456,6 +464,7 @@ namespace Inventory.PeopleViewer.Inventory
                 else
                 {
                     ucInformation.ShowErrorMessage("There is no purchase ordere in the database with this PO/Contract number.");
+                    linkButtonReset_Click(sender, e);
                 }
             }
             catch (ApplicationException Ae)

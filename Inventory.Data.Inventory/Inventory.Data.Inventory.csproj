@@ -77,6 +77,10 @@
     <Compile Include="Migrations\201701081459128_RemovedRelationshipsBetweenPOLineItemsAndReceivedItems.Designer.cs">
       <DependentUpon>201701081459128_RemovedRelationshipsBetweenPOLineItemsAndReceivedItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701130656062_AddedUniqueKeyReferenceToPoOrContractNo.cs" />
+    <Compile Include="Migrations\201701130656062_AddedUniqueKeyReferenceToPoOrContractNo.Designer.cs">
+      <DependentUpon>201701130656062_AddedUniqueKeyReferenceToPoOrContractNo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -119,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701081459128_RemovedRelationshipsBetweenPOLineItemsAndReceivedItems.resx">
       <DependentUpon>201701081459128_RemovedRelationshipsBetweenPOLineItemsAndReceivedItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701130656062_AddedUniqueKeyReferenceToPoOrContractNo.resx">
+      <DependentUpon>201701130656062_AddedUniqueKeyReferenceToPoOrContractNo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

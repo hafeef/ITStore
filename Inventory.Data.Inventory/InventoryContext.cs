@@ -47,6 +47,8 @@ namespace Inventory.Data.Inventory
             modelBuilder.Entity<ReceivedLineItem>().Ignore(rli => rli.PartNumber);
             modelBuilder.Entity<ReceivedLineItem>().Property(rli => rli.SerialNo).HasMaxLength(100);
             modelBuilder.Entity<ReceivedLineItem>().Property(rli => rli.SerialNo).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
+            modelBuilder.Entity<PurchaseOrder>().Property(li => li.PoOrContractNumber).HasMaxLength(100);
+            modelBuilder.Entity<PurchaseOrder>().Property(li => li.PoOrContractNumber).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
             modelBuilder.HasDefaultSchema("Inventory");
         }
     }

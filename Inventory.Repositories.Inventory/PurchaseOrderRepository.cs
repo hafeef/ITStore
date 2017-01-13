@@ -72,7 +72,7 @@ namespace Inventory.Repositories.Inventory
                     if (purchaseOrder != null)
                     {
                         int[] itemsIDs = purchaseOrder.PurchaseOrderLineItems.Select(li => li.ItemID).Distinct().ToArray();
-                        var items = context.Items.Where(i => itemsIDs.Contains(i.ItemID)).ToList();
+                        var items = context.Items.AsNoTracking().Where(i => itemsIDs.Contains(i.ItemID)).ToList();
                         purchaseOrder.PurchaseOrderLineItems = purchaseOrder.PurchaseOrderLineItems.Join(items, li => li.ItemID, i => i.ItemID, (li, i) => { li.ItemDescription = i.Description; li.PartNumber = i.PartNumber; return li; }).ToList();
                     }
                 }
@@ -94,7 +94,7 @@ namespace Inventory.Repositories.Inventory
                     if (purchaseOrder != null)
                     {
                         int[] itemsIDs = purchaseOrder.PurchaseOrderLineItems.Select(li => li.ItemID).Distinct().ToArray();
-                        var items = context.Items.Where(i => itemsIDs.Contains(i.ItemID)).ToList();
+                        var items = context.Items.AsNoTracking().Where(i => itemsIDs.Contains(i.ItemID)).ToList();
                         purchaseOrder.PurchaseOrderLineItems.Join(items, li => li.ItemID, i => i.ItemID, (li, i) => { li.ItemDescription = i.Description; li.PartNumber = i.PartNumber; return li; }).ToList();
                         if (purchaseOrder.ReceivedLineItems != null && purchaseOrder.ReceivedLineItems.Count > 0)
                             purchaseOrder.ReceivedLineItems.Join(items, rli => rli.ItemID, i => i.ItemID, (rli, i) => { rli.ItemDescription = i.Description; rli.PartNumber = i.PartNumber; return rli; }).ToList();
@@ -119,13 +119,9 @@ namespace Inventory.Repositories.Inventory
                     {
                         context.Entry(purchaseOrder)
                                .Collection(po => po.PurchaseOrderLineItems)
-                               .Query()
-                               .Where(li => li.IsActive == true)
                                .Load();
                         context.Entry(purchaseOrder)
                                .Collection(po => po.ReceivedLineItems)
-                               .Query()
-                               .Where(li => li.IsActive == true)
                                .Load();
                     }
                     return purchaseOrder;
@@ -143,7 +139,7 @@ namespace Inventory.Repositories.Inventory
             {
                 using (AdminReferenceContext context = new AdminReferenceContext())
                 {
-                    var vendors = context.Vendors.ToList();
+                    var vendors = context.Vendors.AsNoTracking().ToList();
                     return AutoMapper.Mapper.Map<List<Vendor>, List<VendorVM>>(vendors);
                 }
             }
@@ -159,7 +155,7 @@ namespace Inventory.Repositories.Inventory
             {
                 using (AdminReferenceContext context = new AdminReferenceContext())
                 {
-                    var items = context.Items.Where(i => i.Description.Contains(itemDescription)).ToList();
+                    var items = context.Items.AsNoTracking().Where(i => i.Description.Contains(itemDescription)).ToList();
                     return AutoMapper.Mapper.Map<List<Item>, List<ItemVM>>(items);
                 }
             }
@@ -175,7 +171,7 @@ namespace Inventory.Repositories.Inventory
             {
                 using (AdminReferenceContext context = new AdminReferenceContext())
                 {
-                    var locations = context.Locations.ToList();
+                    var locations = context.Locations.AsNoTracking().ToList();
                     return AutoMapper.Mapper.Map<List<Location>, List<LocationVM>>(locations);
                 }
             }
@@ -191,7 +187,7 @@ namespace Inventory.Repositories.Inventory
             {
                 using (AdminReferenceContext context = new AdminReferenceContext())
                 {
-                    var warehouses = context.Warehouses.ToList();
+                    var warehouses = context.Warehouses.AsNoTracking().ToList();
                     return AutoMapper.Mapper.Map<List<Warehouse>, List<WareHouseVM>>(warehouses);
                 }
             }
@@ -207,7 +203,7 @@ namespace Inventory.Repositories.Inventory
             {
                 using (AdminReferenceContext context = new AdminReferenceContext())
                 {
-                    var racks = context.Racks.ToList();
+                    var racks = context.Racks.AsNoTracking().ToList();
                     return AutoMapper.Mapper.Map<List<Rack>, List<RackVM>>(racks);
                 }
             }
@@ -223,8 +219,27 @@ namespace Inventory.Repositories.Inventory
             {
                 using (AdminReferenceContext context = new AdminReferenceContext())
                 {
-                    var shelves = context.Shelves.ToList();
+                    var shelves = context.Shelves.AsNoTracking().ToList();
                     return AutoMapper.Mapper.Map<List<Shelf>, List<ShelfVM>>(shelves);
+                }
+            }
+            catch (Exception Ex)
+            {
+                throw Ex;
+            }
+        }
+
+        public bool IsPurchaseOrderExists(string poOrContractNumber)
+        {
+            try
+            {
+                using (InventoryContext context = new InventoryContext())
+                {
+                    var purchaseOrder = context.PurchaseOrders.AsNoTracking().FirstOrDefault(po => po.PoOrContractNumber == poOrContractNumber);
+                    if (purchaseOrder != null)
+                        return true;
+                    else
+                        return false;
                 }
             }
             catch (Exception Ex)
