@@ -243,8 +243,11 @@
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Images\csc-logo.jpg" />
     <Content Include="Images\bg.png" />
+    <Content Include="Inventory\Issue.aspx" />
     <Content Include="Inventory\PurchaseOrder.aspx" />
     <Content Include="Inventory\ReceivingOrder.aspx" />
+    <Content Include="Inventory\Returns.aspx" />
+    <Content Include="Inventory\Transfer.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -486,6 +489,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Inventory\Issue.aspx.cs">
+      <DependentUpon>Issue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\Issue.aspx.designer.cs">
+      <DependentUpon>Issue.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Inventory\PurchaseOrder.aspx.cs">
       <DependentUpon>PurchaseOrder.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -499,6 +509,20 @@
     </Compile>
     <Compile Include="Inventory\ReceivingOrder.aspx.designer.cs">
       <DependentUpon>ReceivingOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\Returns.aspx.cs">
+      <DependentUpon>Returns.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\Returns.aspx.designer.cs">
+      <DependentUpon>Returns.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\Transfer.aspx.cs">
+      <DependentUpon>Transfer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\Transfer.aspx.designer.cs">
+      <DependentUpon>Transfer.aspx</DependentUpon>
     </Compile>
     <Compile Include="Keys\ViewStateKeys.cs" />
     <Compile Include="Migrations\201701091514094_InitDb.cs" />
