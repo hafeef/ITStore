@@ -146,7 +146,7 @@ namespace Inventory.PeopleViewer.Inventory
             {
                 ucInformation.ShowErrorMessage(Ae.Message);
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
                 ucInformation.ShowErrorMessage();
             }
@@ -155,7 +155,7 @@ namespace Inventory.PeopleViewer.Inventory
         private void BindReceivedItems()
         {
             GetPurchaseOrderFromViewState();
-            GridViewReceivedItems.DataSource = _PurchaseOrder.ReceivedLineItems.Where(rli => rli.EntityState != ObjectState.Deleted);
+            GridViewReceivedItems.DataSource = _PurchaseOrder.ReceivedLineItems.Where(rli => rli.EntityState != ObjectState.Deleted).ToList();
             GridViewReceivedItems.DataBind();
         }
 
@@ -478,6 +478,20 @@ namespace Inventory.PeopleViewer.Inventory
                     dropDownList.SelectedValue = selectedValue;
             }
             catch (Exception)
+            {
+                ucInformation.ShowErrorMessage();
+            }
+        }
+
+        protected void GridViewReceivedItems_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            try
+            {
+                SetGridViewReceivedItemsEditRowIndexToMinusOne();
+                GridViewReceivedItems.PageIndex = e.NewPageIndex;
+                BindReceivedItems();
+            }
+            catch (Exception Ex)
             {
                 ucInformation.ShowErrorMessage();
             }

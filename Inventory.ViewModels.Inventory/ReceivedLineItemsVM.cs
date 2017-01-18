@@ -23,5 +23,41 @@ namespace Inventory.ViewModels.Inventory
         public string ShelfName { get; set; }
         public DateTime WarrantyDate { get; set; }
         public DateTime ExpiryDate { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            else if (ReferenceEquals(obj, this))
+                return true;
+            else if (GetType() != obj.GetType())
+                return false;
+            var receivedLineItem = obj as ReceivedLineItemVM;
+
+            return SerialNo == receivedLineItem.SerialNo && PartNumber == receivedLineItem.PartNumber;
+
+            //return PurchaseOrderID == receivedLineItem.PurchaseOrderID &&
+            //       PurchaseOrderLineItemID == receivedLineItem.PurchaseOrderLineItemID &&
+            //       ReceivedLineItemID == receivedLineItem.ReceivedLineItemID &&
+            //       SerialNo == receivedLineItem.SerialNo && WarehouseID == receivedLineItem.WarehouseID &&
+            //       RackID == receivedLineItem.RackID && ShelfID == receivedLineItem.ShelfID &&
+            //       ReceivedDate == receivedLineItem.ReceivedDate && WarrantyDate == receivedLineItem.WarrantyDate &&
+            //       ExpiryDate == receivedLineItem.ExpiryDate;
+        }
+
+        public override int GetHashCode()
+        {
+            return SerialNo.GetHashCode() ^ PartNumber.GetHashCode();
+        }
+
+        public static bool operator ==(ReceivedLineItemVM lsh, ReceivedLineItemVM rsh)
+        {
+            return Equals(lsh, rsh);
+        }
+
+        public static bool operator !=(ReceivedLineItemVM lsh, ReceivedLineItemVM rsh)
+        {
+            return !Equals(lsh, rsh);
+        }
     }
 }

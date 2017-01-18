@@ -61,9 +61,9 @@
                                     </asp:LinkButton>
                                 </div>
                             </div>
-                            <div class="row">
-                                <InventoryUC:Information runat="server" ID="ucInformation" />
-                            </div>
+                        </div>
+                        <div class="row">
+                            <InventoryUC:Information runat="server" ID="ucInformation" />
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -72,7 +72,7 @@
                                     OnRowCancelingEdit="gridLineItems_RowCancelingEdit" OnRowEditing="gridLineItems_RowEditing"
                                     OnRowDataBound="gridLineItems_RowDataBound" OnRowUpdating="gridLineItems_RowUpdating"
                                     OnRowDeleting="gridLineItems_RowDeleting" OnPageIndexChanging="gridLineItems_PageIndexChanging"
-                                    runat="server" AllowPaging="true" PageSize="5">
+                                    runat="server" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>">
                                     <Columns>
                                         <asp:TemplateField HeaderText="Item">
                                             <ItemTemplate>

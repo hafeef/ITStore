@@ -8,6 +8,7 @@ using Inventory.ViewModels.Inventory;
 using System.Collections.Generic;
 using System.Transactions;
 using Core.Common.Resolvers;
+using Core.Common.Enums;
 
 namespace Inventory.Repositories.Inventory
 {
@@ -44,9 +45,9 @@ namespace Inventory.Repositories.Inventory
                     using (var scope = new TransactionScope(TransactionScopeOption.Required))
                     {
                         var purchaseOrder = AutoMapper.Mapper.Map<PurchaseOrder>(newPurchaseOrder);
-                        foreach (var item in purchaseOrder.PurchaseOrderLineItems)
+                        foreach (var item in purchaseOrder.PurchaseOrderLineItems.Where(li => li.EntityState != ObjectState.Unchanged))
                             context.Entry(item).State = StateResolver.Resolve(item.EntityState);
-                        foreach (var item in purchaseOrder.ReceivedLineItems)
+                        foreach (var item in purchaseOrder.ReceivedLineItems.Where(rli => rli.EntityState != ObjectState.Unchanged))
                             context.Entry(item).State = StateResolver.Resolve(item.EntityState);
                         context.SaveChanges();
                         context.Entry(purchaseOrder).State = StateResolver.Resolve(purchaseOrder.EntityState);

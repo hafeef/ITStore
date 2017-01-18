@@ -362,13 +362,14 @@ namespace Inventory.PeopleViewer.Inventory
                 }
                 else
                 {
-                    if (_purchaseOrderRepository.IsPurchaseOrderExists(txtPoOrContractNumber.Text.Trim()))
-                        throw new ApplicationException("The purchase order already exists in database with this PO/Contract number.");
                     GetPurchaseOrderFromViewState();
                     ValidatePurchaseOrder();
                     CreatePurchaseOrder();
                     if (string.IsNullOrWhiteSpace(hiddenFieldPurchaseOrderID.Value))
                     {
+                        if (_purchaseOrderRepository.IsPurchaseOrderExists(txtPoOrContractNumber.Text.Trim()))
+                            throw new ApplicationException("The purchase order already exists in database with this PO/Contract number.");
+
                         _purchaseOrderRepository.CreatePurchaseOrder(_PurchaseOrder);
                         ucInformation.ShowSaveInfomationMessage();
                     }
@@ -418,6 +419,7 @@ namespace Inventory.PeopleViewer.Inventory
 
         private void ClearFormData()
         {
+            ViewState.Clear();
             InitializePurchaseOrder();
             PutPurchaseOrderBackToViewState();
             ddlPOType.SelectedIndex = 0;

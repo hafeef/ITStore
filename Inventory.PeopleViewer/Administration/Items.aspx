@@ -20,9 +20,9 @@
                                 <asp:Button runat="server" ValidationGroup="Search" ID="btnSearch" Text="Go!" CssClass="btn btn-default" OnClick="btnSearch_Click" />
                                 <asp:Button runat="server" ID="btnReset" Text="Reset" CausesValidation="false" CssClass="btn btn-default" OnClick="btnReset_Click" />
                             </div>
-                            <div class="row">
-                                <InventoryUC:Information runat="server" ID="ucInformation" />
-                            </div>
+                        </div>
+                        <div class="row">
+                            <InventoryUC:Information runat="server" ID="ucInformation" />
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -30,7 +30,7 @@
                                     CssClass="table table-striped table-responsive table-bordered table-hover" runat="server"
                                     OnRowDeleting="gridItems_RowDeleting" OnRowUpdating="gridItems_RowUpdating" AllowSorting="true"
                                     OnRowCancelingEdit="gridItems_RowCancelingEdit" OnRowEditing="gridItems_RowEditing"
-                                    OnRowDataBound="gridItems_RowDataBound" AllowPaging="true" PageSize="5" OnPageIndexChanging="gridItems_PageIndexChanging"
+                                    OnRowDataBound="gridItems_RowDataBound" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>" OnPageIndexChanging="gridItems_PageIndexChanging"
                                     EmptyDataText="No Records Found.">
                                     <Columns>
                                         <asp:TemplateField HeaderText="Item ID">

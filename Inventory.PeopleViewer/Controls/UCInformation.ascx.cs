@@ -23,7 +23,7 @@ namespace Inventory.PeopleViewer.Controls
         public void ShowErrorMessage(string errorMessage)
         {
             lblInformation.Text = $"<strong>{errorMessage}</strong>";
-            lblInformation.CssClass = "text-danger col-md-offset-1";
+            lblInformation.CssClass = "control-label text-danger";
             RegisterClientScript();
         }
 
@@ -35,7 +35,7 @@ namespace Inventory.PeopleViewer.Controls
         private void ShowInformationMessage(string message)
         {
             lblInformation.Text = $"<strong>{Page.Title}{message}</strong>";
-            lblInformation.CssClass = "text-success col-md-offset-1";
+            lblInformation.CssClass = "control-label text-success";
             RegisterClientScript();
         }
 

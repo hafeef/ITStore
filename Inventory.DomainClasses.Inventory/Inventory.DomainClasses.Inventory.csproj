@@ -49,6 +49,7 @@
     <Compile Include="Rack.cs" />
     <Compile Include="ReceivedLineItems.cs" />
     <Compile Include="Shelf.cs" />
+    <Compile Include="Transfer.cs" />
     <Compile Include="Vendor.cs" />
     <Compile Include="WareHouse.cs" />
   </ItemGroup>

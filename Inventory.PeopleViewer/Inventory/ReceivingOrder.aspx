@@ -59,9 +59,9 @@
                                     </asp:LinkButton>
                                 </div>
                             </div>
-                            <div class="row">
-                                <InventoryUC:Information runat="server" ID="ucInformation" />
-                            </div>
+                        </div>
+                        <div class="row">
+                            <InventoryUC:Information runat="server" ID="ucInformation" />
                         </div>
                         <div class="row">
                             <div class="col-md-12 table-responsive">
@@ -156,7 +156,8 @@
                                     ID="GridViewReceivedItems" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover"
                                     OnRowCancelingEdit="GridViewReceivedItems_RowCancelingEdit" OnRowDeleting="GridViewReceivedItems_RowDeleting"
                                     runat="server" OnRowEditing="GridViewReceivedItems_RowEditing" OnRowDataBound="GridViewReceivedItems_RowDataBound"
-                                    OnRowUpdating="GridViewReceivedItems_RowUpdating">
+                                    OnRowUpdating="GridViewReceivedItems_RowUpdating" PageSize="<%$ appSettings:GridViewPageSize %>" AllowPaging="true"
+                                    OnPageIndexChanging="GridViewReceivedItems_PageIndexChanging">
                                     <Columns>
                                         <asp:TemplateField HeaderText="Item">
                                             <ItemTemplate>
@@ -173,7 +174,7 @@
                                                 <asp:TextBox runat="server" ID="txtSerialNos" Text='<%# Eval("SerialNo") %>' placeholder="Serial Numbers" ValidationGroup="Edit"
                                                     CssClass="form-control"></asp:TextBox>
                                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="txtSerialNos"
-                                                    CssClass="text-danger"  ValidationGroup="Edit" ErrorMessage="Serial no is required." />
+                                                    CssClass="text-danger" ValidationGroup="Edit" ErrorMessage="Serial no is required." />
                                             </EditItemTemplate>
                                             <ItemTemplate>
                                                 <%# Eval("SerialNo") %>
@@ -187,7 +188,7 @@
                                                 <asp:DropDownList runat="server" ID="ddlRacks" ValidationGroup="Edit" DataValueField="RackID" DataTextField="Name" CssClass="form-control">
                                                 </asp:DropDownList>
                                                 <asp:RequiredFieldValidator InitialValue="0" runat="server" ControlToValidate="ddlRacks"
-                                                    CssClass="text-danger"  ValidationGroup="Edit" ErrorMessage="Rack is required." />
+                                                    CssClass="text-danger" ValidationGroup="Edit" ErrorMessage="Rack is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Shelf">
@@ -198,7 +199,7 @@
                                                 <asp:DropDownList runat="server" ID="ddlShelves" ValidationGroup="Edit" DataValueField="ShelfID" DataTextField="Name" CssClass="form-control">
                                                 </asp:DropDownList>
                                                 <asp:RequiredFieldValidator InitialValue="0" runat="server" ControlToValidate="ddlShelves"
-                                                    CssClass="text-danger"  ValidationGroup="Edit" ErrorMessage="Shelf is required." />
+                                                    CssClass="text-danger" ValidationGroup="Edit" ErrorMessage="Shelf is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Warehouse">
@@ -209,7 +210,7 @@
                                                 <asp:DropDownList runat="server" ID="ddlWarehouses" ValidationGroup="Edit" DataValueField="WarehouseID" DataTextField="Name" CssClass="form-control">
                                                 </asp:DropDownList>
                                                 <asp:RequiredFieldValidator InitialValue="0" runat="server" ControlToValidate="ddlWarehouses"
-                                                    CssClass="text-danger"  ValidationGroup="Edit" ErrorMessage="Warehouse is required." />
+                                                    CssClass="text-danger" ValidationGroup="Edit" ErrorMessage="Warehouse is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Received Date">
@@ -219,7 +220,7 @@
                                             <EditItemTemplate>
                                                 <asp:TextBox runat="server" ID="txtReceivedDate" ValidationGroup="Edit" Text='<%# Eval("ReceivedDate", "{0:yyyy-MM-dd}") %>' CssClass="form-control" TextMode="Date"></asp:TextBox>
                                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="txtReceivedDate"
-                                                    CssClass="text-danger"  ValidationGroup="Edit" ErrorMessage="Received date is required." />
+                                                    CssClass="text-danger" ValidationGroup="Edit" ErrorMessage="Received date is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Warranty Date">
@@ -229,7 +230,7 @@
                                             <EditItemTemplate>
                                                 <asp:TextBox runat="server" ID="txtWarrantyYear" ValidationGroup="Edit" Text='<%# Eval("WarrantyDate", "{0:yyyy-MM-dd}") %>' CssClass="form-control" TextMode="Date"></asp:TextBox>
                                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="txtWarrantyYear"
-                                                    CssClass="text-danger"  ValidationGroup="Edit" ErrorMessage="Warranty date is required." />
+                                                    CssClass="text-danger" ValidationGroup="Edit" ErrorMessage="Warranty date is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField ItemStyle-CssClass="col-xs-1" HeaderText="Expiry Date">
@@ -239,10 +240,10 @@
                                             <EditItemTemplate>
                                                 <asp:TextBox runat="server" ID="txtExpiry" ValidationGroup="Edit" Text='<%# Eval("ExpiryDate", "{0:yyyy-MM-dd}") %>' CssClass="form-control" TextMode="Date"></asp:TextBox>
                                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="txtExpiry"
-                                                    CssClass="text-danger"  ValidationGroup="Edit" ErrorMessage="Expiry date is required." />
+                                                    CssClass="text-danger" ValidationGroup="Edit" ErrorMessage="Expiry date is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField  HeaderText="Action Links">
+                                        <asp:TemplateField HeaderText="Action Links">
                                             <ItemTemplate>
                                                 <asp:LinkButton CommandName="Delete" CssClass="btn btn-primary btn-sm" CausesValidation="false" ID="linkButtonDelete" runat="server">
                                         <span class="glyphicon glyphicon-trash"></span> Delete

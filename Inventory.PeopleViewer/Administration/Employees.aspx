@@ -21,14 +21,14 @@
                                     <asp:Button runat="server" ValidationGroup="Search" ID="btnSearch" Text="Go!" CssClass="btn btn-default" OnClick="btnSearch_Click" />
                                     <asp:Button runat="server" ID="btnReset" Text="Reset" CausesValidation="false" CssClass="btn btn-default" OnClick="btnReset_Click" />
                                 </div>
-                                <div class="row">
-                                    <InventoryUC:Information runat="server" ID="ucInformation" />
-                                </div>
+                            </div>
+                            <div class="row">
+                                <InventoryUC:Information runat="server" ID="ucInformation" />
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <asp:GridView ID="GridEmployee" DataKeyNames="EmployeeID" AutoGenerateColumns="false" ShowFooter="true"
-                                        CssClass="table table-striped table-bordered table-hover" runat="server" AllowPaging="true" PageSize="5"
+                                        CssClass="table table-striped table-bordered table-hover" runat="server" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>"
                                         OnRowDeleting="GridEmployee_RowDeleting" OnRowUpdating="GridEmployee_RowUpdating" AllowSorting="true"
                                         OnRowCancelingEdit="GridEmployee_RowCancelingEdit" OnPageIndexChanging="GridEmployee_PageIndexChanging"
                                         OnRowEditing="GridEmployee_RowEditing" OnRowDataBound="GridEmployee_RowDataBound" EmptyDataText="No Records Found.">
