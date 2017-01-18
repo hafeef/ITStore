@@ -138,8 +138,11 @@ namespace Inventory.PeopleViewer.Inventory
                         gridLineItems.Visible = true;
                         BindPurchasedLineItems();
                     }
-
-
+                }
+                else
+                {
+                    ucInformation.ShowErrorMessage("There is no purchase ordere in the database with this PO/Contract number.");
+                    linkButtonReset_Click(sender, e);
                 }
             }
             catch (ApplicationException Ae)
@@ -174,6 +177,7 @@ namespace Inventory.PeopleViewer.Inventory
                 }
                 _purchaseOrderRepository.UpdatePurchaseOrder(_PurchaseOrder);
                 ucInformation.ShowSaveInfomationMessage();
+                ClearFormData();
             }
             catch (ApplicationException Ae)
             {
@@ -265,13 +269,19 @@ namespace Inventory.PeopleViewer.Inventory
         {
             try
             {
+                GetPurchaseOrderFromViewState();
                 txtPoCreatedDate.Text = txtPoOrContractNumber.Text = string.Empty;
                 ddlPOType.ClearSelection();
                 ddlVendors.ClearSelection();
                 gridLineItems.Visible = false;
                 GridViewReceivedItems.Visible = false;
+                GridViewReceivedItems.PageIndex = 0;
                 divReceivedItems.Visible = false;
-                ViewState[ViewStateKeys.PurchaseOrder] = null;
+                _PurchaseOrder.ReceivedLineItems.Clear();
+                _PurchaseOrder.PurchaseOrderLineItems.Clear();
+                _PurchaseOrder = null;
+                PutPurchaseOrderBackToViewState();
+                ViewState.Clear();
             }
             catch (Exception)
             {

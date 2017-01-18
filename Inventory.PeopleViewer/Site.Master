@@ -100,6 +100,7 @@
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/Inventory/PurchaseOrder.aspx">Purchase Orders</a></li>
                                 <li><a runat="server" href="~/Inventory/ReceivingOrder.aspx">Receiving Orders</a></li>
+                                <li><a runat="server" href="~/Inventory/Transfer.aspx">Transfer</a></li>
                             </ul>
                         </li>
 

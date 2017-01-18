@@ -11,6 +11,24 @@ namespace Inventory.PeopleViewer.Inventory
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+
+            }
+        }
+
+        protected void linkButtonSearch_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void linkButtonReset_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void linkButtonSave_Click(object sender, EventArgs e)
+        {
 
         }
     }
