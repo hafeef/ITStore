@@ -17,7 +17,7 @@ namespace Inventory.Data.Inventory
         public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public DbSet<PurchaseOrderLineItem> PurchaseOrderLineItems { get; set; }
         public DbSet<ReceivedLineItem> ReceivedLineItems { get; set; }
-
+        public DbSet<Transfer> Transfers { get; set; }
         public override int SaveChanges()
         {
             var dateTimeHistories = ChangeTracker.Entries()
@@ -49,6 +49,8 @@ namespace Inventory.Data.Inventory
             modelBuilder.Entity<ReceivedLineItem>().Property(rli => rli.SerialNo).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
             modelBuilder.Entity<PurchaseOrder>().Property(li => li.PoOrContractNumber).HasMaxLength(100);
             modelBuilder.Entity<PurchaseOrder>().Property(li => li.PoOrContractNumber).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
+            modelBuilder.Entity<Transfer>().Property(t => t.SerialNo).HasMaxLength(100);
+            modelBuilder.Entity<Transfer>().Property(t => t.SerialNo).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
             modelBuilder.HasDefaultSchema("Inventory");
         }
     }

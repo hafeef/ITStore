@@ -84,7 +84,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-offset-7 col-md-3">
+                                    <asp:Label runat="server" AssociatedControlID="txtTransferredDate" CssClass="col-md-2 control-label">Transferred Date</asp:Label>
+                                    <div class="col-md-3">
+                                        <asp:TextBox runat="server" ID="txtTransferredDate" placeholder="Transferred Date" TextMode="Date" CssClass="form-control"></asp:TextBox>
+                                        <asp:RequiredFieldValidator runat="server" ValidationGroup="Create" ControlToValidate="txtTransferredDate"
+                                            CssClass="text-danger" ErrorMessage="Transferred date is required." />
+                                    </div>
+                                    <div class="col-md-offset-2 col-md-3">
                                         <asp:LinkButton CssClass="btn btn-primary" ID="linkButtonSearch" ValidationGroup="Search" OnClick="linkButtonSearch_Click" runat="server">
                                             <span class="glyphicon glyphicon-search"></span> Search
                                         </asp:LinkButton>

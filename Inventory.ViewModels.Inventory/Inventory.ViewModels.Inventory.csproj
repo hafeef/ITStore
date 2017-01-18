@@ -48,6 +48,7 @@
     <Compile Include="RackVM.cs" />
     <Compile Include="ReceivedLineItemsVM.cs" />
     <Compile Include="ShelfVM.cs" />
+    <Compile Include="TransferVM.cs" />
     <Compile Include="VendorVM.cs" />
     <Compile Include="WareHouseVM.cs" />
   </ItemGroup>

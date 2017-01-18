@@ -66,7 +66,25 @@ namespace Inventory.PeopleViewer.Inventory
 
         protected void linkButtonReset_Click(object sender, EventArgs e)
         {
+            ClearFormData();
+        }
 
+        private void ClearFormData()
+        {
+            try
+            {
+                txtTransferredDate.Text = hiddenFieldItemID.Value = txtSerialNo.Text = txtItemDescription.Text = string.Empty;
+                ddlFromRacks.ClearSelection();
+                ddlToRacks.ClearSelection();
+                ddlFromshelves.ClearSelection();
+                ddlToshelves.ClearSelection();
+                ddlFromWarehouses.ClearSelection();
+                ddlToWarehouses.ClearSelection();
+            }
+            catch (Exception)
+            {
+                ucInformation.ShowErrorMessage();
+            }
         }
 
         protected void linkButtonSave_Click(object sender, EventArgs e)

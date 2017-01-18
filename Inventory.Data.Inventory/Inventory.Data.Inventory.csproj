@@ -81,6 +81,10 @@
     <Compile Include="Migrations\201701130656062_AddedUniqueKeyReferenceToPoOrContractNo.Designer.cs">
       <DependentUpon>201701130656062_AddedUniqueKeyReferenceToPoOrContractNo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701181524562_AddedTransferEntity.cs" />
+    <Compile Include="Migrations\201701181524562_AddedTransferEntity.Designer.cs">
+      <DependentUpon>201701181524562_AddedTransferEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -126,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701130656062_AddedUniqueKeyReferenceToPoOrContractNo.resx">
       <DependentUpon>201701130656062_AddedUniqueKeyReferenceToPoOrContractNo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701181524562_AddedTransferEntity.resx">
+      <DependentUpon>201701181524562_AddedTransferEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

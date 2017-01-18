@@ -103,6 +103,15 @@ namespace Inventory.PeopleViewer.Inventory {
         protected global::System.Web.UI.WebControls.DropDownList ddlToshelves;
         
         /// <summary>
+        /// txtTransferredDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTransferredDate;
+        
+        /// <summary>
         /// linkButtonSearch control.
         /// </summary>
         /// <remarks>
