@@ -102,9 +102,9 @@
                                         </asp:LinkButton>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <InventoryUC:Information runat="server" ID="ucInformation" />
-                                </div>
+                            </div>
+                            <div class="row">
+                                <InventoryUC:Information runat="server" ID="ucInformation" />
                             </div>
                         </div>
                     </div>

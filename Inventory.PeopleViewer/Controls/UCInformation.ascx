@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="UCInformation.ascx.cs" Inherits="Inventory.PeopleViewer.Controls.UCInformation" %>
-<div class="col-md-10">
+<div class="col-md-12">
     <asp:Label ID="lblInformation" runat="server" />
 </div>
 <script type="text/javascript">
@@ -7,7 +7,7 @@
         var seconds = 10;
         setTimeout(function Clear() {
             $("#<%=lblInformation.ClientID %>").text('');
-            }, seconds * 1000)
+        }, seconds * 1000)
     }
 </script>
 

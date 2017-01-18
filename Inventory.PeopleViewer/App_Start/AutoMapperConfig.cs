@@ -81,6 +81,9 @@ namespace Inventory.PeopleViewer.App_Start
                 config.CreateMap<ReceivedLineItemVM, ReceivedLineItem>();
                 config.CreateMap<ReceivedLineItem, ReceivedLineItemVM>();
                 config.CreateMap<ReceivedLineItemVM, ReceivedLineItemVM>();
+
+                config.CreateMap<TransferVM, Transfer>();
+                config.CreateMap<Transfer, TransferVM>();
                 #endregion
 
 
