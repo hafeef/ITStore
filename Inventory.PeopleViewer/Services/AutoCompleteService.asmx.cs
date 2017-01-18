@@ -17,12 +17,11 @@ namespace Inventory.PeopleViewer.Services
     [System.Web.Script.Services.ScriptService]
     public class AutoCompleteService : System.Web.Services.WebService
     {
-        IPurchaseOrderRepository _purchaseOrderRepository = new PurchaseOrderRepository(new InventoryContext());
-
+        IAdministrationRepository _administrationRepository = new AdministrationRepository();
         [WebMethod, ScriptMethod]
         public List<string> GetItemDescription(string prefixText, int count)
         {
-            var items = _purchaseOrderRepository.GetItemByDescription(prefixText);
+            var items = _administrationRepository.GetItemByDescription(prefixText);
             var resutls = new List<string>();
             foreach (var item in items)
             {

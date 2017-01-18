@@ -18,7 +18,7 @@ namespace Inventory.PeopleViewer.Inventory
     public partial class ReceivingOrder : Page
     {
         IPurchaseOrderRepository _purchaseOrderRepository = new PurchaseOrderRepository(new InventoryContext());
-
+        IAdministrationRepository _administrationRepository = new AdministrationRepository();
         List<LocationVM> _Locations = null;
         List<VendorVM> _vendors = null;
         List<WareHouseVM> _Warehouses = null;
@@ -49,7 +49,7 @@ namespace Inventory.PeopleViewer.Inventory
         {
             if (!Page.IsPostBack)
             {
-                _vendors = _purchaseOrderRepository.GetAllVendors();
+                _vendors = _administrationRepository.GetAllVendors();
                 BindDropDownList(ddlVendors, _vendors);
             }
         }
@@ -70,22 +70,22 @@ namespace Inventory.PeopleViewer.Inventory
 
         private void GetLocations()
         {
-            _Locations = _purchaseOrderRepository.GetAllLocations();
+            _Locations = _administrationRepository.GetAllLocations();
         }
 
         private void GetRacks()
         {
-            _Racks = _purchaseOrderRepository.GetAllRacks();
+            _Racks = _administrationRepository.GetAllRacks();
         }
 
         private void GetShelves()
         {
-            _Shelves = _purchaseOrderRepository.GetAllShelves();
+            _Shelves = _administrationRepository.GetAllShelves();
         }
 
         private void GetWarehouses()
         {
-            _Warehouses = _purchaseOrderRepository.GetAllWarehouses();
+            _Warehouses = _administrationRepository.GetAllWarehouses();
         }
 
         private void BindPurchasedLineItems()

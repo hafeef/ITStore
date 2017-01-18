@@ -15,7 +15,7 @@ namespace Inventory.PeopleViewer.Inventory
     public partial class PurchaseOrder : Page
     {
         IPurchaseOrderRepository _purchaseOrderRepository = new PurchaseOrderRepository(new InventoryContext());
-
+        IAdministrationRepository _administrationRepository = new AdministrationRepository();
 
         TextBox txtItemDescription = null;
         TextBox txtQuantity = null;
@@ -30,7 +30,7 @@ namespace Inventory.PeopleViewer.Inventory
             {
                 if (!Page.IsPostBack)
                 {
-                    _vendors = _purchaseOrderRepository.GetAllVendors();
+                    _vendors = _administrationRepository.GetAllVendors();
                     BindDropDownList(ddlVendors, _vendors);
                     BindLineItems();
                 }
