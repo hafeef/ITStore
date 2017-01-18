@@ -38,14 +38,14 @@
                                 <div class="row">
                                     <asp:Label runat="server" AssociatedControlID="ddlFromWarehouses" CssClass="col-md-2 control-label">From Warehouse</asp:Label>
                                     <div class="col-md-3">
-                                        <asp:DropDownList runat="server" ID="ddlFromWarehouses" DataValueField="LocationID" DataTextField="Name" CssClass="form-control">
+                                        <asp:DropDownList runat="server" ID="ddlFromWarehouses" DataValueField="WareHouseID" DataTextField="Name" CssClass="form-control">
                                         </asp:DropDownList>
                                         <asp:RequiredFieldValidator InitialValue="0" ValidationGroup="Create" runat="server" ControlToValidate="ddlFromWarehouses"
                                             CssClass="text-danger" ErrorMessage="From warehouse is required." />
                                     </div>
                                     <asp:Label runat="server" AssociatedControlID="ddlToWarehouses" CssClass="col-md-2 control-label">To Warehouse</asp:Label>
                                     <div class="col-md-3">
-                                        <asp:DropDownList runat="server" ID="ddlToWarehouses" DataValueField="LocationID" DataTextField="Name" CssClass="form-control">
+                                        <asp:DropDownList runat="server" ID="ddlToWarehouses" DataValueField="WareHouseID" DataTextField="Name" CssClass="form-control">
                                         </asp:DropDownList>
                                         <asp:RequiredFieldValidator InitialValue="0" ValidationGroup="Create" runat="server" ControlToValidate="ddlToWarehouses"
                                             CssClass="text-danger" ErrorMessage="To warehouse is required." />
@@ -54,14 +54,14 @@
                                 <div class="row">
                                     <asp:Label runat="server" AssociatedControlID="ddlFromRacks" CssClass="col-md-2 control-label">From Rack</asp:Label>
                                     <div class="col-md-3">
-                                        <asp:DropDownList runat="server" ID="ddlFromRacks" DataValueField="LocationID" DataTextField="Name" CssClass="form-control">
+                                        <asp:DropDownList runat="server" ID="ddlFromRacks" DataValueField="RackID" DataTextField="Name" CssClass="form-control">
                                         </asp:DropDownList>
                                         <asp:RequiredFieldValidator InitialValue="0" ValidationGroup="Create" runat="server" ControlToValidate="ddlFromRacks"
                                             CssClass="text-danger" ErrorMessage="From rack is required." />
                                     </div>
                                     <asp:Label runat="server" AssociatedControlID="ddlToRacks" CssClass="col-md-2 control-label">To Rack</asp:Label>
                                     <div class="col-md-3">
-                                        <asp:DropDownList runat="server" ID="ddlToRacks" DataValueField="LocationID" DataTextField="Name" CssClass="form-control">
+                                        <asp:DropDownList runat="server" ID="ddlToRacks" DataValueField="RackID" DataTextField="Name" CssClass="form-control">
                                         </asp:DropDownList>
                                         <asp:RequiredFieldValidator InitialValue="0" ValidationGroup="Create" runat="server" ControlToValidate="ddlToRacks"
                                             CssClass="text-danger" ErrorMessage="To rack is required." />
@@ -70,14 +70,14 @@
                                 <div class="row">
                                     <asp:Label runat="server" AssociatedControlID="ddlFromshelves" CssClass="col-md-2 control-label">From Shelf</asp:Label>
                                     <div class="col-md-3">
-                                        <asp:DropDownList runat="server" ID="ddlFromshelves" DataValueField="LocationID" DataTextField="Name" CssClass="form-control">
+                                        <asp:DropDownList runat="server" ID="ddlFromshelves" DataValueField="ShelfID" DataTextField="Name" CssClass="form-control">
                                         </asp:DropDownList>
                                         <asp:RequiredFieldValidator InitialValue="0" ValidationGroup="Create" runat="server" ControlToValidate="ddlFromshelves"
                                             CssClass="text-danger" ErrorMessage="From shelf is required." />
                                     </div>
                                     <asp:Label runat="server" AssociatedControlID="ddlToshelves" CssClass="col-md-2 control-label">To Shelf</asp:Label>
                                     <div class="col-md-3">
-                                        <asp:DropDownList runat="server" ID="ddlToshelves" DataValueField="LocationID" DataTextField="Name" CssClass="form-control">
+                                        <asp:DropDownList runat="server" ID="ddlToshelves" DataValueField="ShelfID" DataTextField="Name" CssClass="form-control">
                                         </asp:DropDownList>
                                         <asp:RequiredFieldValidator InitialValue="0" ValidationGroup="Create" runat="server" ControlToValidate="ddlToshelves"
                                             CssClass="text-danger" ErrorMessage="To shelf is required." />
