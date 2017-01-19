@@ -19,7 +19,9 @@
                                             CssClass="text-danger col-md-offset-1" ErrorMessage="The employee name field is required." />
                                     </div>
                                     <asp:Button runat="server" ValidationGroup="Search" ID="btnSearch" Text="Go!" CssClass="btn btn-default" OnClick="btnSearch_Click" />
-                                    <asp:Button runat="server" ID="btnReset" Text="Reset" CausesValidation="false" CssClass="btn btn-default" OnClick="btnReset_Click" />
+                                    <asp:LinkButton CssClass="btn btn-default" CausesValidation="false" ID="linkButtonReset" OnClick="btnReset_Click" runat="server">
+                                          <span class="glyphicon glyphicon glyphicon-repeat"></span> Reset
+                                    </asp:LinkButton>
                                 </div>
                             </div>
                             <div class="row">
@@ -65,7 +67,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Action Links">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton CommandName="Delete" CssClass="btn btn-primary" CausesValidation="false" ID="linkButtonDelete" runat="server">
+                                                    <asp:LinkButton CommandName="Delete" OnClientClick="return confirm('Are you sure you want to delete this employee?');" CssClass="btn btn-primary" CausesValidation="false" ID="linkButtonDelete" runat="server">
                                         <span class="glyphicon glyphicon-trash"></span> Delete
                                                     </asp:LinkButton>
                                                     &nbsp;&nbsp;

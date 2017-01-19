@@ -32,7 +32,7 @@
                                             <span class="glyphicon glyphicon-search"></span> Search
                                     </asp:LinkButton>
                                     <asp:LinkButton CssClass="btn btn-primary" CausesValidation="false" ID="linkButtonReset" OnClick="linkButtonReset_Click" runat="server">
-                                            Reset
+                                          <span class="glyphicon glyphicon glyphicon-repeat"></span> Reset
                                     </asp:LinkButton>
                                 </div>
                             </div>
@@ -245,7 +245,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Action Links">
                                             <ItemTemplate>
-                                                <asp:LinkButton CommandName="Delete" CssClass="btn btn-primary btn-sm" CausesValidation="false" ID="linkButtonDelete" runat="server">
+                                                <asp:LinkButton CommandName="Delete" OnClientClick="return confirm('Are you sure you want to delete this received item?');" CssClass="btn btn-primary btn-sm" CausesValidation="false" ID="linkButtonDelete" runat="server">
                                         <span class="glyphicon glyphicon-trash"></span> Delete
                                                 </asp:LinkButton>
                                                 &nbsp;&nbsp;
