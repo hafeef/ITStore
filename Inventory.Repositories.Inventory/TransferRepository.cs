@@ -49,13 +49,24 @@ namespace Inventory.Repositories.Inventory
 
         public List<TransferVM> SearchTransfers(int itemID)
         {
+            return SearchTransfers(itemID, null);
+        }
+
+        public List<TransferVM> SearchTransfers(int itemID, string[] serialNos)
+        {
             using (InventoryContext context = new InventoryContext())
             {
                 using (AdminReferenceContext adminContext = new AdminReferenceContext())
                 {
-                    var dbTransfers = context.Transfers.AsNoTracking()
-                                           .Where(t => t.ItemID == itemID)
-                                           .ToList();
+                    IQueryable<Transfer> query;
+                    if (serialNos != null)
+                        query = context.Transfers.AsNoTracking()
+                                               .Where(t => t.ItemID == itemID && serialNos.Contains(t.SerialNo));
+                    else
+                        query = context.Transfers.AsNoTracking()
+                                               .Where(t => t.ItemID == itemID);
+
+                    var dbTransfers = query.ToList();
                     var transfers = AutoMapper.Mapper.Map<IList<Transfer>, IList<TransferVM>>(dbTransfers);
 
                     int[] warehouseIDs = dbTransfers.Select(t => t.FromWarehouseID)
@@ -92,11 +103,6 @@ namespace Inventory.Repositories.Inventory
                                             .ToList();
                 }
             }
-        }
-
-        public List<TransferVM> SearchTransfers(int itemID, string[] serialNos)
-        {
-            throw new NotImplementedException();
         }
     }
 }

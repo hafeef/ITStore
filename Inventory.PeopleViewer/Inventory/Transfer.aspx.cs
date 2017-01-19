@@ -70,7 +70,15 @@ namespace Inventory.PeopleViewer.Inventory
         {
             if (string.IsNullOrWhiteSpace(txtItemDescription.Text) || string.IsNullOrWhiteSpace(hiddenFieldItemID.Value))
                 throw new ApplicationException("Item description  field is required.");
-            _Transfers = _TransferRepository.SearchTransfers(int.Parse(hiddenFieldItemID.Value));
+
+            if (!string.IsNullOrWhiteSpace(txtSerialNo.Text))
+            {
+                SerialNumbers = txtSerialNo.Text.Trim().Split(Environment.NewLine.ToCharArray());
+                _Transfers = _TransferRepository.SearchTransfers(int.Parse(hiddenFieldItemID.Value), SerialNumbers);
+            }
+            else
+                _Transfers = _TransferRepository.SearchTransfers(int.Parse(hiddenFieldItemID.Value));
+
             GridTransferHistory.Visible = true;
             GridTransferHistory.DataSource = _Transfers;
             GridTransferHistory.DataBind();
@@ -202,7 +210,7 @@ namespace Inventory.PeopleViewer.Inventory
             TableCell cell = new TableCell();
             cell.Text = $"<strong>Serial No : { DataBinder.Eval(e.Row.DataItem, "SerialNo").ToString()}</strong>";
             cell.ColumnSpan = 9;
-            cell.CssClass = "bg-primary text-center";
+            cell.CssClass = "bg-info text-left";
             row.Cells.Add(cell);
             GridTransferHistory.Controls[0].Controls.AddAt(e.Row.RowIndex + RowIndex, row);
             RowIndex++;
