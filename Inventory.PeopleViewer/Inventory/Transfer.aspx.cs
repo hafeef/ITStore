@@ -23,6 +23,8 @@ namespace Inventory.PeopleViewer.Inventory
         List<TransferVM> _Transfers = new List<TransferVM>();
 
         public string[] SerialNumbers { get; set; }
+        public string SerialNumber { get; set; } = string.Empty;
+        public int RowIndex { get; set; } = 1;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -66,7 +68,12 @@ namespace Inventory.PeopleViewer.Inventory
 
         protected void linkButtonSearch_Click(object sender, EventArgs e)
         {
-
+            if (string.IsNullOrWhiteSpace(txtItemDescription.Text) || string.IsNullOrWhiteSpace(hiddenFieldItemID.Value))
+                throw new ApplicationException("Item description  field is required.");
+            _Transfers = _TransferRepository.SearchTransfers(int.Parse(hiddenFieldItemID.Value));
+            GridTransferHistory.Visible = true;
+            GridTransferHistory.DataSource = _Transfers;
+            GridTransferHistory.DataBind();
         }
 
         protected void linkButtonReset_Click(object sender, EventArgs e)
@@ -153,6 +160,52 @@ namespace Inventory.PeopleViewer.Inventory
                 throw new ApplicationException("From warehouse field is required");
             if (ddlToWarehouses.SelectedIndex == 0)
                 throw new ApplicationException("To warehouse field is required");
+        }
+
+        protected void GridTransferHistory_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+
+        }
+
+        protected void GridTransferHistory_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+
+        }
+
+        protected void GridTransferHistory_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                SerialNumber = DataBinder.Eval(e.Row.DataItem, "SerialNo").ToString();
+            }
+        }
+
+        protected void GridTransferHistory_RowCreated(object sender, GridViewRowEventArgs e)
+        {
+            bool IsHistoryRowNeedToAdd = false;
+
+            if ((SerialNumber != string.Empty) && (DataBinder.Eval(e.Row.DataItem, "SerialNo") != null))
+                if (SerialNumber != DataBinder.Eval(e.Row.DataItem, "SerialNo").ToString())
+                    IsHistoryRowNeedToAdd = true;
+
+            if ((SerialNumber == string.Empty) && (DataBinder.Eval(e.Row.DataItem, "SerialNo") != null))
+                AddGrouping(e);
+
+            if (IsHistoryRowNeedToAdd)
+                if (DataBinder.Eval(e.Row.DataItem, "SerialNo") != null)
+                    AddGrouping(e);
+        }
+
+        private void AddGrouping(GridViewRowEventArgs e)
+        {
+            GridViewRow row = new GridViewRow(0, 0, DataControlRowType.DataRow, DataControlRowState.Insert);
+            TableCell cell = new TableCell();
+            cell.Text = $"<strong>Serial No : { DataBinder.Eval(e.Row.DataItem, "SerialNo").ToString()}</strong>";
+            cell.ColumnSpan = 9;
+            cell.CssClass = "bg-primary text-center";
+            row.Cells.Add(cell);
+            GridTransferHistory.Controls[0].Controls.AddAt(e.Row.RowIndex + RowIndex, row);
+            RowIndex++;
         }
     }
 }

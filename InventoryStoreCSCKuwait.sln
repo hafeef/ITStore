@@ -59,6 +59,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Repositories.Inve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.ViewModels.Inventory", "Inventory.ViewModels.Inventory\Inventory.ViewModels.Inventory.csproj", "{13314C3C-D6C4-4AAE-BE7B-CDAC4CE1F260}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Biz", "Inventory.Biz\Inventory.Biz.csproj", "{6875A4D8-7794-4635-8182-7B34659A6D59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{13314C3C-D6C4-4AAE-BE7B-CDAC4CE1F260}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13314C3C-D6C4-4AAE-BE7B-CDAC4CE1F260}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13314C3C-D6C4-4AAE-BE7B-CDAC4CE1F260}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6875A4D8-7794-4635-8182-7B34659A6D59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6875A4D8-7794-4635-8182-7B34659A6D59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6875A4D8-7794-4635-8182-7B34659A6D59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6875A4D8-7794-4635-8182-7B34659A6D59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -142,5 +148,6 @@ Global
 		{933FD1BF-72EC-4749-93E0-4F5C51DAA5BC} = {6B5730E6-DCBD-4057-BB54-561FFD334CA8}
 		{5CF1CB0F-DB9F-4D77-8E0F-ADFB809573F9} = {5D43CC7A-7669-4D65-89FD-DE1F3AF4618C}
 		{13314C3C-D6C4-4AAE-BE7B-CDAC4CE1F260} = {1597B094-BE80-43F4-8CD9-E783D456D480}
+		{6875A4D8-7794-4635-8182-7B34659A6D59} = {92871F78-6E42-42F6-A44A-AC9D2426D0B3}
 	EndGlobalSection
 EndGlobal

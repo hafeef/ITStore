@@ -9,8 +9,8 @@ namespace Inventory.Contracts.Inventory
 {
     public interface ITransferRepository
     {
-        IList<TransferVM> SearchTransfers(int itemID);
-        IList<TransferVM> SearchTransfers(int itemID, string[] serialNos);
+        List<TransferVM> SearchTransfers(int itemID);
+        List<TransferVM> SearchTransfers(int itemID, string[] serialNos);
         void SaveTransfers(IEnumerable<TransferVM> transfers);
         void DeleteTransfers(IEnumerable<TransferVM> transfers);
     }

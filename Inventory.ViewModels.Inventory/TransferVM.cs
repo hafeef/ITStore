@@ -11,6 +11,7 @@ namespace Inventory.ViewModels.Inventory
     {
         public int TransferID { get; set; }
         public int ItemID { get; set; }
+        public string ItemDescription { get; set; }
         public string SerialNo { get; set; }
         public int FromWarehouseID { get; set; }
         public string FromWarehouseName { get; set; }
