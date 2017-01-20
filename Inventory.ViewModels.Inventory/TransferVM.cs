@@ -1,12 +1,14 @@
 ﻿using Core.Common.BaseTypes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Inventory.ViewModels.Inventory
 {
+    [Serializable, DebuggerDisplay("ID:{TransferID},FromWarehouse:{FromWarehouseName},ToWarehouse:{ToWarehouseName},FromRack:{FromRackName},ToRack:{ToRackName},FromShelf:{FromShelfName},ToShelf:{ToShelfName},EntityState:{EntityState}")]
     public class TransferVM : EntityBaseVM
     {
         public int TransferID { get; set; }

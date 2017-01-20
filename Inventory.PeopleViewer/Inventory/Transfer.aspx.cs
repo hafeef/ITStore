@@ -1,6 +1,7 @@
 ﻿using Core.Common.Enums;
 using Inventory.Contracts.Inventory;
 using Inventory.Data.Inventory;
+using Inventory.PeopleViewer.Keys;
 using Inventory.Repositories.Inventory;
 using Inventory.ViewModels.Inventory;
 using System;
@@ -68,20 +69,57 @@ namespace Inventory.PeopleViewer.Inventory
 
         protected void linkButtonSearch_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtItemDescription.Text) || string.IsNullOrWhiteSpace(hiddenFieldItemID.Value))
-                throw new ApplicationException("Item description  field is required.");
-
-            if (!string.IsNullOrWhiteSpace(txtSerialNo.Text))
+            try
             {
-                SerialNumbers = txtSerialNo.Text.Trim().Split(Environment.NewLine.ToCharArray());
-                _Transfers = _TransferRepository.SearchTransfers(int.Parse(hiddenFieldItemID.Value), SerialNumbers);
-            }
-            else
-                _Transfers = _TransferRepository.SearchTransfers(int.Parse(hiddenFieldItemID.Value));
+                if (string.IsNullOrWhiteSpace(txtItemDescription.Text) || string.IsNullOrWhiteSpace(hiddenFieldItemID.Value))
+                    throw new ApplicationException("Item description  field is required.");
 
-            GridTransferHistory.Visible = true;
-            GridTransferHistory.DataSource = _Transfers;
-            GridTransferHistory.DataBind();
+                if (!string.IsNullOrWhiteSpace(txtSerialNo.Text))
+                {
+                    SerialNumbers = txtSerialNo.Text.Trim().Split(Environment.NewLine.ToCharArray());
+                    _Transfers = _TransferRepository.SearchTransfers(int.Parse(hiddenFieldItemID.Value), SerialNumbers);
+                }
+                else
+                    _Transfers = _TransferRepository.SearchTransfers(int.Parse(hiddenFieldItemID.Value));
+                PutTransfersBackToViewState();
+                BindTransfers();
+            }
+            catch (ApplicationException Ae)
+            {
+                ucInformation.ShowErrorMessage(Ae.Message);
+            }
+            catch (Exception)
+            {
+                ucInformation.ShowErrorMessage();
+            }
+
+
+        }
+
+        private void BindTransfers()
+        {
+            try
+            {
+                GetTransfersFromViewState();
+                GridTransferHistory.Visible = true;
+                GridTransferHistory.DataSource = _Transfers;
+                GridTransferHistory.DataBind();
+            }
+            catch (Exception)
+            {
+                ucInformation.ShowErrorMessage();
+            }
+
+        }
+
+        private void GetTransfersFromViewState()
+        {
+            _Transfers = ViewState[ViewStateKeys.SearchResult] as List<TransferVM>;
+        }
+
+        private void PutTransfersBackToViewState()
+        {
+            ViewState[ViewStateKeys.SearchResult] = _Transfers;
         }
 
         protected void linkButtonReset_Click(object sender, EventArgs e)
@@ -93,6 +131,7 @@ namespace Inventory.PeopleViewer.Inventory
         {
             try
             {
+                GetTransfersFromViewState();
                 txtTransferredDate.Text = hiddenFieldItemID.Value = txtSerialNo.Text = txtItemDescription.Text = string.Empty;
                 ddlFromRacks.ClearSelection();
                 ddlToRacks.ClearSelection();
@@ -100,8 +139,10 @@ namespace Inventory.PeopleViewer.Inventory
                 ddlToshelves.ClearSelection();
                 ddlFromWarehouses.ClearSelection();
                 ddlToWarehouses.ClearSelection();
-                _Transfers.Clear();
+                if (_Transfers != null)
+                    _Transfers.Clear();
                 ViewState.Clear();
+                GridTransferHistory.Visible = false;
             }
             catch (Exception)
             {
@@ -172,12 +213,22 @@ namespace Inventory.PeopleViewer.Inventory
 
         protected void GridTransferHistory_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-
-        }
-
-        protected void GridTransferHistory_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-
+            try
+            {
+                var transferID = int.Parse(e.Keys["TransferID"].ToString());
+                GetTransfersFromViewState();
+                var transfer = _Transfers.Find(t => t.TransferID == transferID);
+                _Transfers.Remove(transfer);
+                transfer.EntityState = ObjectState.Deleted;
+                _TransferRepository.DeleteTransfers(transfer);
+                ucInformation.ShowDeleteInfomationMessage();
+                PutTransfersBackToViewState();
+                BindTransfers();
+            }
+            catch (Exception)
+            {
+                ucInformation.ShowErrorMessage();
+            }
         }
 
         protected void GridTransferHistory_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -190,18 +241,21 @@ namespace Inventory.PeopleViewer.Inventory
 
         protected void GridTransferHistory_RowCreated(object sender, GridViewRowEventArgs e)
         {
-            bool IsHistoryRowNeedToAdd = false;
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                bool IsHistoryRowNeedToAdd = false;
 
-            if ((SerialNumber != string.Empty) && (DataBinder.Eval(e.Row.DataItem, "SerialNo") != null))
-                if (SerialNumber != DataBinder.Eval(e.Row.DataItem, "SerialNo").ToString())
-                    IsHistoryRowNeedToAdd = true;
+                if ((SerialNumber != string.Empty) && (DataBinder.Eval(e.Row.DataItem, "SerialNo") != null))
+                    if (SerialNumber != DataBinder.Eval(e.Row.DataItem, "SerialNo").ToString())
+                        IsHistoryRowNeedToAdd = true;
 
-            if ((SerialNumber == string.Empty) && (DataBinder.Eval(e.Row.DataItem, "SerialNo") != null))
-                AddGrouping(e);
-
-            if (IsHistoryRowNeedToAdd)
-                if (DataBinder.Eval(e.Row.DataItem, "SerialNo") != null)
+                if ((SerialNumber == string.Empty) && (DataBinder.Eval(e.Row.DataItem, "SerialNo") != null))
                     AddGrouping(e);
+
+                if (IsHistoryRowNeedToAdd)
+                    if (DataBinder.Eval(e.Row.DataItem, "SerialNo") != null)
+                        AddGrouping(e);
+            }
         }
 
         private void AddGrouping(GridViewRowEventArgs e)

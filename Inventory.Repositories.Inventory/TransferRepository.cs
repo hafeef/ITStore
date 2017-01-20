@@ -18,11 +18,24 @@ namespace Inventory.Repositories.Inventory
     {
         public TransferRepository(InventoryContext context) : base(context)
         {
+
         }
 
-        public void DeleteTransfers(IEnumerable<TransferVM> transfers)
+        public void DeleteTransfers(TransferVM transfer)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (InventoryContext context = new InventoryContext())
+                {
+                    var dbTransfers = AutoMapper.Mapper.Map<Transfer>(transfer);
+                    context.Entry(dbTransfers).State = StateResolver.Resolve(dbTransfers.EntityState);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception Ex)
+            {
+                throw Ex;
+            }
         }
 
         public void SaveTransfers(IEnumerable<TransferVM> transfers)
@@ -61,10 +74,10 @@ namespace Inventory.Repositories.Inventory
                     IQueryable<Transfer> query;
                     if (serialNos != null)
                         query = context.Transfers.AsNoTracking()
-                                               .Where(t => t.ItemID == itemID && serialNos.Contains(t.SerialNo));
+                                               .Where(t => t.ItemID == itemID && serialNos.Contains(t.SerialNo) && t.IsActive == true);
                     else
                         query = context.Transfers.AsNoTracking()
-                                               .Where(t => t.ItemID == itemID);
+                                               .Where(t => t.ItemID == itemID && t.IsActive == true);
 
                     var dbTransfers = query.ToList();
                     var transfers = AutoMapper.Mapper.Map<IList<Transfer>, IList<TransferVM>>(dbTransfers);
@@ -80,9 +93,9 @@ namespace Inventory.Repositories.Inventory
                                                 .ToArray();
 
                     var items = adminContext.Items.AsNoTracking().Where(i => i.ItemID == itemID).ToList();
-                    var warehouses = adminContext.Warehouses.Where(wh => warehouseIDs.Contains(wh.WareHouseID)).ToList();
-                    var racks = adminContext.Racks.Where(r => rackIDs.Contains(r.RackID)).ToList();
-                    var shelves = adminContext.Shelves.Where(s => shelfIDs.Contains(s.ShelfID)).ToList();
+                    var warehouses = adminContext.Warehouses.AsNoTracking().Where(wh => warehouseIDs.Contains(wh.WareHouseID)).ToList();
+                    var racks = adminContext.Racks.AsNoTracking().Where(r => rackIDs.Contains(r.RackID)).ToList();
+                    var shelves = adminContext.Shelves.AsNoTracking().Where(s => shelfIDs.Contains(s.ShelfID)).ToList();
 
                     transfers.Join(items, tvm => tvm.ItemID, i => i.ItemID, (tvm, i) => { tvm.ItemDescription = i.Description; return tvm; })
                                            .ToList();

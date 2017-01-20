@@ -110,12 +110,9 @@
                                 <div class="col-md-12">
                                     <asp:GridView ID="GridTransferHistory" DataKeyNames="TransferID" AutoGenerateColumns="false"
                                         CssClass="table table-striped table-bordered table-hover table-fixed" Visible="false" runat="server"
-                                        AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>"
-                                        OnRowDeleting="GridTransferHistory_RowDeleting" AllowSorting="true"
-                                        OnPageIndexChanging="GridTransferHistory_PageIndexChanging"
-                                        OnRowDataBound="GridTransferHistory_RowDataBound" OnRowCreated="GridTransferHistory_RowCreated"
-                                        EmptyDataText="No Records Found." GridLines="Vertical">
+                                        OnRowDeleting="GridTransferHistory_RowDeleting" EmptyDataText="No Records Found.">
                                         <Columns>
+                                            <asp:BoundField HeaderText="Serial No" DataField="SerialNo" />
                                             <asp:BoundField HeaderText="From Warehouse" DataField="FromWarehouseName" />
                                             <asp:BoundField HeaderText="To Warehouse" DataField="ToWarehouseName" />
                                             <asp:BoundField HeaderText="From Rack" DataField="FromRackName" />

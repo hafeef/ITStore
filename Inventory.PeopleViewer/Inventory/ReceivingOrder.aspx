@@ -65,7 +65,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 table-responsive">
-                                <asp:GridView Visible="false" DataKeyNames="PurchaseOrderLineItemID,PurchaseOrderID,ItemID" ID="gridLineItems" AutoGenerateColumns="false"
+                                <asp:GridView Visible="false" DataKeyNames="PurchaseOrderLineItemID,PurchaseOrderID,ItemID" ID="gridLineItems" 
+                                    AutoGenerateColumns="false"
                                     CssClass="table table-striped table-bordered table-hover" OnRowDataBound="gridLineItems_RowDataBound"
                                     runat="server">
                                     <Columns>

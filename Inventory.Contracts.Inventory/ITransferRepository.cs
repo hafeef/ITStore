@@ -12,6 +12,6 @@ namespace Inventory.Contracts.Inventory
         List<TransferVM> SearchTransfers(int itemID);
         List<TransferVM> SearchTransfers(int itemID, string[] serialNos);
         void SaveTransfers(IEnumerable<TransferVM> transfers);
-        void DeleteTransfers(IEnumerable<TransferVM> transfers);
+        void DeleteTransfers(TransferVM transfer);
     }
 }
