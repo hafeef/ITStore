@@ -8,6 +8,9 @@ using Inventory.ViewModels.Inventory;
 using System.Transactions;
 using Core.Common.Resolvers;
 using Core.Common.Enums;
+using System.Data.Entity.Infrastructure;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace Inventory.Repositories.Inventory
 {
@@ -57,7 +60,41 @@ namespace Inventory.Repositories.Inventory
             }
             catch (Exception Ex)
             {
-                throw Ex;
+
+                HandleException(Ex);
+            }
+        }
+
+        public virtual void HandleException(Exception exception)
+        {
+
+            DbUpdateException dbUpdateEx = exception as DbUpdateException;
+            if (dbUpdateEx != null)
+            {
+                if (dbUpdateEx != null
+                        && dbUpdateEx.InnerException != null
+                        && dbUpdateEx.InnerException.InnerException != null)
+                {
+                    SqlException sqlException = dbUpdateEx.InnerException.InnerException as SqlException;
+                    if (sqlException != null)
+                    {
+                        switch (sqlException.Number)
+                        {
+                            case 2627:  // Unique constraint error
+                            case 547:   // Constraint check violation
+                            case 2601:
+                                {
+                                    int startIndex = sqlException.Message.IndexOf('(');
+                                    int lastIndex = sqlException.Message.IndexOf(')');
+                                    string serialNo = sqlException.Message.Substring(startIndex, lastIndex - startIndex + 1);
+                                    throw new ApplicationException($"The {serialNo} serial number alread exists in the database");
+                                }
+                            default:
+                                // A custom exception of yours for other DB issues
+                                throw exception;
+                        }
+                    }
+                }
             }
         }
 
@@ -133,7 +170,7 @@ namespace Inventory.Repositories.Inventory
             }
         }
 
-       
+
 
         public bool IsPurchaseOrderExists(string poOrContractNumber)
         {
@@ -151,6 +188,25 @@ namespace Inventory.Repositories.Inventory
             catch (Exception Ex)
             {
                 throw Ex;
+            }
+        }
+
+        public string[] AreSerialNumbersExists(string[] serialNo)
+        {
+            try
+            {
+                using (InventoryContext context = new InventoryContext())
+                {
+                    return context.ReceivedLineItems
+                                  .Where(ri => serialNo.Contains(ri.SerialNo))
+                                  .Select(ri => ri.SerialNo)
+                                  .ToArray();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

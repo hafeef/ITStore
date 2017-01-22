@@ -8,7 +8,7 @@ namespace Inventory.Contracts.Inventory
         PurchaseOrderVM FindPurchaseOrderByPoOrContractNumber(string poOrContractNumber);
         PurchaseOrderVM FindPurchaseOrderIncludeReceivedItemsByPoOrContractNumber(string poOrContractNumber);
         void UpdatePurchaseOrder(PurchaseOrderVM newPurchaseOrder);
-        
         bool IsPurchaseOrderExists(string poOrContractNumber);
+        string[] AreSerialNumbersExists(string[] serialNo);
     }
 }

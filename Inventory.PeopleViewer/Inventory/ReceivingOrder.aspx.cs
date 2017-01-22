@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using Inventory.ViewModels.Inventory;
 using Core.Common.BaseTypes;
 using Core.Common.Enums;
+using System.Text;
 
 namespace Inventory.PeopleViewer.Inventory
 {
@@ -110,7 +111,7 @@ namespace Inventory.PeopleViewer.Inventory
             {
                 if (string.IsNullOrWhiteSpace(txtPoOrContractNumber.Text.Trim()))
                     throw new ApplicationException("The po or contract no is required.");
-
+                ClearPurchaseOrder();
                 _PurchaseOrder = _purchaseOrderRepository.FindPurchaseOrderIncludeReceivedItemsByPoOrContractNumber(txtPoOrContractNumber.Text.Trim());
                 if (_PurchaseOrder != null)
                 {
@@ -130,6 +131,11 @@ namespace Inventory.PeopleViewer.Inventory
                         divReceivedItems.Visible = true;
                         PutPurchaseOrderBackToViewState();
                         BindReceivedItems();
+                    }
+                    else
+                    {
+                        GridViewReceivedItems.Visible = false;
+                        divReceivedItems.Visible = false;
                     }
                     if (_PurchaseOrder.PurchaseOrderLineItems.Count > 0)
                     {
@@ -236,6 +242,25 @@ namespace Inventory.PeopleViewer.Inventory
                     SetRowCssClassToDanger(row);
                     throw new ApplicationException("Serial numbers should be equal to the receiving quantity of an item.");
                 }
+
+                if (SerialNumbers.Distinct().Count() != SerialNumbers.Count())
+                {
+                    SetRowCssClassToDanger(row);
+                    throw new ApplicationException("Threr are duplicate serial numbers. Please provide unique serial numbers in order to receive an item.");
+                }
+
+                var existedSerialNumbers = _purchaseOrderRepository.AreSerialNumbersExists(SerialNumbers);
+                if (existedSerialNumbers != null && existedSerialNumbers.Length > 0)
+                {
+                    SetRowCssClassToDanger(row);
+                    StringBuilder errorMessageBuilder = new StringBuilder();
+                    errorMessageBuilder.Append("Below mentioned serial numbers are alread exists in the database.<br/>");
+                    foreach (var srNo in existedSerialNumbers)
+                    {
+                        errorMessageBuilder.Append($"{srNo}<br/>");
+                    }
+                    throw new ApplicationException(errorMessageBuilder.ToString());
+                }
                 IsValidGridRow = true;
                 IsEmptyGridRow = false;
             }
@@ -267,7 +292,6 @@ namespace Inventory.PeopleViewer.Inventory
         {
             try
             {
-                GetPurchaseOrderFromViewState();
                 txtPoCreatedDate.Text = txtPoOrContractNumber.Text = string.Empty;
                 ddlPOType.ClearSelection();
                 ddlVendors.ClearSelection();
@@ -275,16 +299,25 @@ namespace Inventory.PeopleViewer.Inventory
                 GridViewReceivedItems.Visible = false;
                 GridViewReceivedItems.PageIndex = 0;
                 divReceivedItems.Visible = false;
-                _PurchaseOrder.ReceivedLineItems.Clear();
-                _PurchaseOrder.PurchaseOrderLineItems.Clear();
-                _PurchaseOrder = null;
-                PutPurchaseOrderBackToViewState();
+                ClearPurchaseOrder();
                 ViewState.Clear();
             }
             catch (Exception)
             {
                 ucInformation.ShowErrorMessage();
             }
+        }
+
+        private void ClearPurchaseOrder()
+        {
+            GetPurchaseOrderFromViewState();
+            if (_PurchaseOrder != null)
+            {
+                _PurchaseOrder.ReceivedLineItems.Clear();
+                _PurchaseOrder.PurchaseOrderLineItems.Clear();
+                _PurchaseOrder = null;
+            }
+            PutPurchaseOrderBackToViewState();
         }
 
         private void ClearPurchaseOrderLineItemsControls()
