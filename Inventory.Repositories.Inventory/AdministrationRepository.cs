@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Inventory.ViewModels.Inventory;
 using Inventory.Data.Inventory;
 using Inventory.DomainClasses.Inventory;
@@ -100,6 +98,38 @@ namespace Inventory.Repositories.Inventory
                 {
                     var shelves = context.Shelves.AsNoTracking().ToList();
                     return AutoMapper.Mapper.Map<List<Shelf>, List<ShelfVM>>(shelves);
+                }
+            }
+            catch (Exception Ex)
+            {
+                throw Ex;
+            }
+        }
+
+        public List<EmployeeVM> GetAllEmployee()
+        {
+            try
+            {
+                using (AdminReferenceContext context = new AdminReferenceContext())
+                {
+                    var shelves = context.Employees.AsNoTracking().ToList();
+                    return AutoMapper.Mapper.Map<List<Employee>, List<EmployeeVM>>(shelves);
+                }
+            }
+            catch (Exception Ex)
+            {
+                throw Ex;
+            }
+        }
+
+        public List<EmployeeVM> FindEmployeeByCivilID(string civilID)
+        {
+            try
+            {
+                using (AdminReferenceContext context = new AdminReferenceContext())
+                {
+                    var shelves = context.Employees.AsNoTracking().Where(e => e.CivilID.StartsWith(civilID)).ToList();
+                    return AutoMapper.Mapper.Map<List<Employee>, List<EmployeeVM>>(shelves);
                 }
             }
             catch (Exception Ex)

@@ -3,14 +3,11 @@ using Inventory.DomainClasses.Inventory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Inventory.Data.Inventory;
 using Inventory.ViewModels.Inventory;
 using System.Transactions;
 using Core.Common.Enums;
 using Core.Common.Resolvers;
-using AutoMapper.QueryableExtensions;
 
 namespace Inventory.Repositories.Inventory
 {

@@ -1,8 +1,7 @@
 namespace Inventory.PeopleViewer.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class InitDb : DbMigration
     {
         public override void Up()

@@ -18,6 +18,7 @@ namespace Inventory.Data.Inventory
         public DbSet<PurchaseOrderLineItem> PurchaseOrderLineItems { get; set; }
         public DbSet<ReceivedLineItem> ReceivedLineItems { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
+        public DbSet<InventoryIssue> InventoryIssues { get; set; }
         public override int SaveChanges()
         {
             var dateTimeHistories = ChangeTracker.Entries()
@@ -43,14 +44,22 @@ namespace Inventory.Data.Inventory
         {
             modelBuilder.Entity<PurchaseOrderLineItem>().Ignore(li => li.ItemDescription);
             modelBuilder.Entity<PurchaseOrderLineItem>().Ignore(li => li.PartNumber);
+
             modelBuilder.Entity<ReceivedLineItem>().Ignore(rli => rli.ItemDescription);
             modelBuilder.Entity<ReceivedLineItem>().Ignore(rli => rli.PartNumber);
             modelBuilder.Entity<ReceivedLineItem>().Property(rli => rli.SerialNo).HasMaxLength(100);
-            modelBuilder.Entity<ReceivedLineItem>().Property(rli => rli.SerialNo).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
-            modelBuilder.Entity<PurchaseOrder>().Property(li => li.PoOrContractNumber).HasMaxLength(100);
-            modelBuilder.Entity<PurchaseOrder>().Property(li => li.PoOrContractNumber).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
+            modelBuilder.Entity<ReceivedLineItem>().Property(rli => rli.SerialNo).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("UI_ReceivedLineItem_SerialNo") { IsUnique = true }));
+
+            modelBuilder.Entity<ReceivedLineItem>().Property(rli => rli.SerialNo).HasMaxLength(100);
+            modelBuilder.Entity<ReceivedLineItem>().Property(rli => rli.SerialNo).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("UI_ReceivedLineItem_SerialNo") { IsUnique = true }));
+
+            modelBuilder.Entity<InventoryIssue>().Property(issue => issue.SerialNo).HasMaxLength(100);
+            modelBuilder.Entity<InventoryIssue>().Property(issue => issue.HelpDeskTicket).HasMaxLength(50);
+            modelBuilder.Entity<InventoryIssue>().Property(issue => issue.SerialNo).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("NIX_InventoryIssue_SerialNo") { IsClustered = false }));
+
             modelBuilder.Entity<Transfer>().Property(t => t.SerialNo).HasMaxLength(100);
-            modelBuilder.Entity<Transfer>().Property(t => t.SerialNo).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
+            modelBuilder.Entity<Transfer>().Property(t => t.SerialNo).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("NIX_Transfer_SerialNo") { IsClustered = false }));
+
             modelBuilder.HasDefaultSchema("Inventory");
         }
     }

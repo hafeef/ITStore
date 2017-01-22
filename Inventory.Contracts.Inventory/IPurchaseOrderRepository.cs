@@ -1,5 +1,4 @@
 ﻿using Inventory.ViewModels.Inventory;
-using System.Collections.Generic;
 
 namespace Inventory.Contracts.Inventory
 {

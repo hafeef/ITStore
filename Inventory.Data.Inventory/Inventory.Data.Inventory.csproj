@@ -85,6 +85,22 @@
     <Compile Include="Migrations\201701181524562_AddedTransferEntity.Designer.cs">
       <DependentUpon>201701181524562_AddedTransferEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701200808106_AddedEmployeeView.cs" />
+    <Compile Include="Migrations\201701200808106_AddedEmployeeView.Designer.cs">
+      <DependentUpon>201701200808106_AddedEmployeeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701220807356_AddedNewIndexes.cs" />
+    <Compile Include="Migrations\201701220807356_AddedNewIndexes.Designer.cs">
+      <DependentUpon>201701220807356_AddedNewIndexes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701220817075_AddedNewIndexes1.cs" />
+    <Compile Include="Migrations\201701220817075_AddedNewIndexes1.Designer.cs">
+      <DependentUpon>201701220817075_AddedNewIndexes1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701220819143_HelpDeskTicketLength.cs" />
+    <Compile Include="Migrations\201701220819143_HelpDeskTicketLength.Designer.cs">
+      <DependentUpon>201701220819143_HelpDeskTicketLength.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -133,6 +149,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701181524562_AddedTransferEntity.resx">
       <DependentUpon>201701181524562_AddedTransferEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701200808106_AddedEmployeeView.resx">
+      <DependentUpon>201701200808106_AddedEmployeeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701220807356_AddedNewIndexes.resx">
+      <DependentUpon>201701220807356_AddedNewIndexes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701220817075_AddedNewIndexes1.resx">
+      <DependentUpon>201701220817075_AddedNewIndexes1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701220819143_HelpDeskTicketLength.resx">
+      <DependentUpon>201701220819143_HelpDeskTicketLength.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

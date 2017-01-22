@@ -1,8 +1,7 @@
 namespace Inventory.Data.Inventory.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class AddedUniqueIndexToSerialNoProp : DbMigration
     {
         public override void Up()

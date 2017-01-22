@@ -71,6 +71,9 @@ namespace Inventory.PeopleViewer.App_Start
                 config.CreateMap<ViewModels.Inventory.ItemVM, DomainClasses.Inventory.Item>();
                 config.CreateMap<DomainClasses.Inventory.Item, ViewModels.Inventory.ItemVM>();
 
+                config.CreateMap<ViewModels.Inventory.EmployeeVM, DomainClasses.Inventory.Employee>();
+                config.CreateMap<DomainClasses.Inventory.Employee, ViewModels.Inventory.EmployeeVM>();
+
                 config.CreateMap<PurchaseOrderVM, PurchaseOrder>();
                 config.CreateMap<PurchaseOrder, PurchaseOrderVM>();
 

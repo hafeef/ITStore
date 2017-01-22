@@ -1,6 +1,5 @@
 ﻿using Core.Common.BaseTypes;
 using System;
-using System.Collections.Generic;
 
 namespace Inventory.DomainClasses.Inventory
 {

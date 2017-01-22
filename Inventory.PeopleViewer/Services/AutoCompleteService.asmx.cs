@@ -1,5 +1,4 @@
 ﻿using Inventory.Contracts.Inventory;
-using Inventory.Data.Inventory;
 using Inventory.Repositories.Inventory;
 using System.Collections.Generic;
 using System.Web.Script.Services;
@@ -26,6 +25,19 @@ namespace Inventory.PeopleViewer.Services
             foreach (var item in items)
             {
                 string resutl = AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(item.Description, item.ItemID.ToString());
+                resutls.Add(resutl);
+            }
+            return resutls;
+        }
+
+        [WebMethod, ScriptMethod]
+        public List<string> FindEmployeeByCivilID(string prefixText, int count)
+        {
+            var employees = _administrationRepository.FindEmployeeByCivilID(prefixText);
+            var resutls = new List<string>();
+            foreach (var emp in employees)
+            {
+                string resutl = AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(emp.CivilID, $"{emp.EmployeeID},{emp.Name}");
                 resutls.Add(resutl);
             }
             return resutls;

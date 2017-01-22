@@ -10,8 +10,6 @@ using System.Web.UI.WebControls;
 using Inventory.ViewModels.Inventory;
 using Core.Common.BaseTypes;
 using Core.Common.Enums;
-using System.Globalization;
-using System.Threading;
 
 namespace Inventory.PeopleViewer.Inventory
 {

@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmployeeVM.cs" />
+    <Compile Include="InventoryIssueVM.cs" />
     <Compile Include="ItemVM.cs" />
     <Compile Include="LocationVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

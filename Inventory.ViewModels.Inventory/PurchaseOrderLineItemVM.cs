@@ -1,6 +1,5 @@
 ﻿using Core.Common.BaseTypes;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Inventory.ViewModels.Inventory

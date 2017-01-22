@@ -16,6 +16,7 @@ namespace Inventory.Data.Inventory
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<Rack> Racks { get; set; }
         public DbSet<Shelf> Shelves { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -26,6 +27,7 @@ namespace Inventory.Data.Inventory
             modelBuilder.Entity<Warehouse>().ToTable("ActiveWarehouses", "Inventory");
             modelBuilder.Entity<Rack>().ToTable("ActiveRacks", "Inventory");
             modelBuilder.Entity<Shelf>().ToTable("ActiveShelves", "Inventory");
+            modelBuilder.Entity<Employee>().ToTable("ActiveEmployees", "Inventory");
             base.OnModelCreating(modelBuilder);
         }
     }

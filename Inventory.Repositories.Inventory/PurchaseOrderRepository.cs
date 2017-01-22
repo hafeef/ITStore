@@ -5,7 +5,6 @@ using Inventory.Contracts.Inventory;
 using Inventory.DomainClasses.Inventory;
 using Inventory.Data.Inventory;
 using Inventory.ViewModels.Inventory;
-using System.Collections.Generic;
 using System.Transactions;
 using Core.Common.Resolvers;
 using Core.Common.Enums;
