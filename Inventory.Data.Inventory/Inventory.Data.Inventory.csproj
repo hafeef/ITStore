@@ -101,6 +101,14 @@
     <Compile Include="Migrations\201701220819143_HelpDeskTicketLength.Designer.cs">
       <DependentUpon>201701220819143_HelpDeskTicketLength.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701221520244_AddedIsReturnedToIssueTable.cs" />
+    <Compile Include="Migrations\201701221520244_AddedIsReturnedToIssueTable.Designer.cs">
+      <DependentUpon>201701221520244_AddedIsReturnedToIssueTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701231447549_AddedIssuedAndReturnedDatesToInventoryIssuesTable.cs" />
+    <Compile Include="Migrations\201701231447549_AddedIssuedAndReturnedDatesToInventoryIssuesTable.Designer.cs">
+      <DependentUpon>201701231447549_AddedIssuedAndReturnedDatesToInventoryIssuesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -161,6 +169,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701220819143_HelpDeskTicketLength.resx">
       <DependentUpon>201701220819143_HelpDeskTicketLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701221520244_AddedIsReturnedToIssueTable.resx">
+      <DependentUpon>201701221520244_AddedIsReturnedToIssueTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701231447549_AddedIssuedAndReturnedDatesToInventoryIssuesTable.resx">
+      <DependentUpon>201701231447549_AddedIssuedAndReturnedDatesToInventoryIssuesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

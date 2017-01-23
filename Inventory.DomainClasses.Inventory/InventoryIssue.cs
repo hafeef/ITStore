@@ -1,4 +1,5 @@
 ﻿using Core.Common.BaseTypes;
+using System;
 
 namespace Inventory.DomainClasses.Inventory
 {
@@ -9,5 +10,8 @@ namespace Inventory.DomainClasses.Inventory
         public int ItemID { get; set; }
         public string SerialNo { get; set; }
         public string HelpDeskTicket { get; set; }
+        public bool IsReturned { get; set; }
+        public DateTime? IssuedDate { get; set; }
+        public DateTime? ReturnedDate { get; set; }
     }
 }

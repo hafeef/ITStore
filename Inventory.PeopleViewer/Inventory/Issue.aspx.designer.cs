@@ -31,13 +31,13 @@ namespace Inventory.PeopleViewer.Inventory {
         protected global::System.Web.UI.WebControls.TextBox txtCivilID;
         
         /// <summary>
-        /// AutoCompleteExtenderItemDescription control.
+        /// AutoCompleteExtenderCivilID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.AutoCompleteExtender AutoCompleteExtenderItemDescription;
+        protected global::AjaxControlToolkit.AutoCompleteExtender AutoCompleteExtenderCivilID;
         
         /// <summary>
         /// txtEmployeeName control.
@@ -56,15 +56,6 @@ namespace Inventory.PeopleViewer.Inventory {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtHelpDeskTicket;
-        
-        /// <summary>
-        /// linkButtonSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton linkButtonSearch;
         
         /// <summary>
         /// linkButtonSave control.

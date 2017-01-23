@@ -15,12 +15,12 @@
                                 <div class="row">
                                     <asp:Label runat="server" AssociatedControlID="txtCivilID" CssClass="col-md-2 control-label">Civil ID</asp:Label>
                                     <div class="col-md-3">
-                                        <asp:TextBox runat="server" ID="txtCivilID" placeholder="Civil ID" CssClass="form-control"></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="txtCivilID" AutoPostBack="true" OnTextChanged="txtCivilID_TextChanged" placeholder="Civil ID" CssClass="form-control"></asp:TextBox>
                                         <asp:RequiredFieldValidator Display="Dynamic" runat="server" ValidationGroup="Create" ControlToValidate="txtCivilID"
                                             CssClass="text-danger" ErrorMessage="The civil id is required." />
-                                        <asp:RequiredFieldValidator runat="server" ValidationGroup="Search" ControlToValidate="txtCivilID"
+                                        <asp:RequiredFieldValidator runat="server" ValidationGroup="Add" ControlToValidate="txtCivilID"
                                             CssClass="text-danger" ErrorMessage="The civil id is required." />
-                                        <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtenderItemDescription" TargetControlID="txtCivilID"
+                                        <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtenderCivilID" TargetControlID="txtCivilID"
                                             ServiceMethod="FindEmployeeByCivilID" MinimumPrefixLength="2" CompletionInterval="10"
                                             EnableCaching="true" FirstRowSelected="false" OnClientItemSelected="EmployeeSelected"
                                             CompletionSetCount="20" ServicePath="~/Services/AutoCompleteService.asmx" ShowOnlyCurrentWordInCompletionListItem="true"
@@ -40,9 +40,9 @@
                                             CssClass="text-danger" ErrorMessage="The helpdesk ticket is required." />
                                     </div>
                                     <div class="col-md-offset-2 col-md-3">
-                                        <asp:LinkButton CssClass="btn btn-primary" ID="linkButtonSearch" ValidationGroup="Search" OnClick="linkButtonSearch_Click" runat="server">
+                                        <%--<asp:LinkButton CssClass="btn btn-primary" ID="linkButtonSearch" ValidationGroup="Search" OnClick="linkButtonSearch_Click" runat="server">
                                             <span class="glyphicon glyphicon-search"></span> Search
-                                        </asp:LinkButton>
+                                        </asp:LinkButton>--%>
                                         <asp:LinkButton CssClass="btn btn-primary" ID="linkButtonSave" ValidationGroup="Create" OnClick="linkButtonSave_Click" runat="server">
                                             <span class="glyphicon glyphicon-floppy-save"></span> Save
                                         </asp:LinkButton>
@@ -57,11 +57,11 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <asp:GridView ID="GridInventoryIssue" DataKeyNames="InventoryIssueID" AutoGenerateColumns="false" ShowFooter="true"
+                                    <asp:GridView ID="GridInventoryIssue" DataKeyNames="InventoryIssueID,SerialNo,ItemID" AutoGenerateColumns="false" ShowFooter="true"
                                         CssClass="table table-striped table-bordered table-hover" runat="server" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>"
                                         OnRowDeleting="GridInventoryIssue_RowDeleting" OnRowUpdating="GridInventoryIssue_RowUpdating" AllowSorting="true"
                                         OnRowCancelingEdit="GridInventoryIssue_RowCancelingEdit" OnPageIndexChanging="GridInventoryIssue_PageIndexChanging"
-                                        OnRowEditing="GridInventoryIssue_RowEditing" OnRowDataBound="GridInventoryIssue_RowDataBound" EmptyDataText="No Records Found.">
+                                        OnRowEditing="GridInventoryIssue_RowEditing" Visible="false" OnRowDataBound="GridInventoryIssue_RowDataBound" EmptyDataText="No Records Found.">
                                         <Columns>
                                             <asp:TemplateField HeaderText="Item">
                                                 <ItemTemplate>

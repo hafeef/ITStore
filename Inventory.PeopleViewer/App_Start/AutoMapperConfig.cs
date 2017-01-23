@@ -87,6 +87,9 @@ namespace Inventory.PeopleViewer.App_Start
 
                 config.CreateMap<TransferVM, Transfer>();
                 config.CreateMap<Transfer, TransferVM>();
+
+                config.CreateMap<InventoryIssueVM, InventoryIssue>();
+                config.CreateMap<InventoryIssue, InventoryIssueVM>();
                 #endregion
 
 
