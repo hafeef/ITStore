@@ -16,8 +16,6 @@
                                     <asp:Label runat="server" AssociatedControlID="txtCivilID" CssClass="col-md-2 control-label">Civil ID</asp:Label>
                                     <div class="col-md-3">
                                         <asp:TextBox runat="server" ID="txtCivilID" AutoPostBack="true" OnTextChanged="txtCivilID_TextChanged" placeholder="Civil ID" CssClass="form-control"></asp:TextBox>
-                                        <asp:RequiredFieldValidator Display="Dynamic" runat="server" ValidationGroup="Create" ControlToValidate="txtCivilID"
-                                            CssClass="text-danger" ErrorMessage="The civil id is required." />
                                         <asp:RequiredFieldValidator runat="server" ValidationGroup="Add" ControlToValidate="txtCivilID"
                                             CssClass="text-danger" ErrorMessage="The civil id is required." />
                                         <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtenderCivilID" TargetControlID="txtCivilID"
@@ -40,9 +38,6 @@
                                             CssClass="text-danger" ErrorMessage="The helpdesk ticket is required." />
                                     </div>
                                     <div class="col-md-offset-2 col-md-3">
-                                        <%--<asp:LinkButton CssClass="btn btn-primary" ID="linkButtonSearch" ValidationGroup="Search" OnClick="linkButtonSearch_Click" runat="server">
-                                            <span class="glyphicon glyphicon-search"></span> Search
-                                        </asp:LinkButton>--%>
                                         <asp:LinkButton CssClass="btn btn-primary" ID="linkButtonSave" ValidationGroup="Create" OnClick="linkButtonSave_Click" runat="server">
                                             <span class="glyphicon glyphicon-floppy-save"></span> Save
                                         </asp:LinkButton>
@@ -68,7 +63,7 @@
                                                     <%# Eval("ItemDescription") %>
                                                 </ItemTemplate>
                                                 <FooterTemplate>
-                                                    <asp:TextBox ID="txtItemDescription" placeholder="Item Description" TextMode="Search" ValidationGroup="Create" CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtItemDescription" placeholder="Item Description" TextMode="Search" ValidationGroup="Add" CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Add" runat="server" ControlToValidate="txtItemDescription"
                                                         CssClass="text-danger" ErrorMessage="The item field is required." />
                                                     <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtenderItemDescription" TargetControlID="txtItemDescription"
@@ -80,7 +75,7 @@
                                                 </FooterTemplate>
                                                 <EditItemTemplate>
                                                     <asp:TextBox ID="txtItemDescription" TextMode="Search" placeholder="Item Description" Text='<%# Eval("ItemDescription") %>' ValidationGroup="Update" CssClass="form-control" runat="server" />
-                                                    <asp:RequiredFieldValidator ValidationGroup="Add" runat="server" ControlToValidate="txtItemDescription"
+                                                    <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtItemDescription"
                                                         CssClass="text-danger" ErrorMessage="The item field is required." />
                                                     <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtenderItemDescription" TargetControlID="txtItemDescription"
                                                         ServiceMethod="GetItemDescription" MinimumPrefixLength="2" CompletionInterval="10"
@@ -95,14 +90,36 @@
                                                     <%# Eval("SerialNo") %>
                                                 </ItemTemplate>
                                                 <FooterTemplate>
-                                                    <asp:TextBox ID="txtSerialNo" TextMode="Search" placeholder="Serial No" ValidationGroup="Create" CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtSerialNo" TextMode="Search" placeholder="Serial No" ValidationGroup="Add" CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Add" runat="server" ControlToValidate="txtSerialNo"
                                                         CssClass="text-danger" ErrorMessage="The serial no is required." />
                                                 </FooterTemplate>
                                                 <EditItemTemplate>
                                                     <asp:TextBox ID="txtSerialNo" TextMode="Search" placeholder="Serial No" Text='<%# Eval("SerialNo") %>' ValidationGroup="Update" CssClass="form-control" runat="server" />
-                                                    <asp:RequiredFieldValidator ValidationGroup="Add" runat="server" ControlToValidate="txtSerialNo"
+                                                    <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtSerialNo"
                                                         CssClass="text-danger" ErrorMessage="The serial no is required." />
+                                                </EditItemTemplate>
+                                            </asp:TemplateField>
+
+                                            <asp:TemplateField HeaderText="HelpDesk Ticket">
+                                                <ItemTemplate>
+                                                    <%# Eval("HelpDeskTicket") %>
+                                                </ItemTemplate>
+                                                <EditItemTemplate>
+                                                    <asp:TextBox ID="txtHelpDeskTicket" TextMode="Search" placeholder="Serial No" Text='<%# Eval("HelpDeskTicket") %>' ValidationGroup="Update" CssClass="form-control" runat="server" />
+                                                    <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtHelpDeskTicket"
+                                                        CssClass="text-danger" ErrorMessage="The helpdesk ticket is required." />
+                                                </EditItemTemplate>
+                                            </asp:TemplateField>
+
+                                            <asp:TemplateField HeaderText="Is Returned">
+                                                <ItemTemplate>
+                                                    <%# (bool.Parse(Eval("IsReturned").ToString())) ? "Yes" : "No" %>
+                                                </ItemTemplate>
+                                                <EditItemTemplate>
+                                                    <div class="text-center">
+                                                        <asp:CheckBox ID="chkIsReturned" Checked='<%# Eval("IsReturned") %>' CssClass="checkbox" runat="server" />
+                                                    </div>
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Action Links">
@@ -126,7 +143,7 @@
                                                 </EditItemTemplate>
                                                 <FooterTemplate>
                                                     <asp:LinkButton CssClass="btn btn-primary" ValidationGroup="Add" ID="linkButtonAdd" OnClick="linkButtonAdd_Click" runat="server">
-                                            <span class="glyphicon glyphicon-floppy-save"></span> Add
+                                            <span class="glyphicon glyphicon-plus"></span> Add
                                                     </asp:LinkButton>
                                                 </FooterTemplate>
                                             </asp:TemplateField>

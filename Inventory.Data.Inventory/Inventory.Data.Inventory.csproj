@@ -109,6 +109,10 @@
     <Compile Include="Migrations\201701231447549_AddedIssuedAndReturnedDatesToInventoryIssuesTable.Designer.cs">
       <DependentUpon>201701231447549_AddedIssuedAndReturnedDatesToInventoryIssuesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701241123180_AddedReceivedLineItemIdToInventoryIssueTable.cs" />
+    <Compile Include="Migrations\201701241123180_AddedReceivedLineItemIdToInventoryIssueTable.Designer.cs">
+      <DependentUpon>201701241123180_AddedReceivedLineItemIdToInventoryIssueTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -175,6 +179,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701231447549_AddedIssuedAndReturnedDatesToInventoryIssuesTable.resx">
       <DependentUpon>201701231447549_AddedIssuedAndReturnedDatesToInventoryIssuesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701241123180_AddedReceivedLineItemIdToInventoryIssueTable.resx">
+      <DependentUpon>201701241123180_AddedReceivedLineItemIdToInventoryIssueTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -13,5 +13,6 @@ namespace Inventory.DomainClasses.Inventory
         public bool IsReturned { get; set; }
         public DateTime? IssuedDate { get; set; }
         public DateTime? ReturnedDate { get; set; }
+        public int ReceivedLineItemID { get; set; }
     }
 }

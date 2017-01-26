@@ -127,6 +127,7 @@ namespace Inventory.PeopleViewer.Inventory
                         _PurchaseOrder.ReceivedLineItems.Join(_Warehouses, rli => rli.WarehouseID, wh => wh.WareHouseID, (rli, w) => { rli.WarehouseName = w.Name; return rli; }).ToList();
                         _PurchaseOrder.ReceivedLineItems.Join(_Shelves, rli => rli.ShelfID, sh => sh.ShelfID, (rli, sh) => { rli.ShelfName = sh.Name; return rli; }).ToList();
                         _PurchaseOrder.ReceivedLineItems.Join(_Racks, rli => rli.RackID, r => r.RackID, (rli, r) => { rli.RackName = r.Name; return rli; }).ToList();
+                        GridViewReceivedItems.PageIndex = 0;
                         GridViewReceivedItems.Visible = true;
                         divReceivedItems.Visible = true;
                         PutPurchaseOrderBackToViewState();

@@ -90,12 +90,12 @@
                                         <asp:RequiredFieldValidator runat="server" ValidationGroup="Create" ControlToValidate="txtTransferredDate"
                                             CssClass="text-danger" ErrorMessage="Transferred date is required." />
                                     </div>
-                                    <div class="col-md-offset-2 col-md-3">
+                                    <div class="col-md-offset-2 col-md-4">
                                         <asp:LinkButton CssClass="btn btn-primary" ID="linkButtonSearch" ValidationGroup="Search" OnClick="linkButtonSearch_Click" runat="server">
                                             <span class="glyphicon glyphicon-search"></span> Search
                                         </asp:LinkButton>
                                         <asp:LinkButton CssClass="btn btn-primary" ID="linkButtonSave" ValidationGroup="Create" OnClick="linkButtonSave_Click" runat="server">
-                                            <span class="glyphicon glyphicon-floppy-save"></span> Save
+                                            <span class="glyphicon glyphicon-transfer"></span> Transfer
                                         </asp:LinkButton>
                                         <asp:LinkButton CssClass="btn btn-primary" CausesValidation="false" ID="linkButtonReset" OnClick="linkButtonReset_Click" runat="server">
                                           <span class="glyphicon glyphicon glyphicon-repeat"></span> Reset
