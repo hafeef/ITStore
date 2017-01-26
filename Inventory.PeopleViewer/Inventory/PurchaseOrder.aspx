@@ -169,7 +169,7 @@
                                             </EditItemTemplate>
                                             <FooterTemplate>
                                                 <asp:LinkButton CssClass="btn btn-primary" ValidationGroup="Add" ID="linkButtonAdd" OnClick="linkButtonAdd_Click" runat="server">
-                                            <span class="glyphicon glyphicon-floppy-save"></span> Add
+                                            <span class="glyphicon glyphicon-plus"></span> Add
                                                 </asp:LinkButton>
                                             </FooterTemplate>
                                         </asp:TemplateField>
