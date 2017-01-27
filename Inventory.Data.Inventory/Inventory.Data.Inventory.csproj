@@ -113,6 +113,10 @@
     <Compile Include="Migrations\201701241123180_AddedReceivedLineItemIdToInventoryIssueTable.Designer.cs">
       <DependentUpon>201701241123180_AddedReceivedLineItemIdToInventoryIssueTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701270615475_AddedInventoryScrapTable.cs" />
+    <Compile Include="Migrations\201701270615475_AddedInventoryScrapTable.Designer.cs">
+      <DependentUpon>201701270615475_AddedInventoryScrapTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -182,6 +186,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701241123180_AddedReceivedLineItemIdToInventoryIssueTable.resx">
       <DependentUpon>201701241123180_AddedReceivedLineItemIdToInventoryIssueTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701270615475_AddedInventoryScrapTable.resx">
+      <DependentUpon>201701270615475_AddedInventoryScrapTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

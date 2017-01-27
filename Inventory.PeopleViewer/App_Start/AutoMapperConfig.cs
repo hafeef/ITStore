@@ -90,6 +90,10 @@ namespace Inventory.PeopleViewer.App_Start
 
                 config.CreateMap<InventoryIssueVM, InventoryIssue>();
                 config.CreateMap<InventoryIssue, InventoryIssueVM>();
+
+                config.CreateMap<InventoryScrapVM, InventoryScrap>();
+                config.CreateMap<InventoryScrap, InventoryScrapVM>();
+
                 #endregion
 
 

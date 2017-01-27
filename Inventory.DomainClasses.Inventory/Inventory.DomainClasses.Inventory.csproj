@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Employee.cs" />
     <Compile Include="InventoryIssue.cs" />
+    <Compile Include="InventoryScrap.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="PurchaseOrderLineItem.cs" />

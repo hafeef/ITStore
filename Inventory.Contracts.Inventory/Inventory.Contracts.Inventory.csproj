@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="IAdministrationRepository.cs" />
     <Compile Include="IInventoryIssueRepository.cs" />
+    <Compile Include="IInventoryScrapRepository.cs" />
     <Compile Include="IPurchaseOrderRepository.cs" />
     <Compile Include="ITransferRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

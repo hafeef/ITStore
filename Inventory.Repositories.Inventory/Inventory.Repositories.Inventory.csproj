@@ -54,6 +54,7 @@
     <Compile Include="AdministrationRepository.cs" />
     <Compile Include="DataRepositoryBase.cs" />
     <Compile Include="InventoryIssueRepository.cs" />
+    <Compile Include="InventoryScrapRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseOrderRepository.cs" />
     <Compile Include="TransferRepository.cs" />

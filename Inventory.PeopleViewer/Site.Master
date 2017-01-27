@@ -102,6 +102,7 @@
                                 <li><a runat="server" href="~/Inventory/ReceivingOrder.aspx">Receiving Orders</a></li>
                                 <li><a runat="server" href="~/Inventory/Transfer.aspx">Inventory Transfer</a></li>
                                 <li><a runat="server" href="~/Inventory/Issue.aspx">Inventory Issue</a></li>
+                                <li><a runat="server" href="~/Inventory/Scrap.aspx">Inventory Scrap</a></li>
                             </ul>
                         </li>
 

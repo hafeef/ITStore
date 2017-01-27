@@ -19,6 +19,7 @@ namespace Inventory.Data.Inventory
         public DbSet<ReceivedLineItem> ReceivedLineItems { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
         public DbSet<InventoryIssue> InventoryIssues { get; set; }
+        public DbSet<InventoryScrap> InventoryScraps { get; set; }
         public override int SaveChanges()
         {
             var dateTimeHistories = ChangeTracker.Entries()
@@ -59,6 +60,9 @@ namespace Inventory.Data.Inventory
 
             modelBuilder.Entity<Transfer>().Property(t => t.SerialNo).HasMaxLength(100);
             modelBuilder.Entity<Transfer>().Property(t => t.SerialNo).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("NIX_Transfer_SerialNo") { IsClustered = false }));
+
+            modelBuilder.Entity<InventoryScrap>().Property(rli => rli.SerialNo).HasMaxLength(100);
+            modelBuilder.Entity<InventoryScrap>().Property(rli => rli.SerialNo).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("UI_InventoryScrap_SerialNo") { IsUnique = true }));
 
             modelBuilder.HasDefaultSchema("Inventory");
         }

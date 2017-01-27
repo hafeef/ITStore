@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="EmployeeVM.cs" />
     <Compile Include="InventoryIssueVM.cs" />
+    <Compile Include="InventoryScrapVM.cs" />
     <Compile Include="ItemVM.cs" />
     <Compile Include="LocationVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
