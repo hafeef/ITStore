@@ -9,7 +9,7 @@ namespace Inventory.Contracts.Inventory
 {
     public interface IInventoryScrapRepository
     {
-        void SaveInventoryScrap(InventoryScrapVM newInventoryScrap);
+        void SaveInventoryScrap(IEnumerable<InventoryScrapVM> inventoryScraps);
         HashSet<InventoryScrapVM> GetAllInventoryScraps();
     }
 }

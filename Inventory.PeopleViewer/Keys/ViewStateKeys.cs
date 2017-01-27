@@ -7,5 +7,6 @@
 
         public const string OrderLineItems = "OrderLineItems";
         public const string PurchaseOrder = "PurchaseOrder";
+        public const string ScrapItems = "ScrapItems";
     }
 }

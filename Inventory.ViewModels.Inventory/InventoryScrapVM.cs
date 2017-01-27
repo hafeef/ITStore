@@ -1,12 +1,14 @@
 ﻿using Core.Common.BaseTypes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Inventory.ViewModels.Inventory
 {
+    [Serializable, DebuggerDisplay("InventoryScrapID:{InventoryScrapID}, ItemID:{ItemID}, ItemDescription:{ItemDescription}, SerialNo:{SerialNo}")]
     public class InventoryScrapVM : EntityBaseVM
     {
         public int InventoryScrapID { get; set; }

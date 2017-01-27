@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Inventory.Data.Inventory;
 using Inventory.ViewModels.Inventory;
+using System.Transactions;
+using Core.Common.Resolvers;
 
 namespace Inventory.Repositories.Inventory
 {
@@ -17,11 +19,22 @@ namespace Inventory.Repositories.Inventory
 
         }
 
-        public void SaveInventoryScrap(InventoryScrapVM newInventoryScrap)
+        public void SaveInventoryScrap(IEnumerable<InventoryScrapVM> inventoryScraps)
         {
             try
             {
-                Insert(AutoMapper.Mapper.Map<InventoryScrap>(newInventoryScrap));
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    using (InventoryContext context = new InventoryContext())
+                    {
+                        var dbInventoryScraps = AutoMapper.Mapper.Map<IEnumerable<InventoryScrap>>(inventoryScraps);
+                        foreach (var scrapItem in dbInventoryScraps)
+                            context.Entry(scrapItem).State = StateResolver.Resolve(scrapItem.EntityState);
+                        context.SaveChanges();
+                    }
+                    scope.Complete();
+                }
             }
             catch (Exception Ex)
             {

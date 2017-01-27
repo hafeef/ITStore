@@ -247,6 +247,7 @@
     <Content Include="Inventory\PurchaseOrder.aspx" />
     <Content Include="Inventory\ReceivingOrder.aspx" />
     <Content Include="Inventory\Returns.aspx" />
+    <Content Include="Inventory\Scrap.aspx" />
     <Content Include="Inventory\SerialGenerator.aspx" />
     <Content Include="Inventory\Transfer.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -517,6 +518,13 @@
     </Compile>
     <Compile Include="Inventory\Returns.aspx.designer.cs">
       <DependentUpon>Returns.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\Scrap.aspx.cs">
+      <DependentUpon>Scrap.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\Scrap.aspx.designer.cs">
+      <DependentUpon>Scrap.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inventory\SerialGenerator.aspx.cs">
       <DependentUpon>SerialGenerator.aspx</DependentUpon>
