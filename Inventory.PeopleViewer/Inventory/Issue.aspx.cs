@@ -88,7 +88,7 @@ namespace Inventory.PeopleViewer.Inventory
                 GridInventoryIssue.DataSource = _InventoryIssues.Where(ii => ii.EntityState != ObjectState.Deleted).ToList();
                 GridInventoryIssue.DataBind();
 
-                if (Convert.ToBoolean(ViewState[ViewStateKeys.IsEmpty]))
+                if (Convert.ToBoolean(ViewState[ViewStateKeys.IsEmpty]) && _InventoryIssues.Count == 0)
                 {
                     _InventoryIssues.Clear();
                 }
@@ -336,7 +336,7 @@ namespace Inventory.PeopleViewer.Inventory
                 SetGridViewEditRowIndexToMinusOne();
                 BindInventoryIssues();
             }
-            catch(ApplicationException Ae)
+            catch (ApplicationException Ae)
             {
                 ucInformation.ShowErrorMessage(Ae.Message);
             }

@@ -112,6 +112,7 @@ namespace Inventory.PeopleViewer.Inventory
         {
             ClearFormData();
             BindInventoryScrapsToGrid();
+            PutInventoryScrapItemsBackToViewState();
         }
 
 
@@ -120,7 +121,16 @@ namespace Inventory.PeopleViewer.Inventory
         {
             try
             {
-
+                var inventoryScrapID = int.Parse(e.Keys["InventoryScrapID"].ToString());
+                var itemID = int.Parse(e.Keys["ItemID"].ToString());
+                var serialNumber = e.Keys["SerialNo"].ToString();
+                GetInventoryScrapItemsFromViewState();
+                if (inventoryScrapID == 0)
+                    _Scraps.RemoveWhere(ins => ins.ItemID == itemID && ins.SerialNo == serialNumber);
+                else
+                    _Scraps.FirstOrDefault(ins => ins.ItemID == itemID && ins.SerialNo == serialNumber && ins.InventoryScrapID == inventoryScrapID).EntityState = ObjectState.Deleted;
+                PutInventoryScrapItemsBackToViewState();
+                BindInventoryScrapsToGrid();
             }
             catch (Exception)
             {

@@ -49,22 +49,22 @@ namespace Inventory.PeopleViewer.Account {
         protected global::System.Web.UI.WebControls.CheckBox RememberMe;
         
         /// <summary>
-        /// btnLoginIn control.
+        /// linkButtonLogin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLoginIn;
+        protected global::System.Web.UI.WebControls.LinkButton linkButtonLogin;
         
         /// <summary>
-        /// btnReset control.
+        /// linkButtonReset control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnReset;
+        protected global::System.Web.UI.WebControls.LinkButton linkButtonReset;
         
         /// <summary>
         /// ErrorMessage control.

@@ -11,7 +11,7 @@ namespace Inventory.PeopleViewer.Account
 {
 
 
-    public partial class Lockout
+    public partial class ChangePassword
     {
     }
 }

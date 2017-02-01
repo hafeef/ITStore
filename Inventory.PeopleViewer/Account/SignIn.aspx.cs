@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNet.Identity.Owin;
+﻿using Inventory.PeopleViewer.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using System;
 using System.Web;
+using System.Web.Security;
 
 namespace Inventory.PeopleViewer.Account
 {
@@ -8,47 +13,43 @@ namespace Inventory.PeopleViewer.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+                ClearControls();
         }
 
-        protected void btnLoginIn_Click(object sender, EventArgs e)
+        protected void linkButtonLogin_Click(object sender, EventArgs e)
         {
-            if (IsValid)
+
+            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var signinManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
+
+            var userIdentiry = manager.CreateIdentity(manager.FindByName(Email.Text), DefaultAuthenticationTypes.ApplicationCookie);
+
+            var result = signinManager.PasswordSignIn(Email.Text, Password.Text, RememberMe.Checked, shouldLockout: false);
+
+            switch (result)
             {
-                // Validate the user password
-                var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var signinManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
+                case SignInStatus.Success:
+                        FormsAuthentication.RedirectFromLoginPage(Email.Text, RememberMe.Checked);
+                    break;
 
-                // This doen't count login failures towards account lockout
-                // To enable password failures to trigger lockout, change to shouldLockout: true
-                var result = signinManager.PasswordSignIn(Email.Text, Password.Text, RememberMe.Checked, shouldLockout: false);
-
-                switch (result)
-                {
-                    case SignInStatus.Success:
-                        IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
-                        break;
-                    case SignInStatus.LockedOut:
-                        Response.Redirect("/Account/Lockout");
-                        break;
-                    case SignInStatus.RequiresVerification:
-                        Response.Redirect(String.Format("/Account/TwoFactorAuthenticationSignIn?ReturnUrl={0}&RememberMe={1}",
-                                                        Request.QueryString["ReturnUrl"],
-                                                        RememberMe.Checked),
-                                          true);
-                        break;
-                    case SignInStatus.Failure:
-                    default:
-                        FailureText.Text = "Invalid login attempt";
-                        ErrorMessage.Visible = true;
-                        break;
-                }
+                default:
+                    FailureText.Text = "Invalid login attempt";
+                    ErrorMessage.Visible = true;
+                    break;
             }
+
         }
 
-        protected void btnReset_Click(object sender, EventArgs e)
+        protected void linkButtonReset_Click(object sender, EventArgs e)
         {
+            ClearControls();
+        }
 
+        private void ClearControls()
+        {
+            Email.Text = Password.Text = string.Empty;
+            ViewState.Clear();
         }
     }
 }

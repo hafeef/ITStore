@@ -36,7 +36,7 @@
             </Scripts>
         </asp:ScriptManager>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar navbar-inverse navbar-fixed-top" runat="server" visible="false" id="divNavigation">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -45,7 +45,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" runat="server" href="~/">
-                        <asp:Image ImageUrl="~/Images/csc-logo.jpg" runat="server" alt="CSC IT STORE" class="img-rounded" Height="30" />
+                        <asp:ImageButton ImageUrl="~/Images/csc-logo.jpg" PostBackUrl="~/Inventory/PurchaseOrder.aspx" runat="server" alt="CSC IT STORE" class="img-rounded" Height="30" />
                     </a>
                 </div>
                 <div class="navbar-collapse collapse">
@@ -54,7 +54,6 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <%--<li class="kopie"><a href="#">Dropdown2</a></li>--%>
                                 <li><a runat="server" href="~/Administration/Locations.aspx">Locations</a></li>
                                 <li><a runat="server" href="~/Administration/Categories.aspx">Categories</a></li>
                                 <li><a runat="server" href="~/Administration/Brands.aspx">Brands</a></li>
@@ -65,33 +64,7 @@
                                 <li><a runat="server" href="~/Administration/Racks.aspx">Racks</a></li>
                                 <li><a runat="server" href="~/Administration/Shelves.aspx">Shelves</a></li>
                                 <li><a runat="server" href="~/Administration/Employees.aspx">Employees</a></li>
-                                <%-- <li class="dropdown dropdown-submenu">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown2 Link 4</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="kopie"><a href="#">Dropdown2 Link 4</a></li>
-                                        <li><a href="#">Dropdown2 Submenu Link 4.1</a></li>
-                                        <li><a href="#">Dropdown2 Submenu Link 4.2</a></li>
-                                        <li><a href="#">Dropdown2 Submenu Link 4.3</a></li>
-                                        <li><a href="#">Dropdown2 Submenu Link 4.4</a></li>
-                                    </ul>
-                                </li>--%>
-                                <%--<li class="dropdown dropdown-submenu">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown2 Link 5</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="kopie"><a href="#">Dropdown Link 5</a></li>
-                                        <li><a href="#">Dropdown2 Submenu Link 5.1</a></li>
-                                        <li><a href="#">Dropdown2 Submenu Link 5.2</a></li>
-                                        <li><a href="#">Dropdown2 Submenu Link 5.3</a></li>
-                                        <li class="dropdown dropdown-submenu">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Submenu Link 5.4</a>
-                                            <ul class="dropdown-menu">
-                                                <li class="kopie"><a href="#">Dropdown2 Submenu Link 5.4</a></li>
-                                                <li><a href="#">Dropdown2 Submenu Link 5.4.1</a></li>
-                                                <li><a href="#">Dropdown2 Submenu Link 5.4.2</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>--%>
+                                <li><a runat="server" href="~/Account/Register.aspx">Register</a></li>
                             </ul>
                         </li>
 
@@ -113,17 +86,13 @@
                         </li>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
-                        <AnonymousTemplate>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Register">Register</a></li>
-                                <li><a runat="server" href="~/Account/Login">Log in</a></li>
-                            </ul>
-                        </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
                                 <li>
-                                    <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                                    <a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a>
+                                </li>
+                                <li>
+                                    <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/Account/SignIn.aspx" OnLoggingOut="Unnamed_LoggingOut" />
                                 </li>
                             </ul>
                         </LoggedInTemplate>

@@ -23,6 +23,10 @@ namespace Inventory.PeopleViewer.Models
         {
             return Task.FromResult(GenerateUserIdentity(manager));
         }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int Gender { get; set; }
     }
 
     public class SecurityContext : IdentityDbContext<ApplicationUser>
@@ -40,6 +44,8 @@ namespace Inventory.PeopleViewer.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("Security");
+            modelBuilder.Entity<ApplicationUser>().Property(u => u.FirstName).HasMaxLength(30);
+            modelBuilder.Entity<ApplicationUser>().Property(u => u.LastName).HasMaxLength(30);
             base.OnModelCreating(modelBuilder);
         }
     }
