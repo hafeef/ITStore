@@ -214,7 +214,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="Account\Web.config" />
+    <Content Include="Account\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -444,6 +446,7 @@
     <Compile Include="Inventory\Transfer.aspx.designer.cs">
       <DependentUpon>Transfer.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Keys\SessionKeys.cs" />
     <Compile Include="Keys\ViewStateKeys.cs" />
     <Compile Include="Migrations\201701091514094_InitDb.cs" />
     <Compile Include="Migrations\201701091514094_InitDb.Designer.cs">
