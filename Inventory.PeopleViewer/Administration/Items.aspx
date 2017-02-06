@@ -20,7 +20,7 @@
                                 <asp:Button runat="server" ValidationGroup="Search" ID="btnSearch" Text="Go!" CssClass="btn btn-default" OnClick="btnSearch_Click" />
                                 <asp:LinkButton CssClass="btn btn-default" CausesValidation="false" ID="linkButtonReset" OnClick="btnReset_Click" runat="server">
                                           <span class="glyphicon glyphicon glyphicon-repeat"></span> Reset
-                                    </asp:LinkButton>
+                                </asp:LinkButton>
                             </div>
                         </div>
                         <div class="row">
@@ -32,50 +32,50 @@
                                     CssClass="table table-striped table-responsive table-bordered table-hover" runat="server"
                                     OnRowDeleting="gridItems_RowDeleting" OnRowUpdating="gridItems_RowUpdating" AllowSorting="true"
                                     OnRowCancelingEdit="gridItems_RowCancelingEdit" OnRowEditing="gridItems_RowEditing"
-                                    OnRowDataBound="gridItems_RowDataBound" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>" OnPageIndexChanging="gridItems_PageIndexChanging"
+                                    OnRowDataBound="gridItems_RowDataBound" ItemType="Inventory.ViewModels.Administration.ItemVM" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>" OnPageIndexChanging="gridItems_PageIndexChanging"
                                     EmptyDataText="No Records Found.">
                                     <Columns>
                                         <asp:TemplateField HeaderText="Item ID">
                                             <ItemTemplate>
-                                                <%# Eval("ItemID") %>
+                                                <%#: Item.ItemID %>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <%# Eval("ItemID") %>
+                                                <%#: Item.ItemID %>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Description">
                                             <ItemTemplate>
-                                                <%# Eval("Description") %>
+                                                <%#: Item.Description %>
                                             </ItemTemplate>
                                             <FooterTemplate>
-                                                <asp:TextBox ID="txtNewItemDescription" ValidationGroup="Create" CssClass="form-control" runat="server" />
+                                                <asp:TextBox ID="txtNewItemDescription" placeholder="Item Description" ValidationGroup="Create" CssClass="form-control" runat="server" />
                                                 <asp:RequiredFieldValidator ValidationGroup="Create" runat="server" ControlToValidate="txtNewItemDescription"
                                                     CssClass="text-danger" ErrorMessage="The item description field is required." />
                                             </FooterTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtUpdateItemDescription" ValidationGroup="Update" Text='<%# Eval("Description") %>' CssClass="form-control" runat="server" />
+                                                <asp:TextBox ID="txtUpdateItemDescription" ValidationGroup="Update" Text='<%#: Item.Description %>' CssClass="form-control" runat="server" />
                                                 <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdateItemDescription"
                                                     CssClass="text-danger" ErrorMessage="The item description field is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Part Number">
                                             <ItemTemplate>
-                                                <%# Eval("PartNumber") %>
+                                                <%#: Item.PartNumber %>
                                             </ItemTemplate>
                                             <FooterTemplate>
-                                                <asp:TextBox ID="txtNewPartNumber" ValidationGroup="Create" CssClass="form-control" runat="server" />
+                                                <asp:TextBox ID="txtNewPartNumber" placeholder="Part Number" ValidationGroup="Create" CssClass="form-control" runat="server" />
                                                 <asp:RequiredFieldValidator ValidationGroup="Create" runat="server" ControlToValidate="txtNewPartNumber"
                                                     CssClass="text-danger" ErrorMessage="The part number field is required." />
                                             </FooterTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtUpdatePartNumber" ValidationGroup="Update" Text='<%# Eval("PartNumber") %>' CssClass="form-control" runat="server" />
+                                                <asp:TextBox ID="txtUpdatePartNumber" ValidationGroup="Update" Text='<%#: Item.PartNumber %>' CssClass="form-control" runat="server" />
                                                 <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdatePartNumber"
                                                     CssClass="text-danger" ErrorMessage="The part number field is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Category">
                                             <ItemTemplate>
-                                                <%# Eval("CategoryName") %>
+                                                <%#:Item.CategoryName %>
                                             </ItemTemplate>
                                             <FooterTemplate>
                                                 <asp:DropDownList ID="ddlFooterCategory" DataTextField="Name" DataValueField="CategoryID" CssClass="form-control" ValidationGroup="Create" runat="server">
@@ -92,7 +92,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Item Type">
                                             <ItemTemplate>
-                                                <%# Eval("ItemTypeName") %>
+                                                <%#:Item.ItemTypeName %>
                                             </ItemTemplate>
                                             <FooterTemplate>
                                                 <asp:DropDownList ID="ddlFooterItemType" DataTextField="Name" DataValueField="ItemTypeID" CssClass="form-control" ValidationGroup="Create" runat="server">
@@ -103,13 +103,13 @@
                                             <EditItemTemplate>
                                                 <asp:DropDownList ID="ddlEditItemType" DataTextField="Name" DataValueField="ItemTypeID" CssClass="form-control" ValidationGroup="Update" runat="server">
                                                 </asp:DropDownList>
-                                                <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="ddlEditCategory"
+                                                <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="ddlEditItemType"
                                                     CssClass="text-danger" InitialValue="0" ErrorMessage="The item type field is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Brand">
                                             <ItemTemplate>
-                                                <%# Eval("BrandName") %>
+                                                <%#: Item.BrandName %>
                                             </ItemTemplate>
                                             <FooterTemplate>
                                                 <asp:DropDownList ID="ddlFooterBrand" DataTextField="Name" DataValueField="BrandID" CssClass="form-control" ValidationGroup="Create" runat="server">

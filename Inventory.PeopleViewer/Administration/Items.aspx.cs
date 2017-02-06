@@ -141,9 +141,12 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                _Items = _itemRepository.SearchItemByDescription(txtItemSearch.Text.Trim());
-                ViewState[ViewStateKeys.SearchResult] = _Items;
-                BindItemsToGrid();
+                if (IsValid)
+                {
+                    _Items = _itemRepository.SearchItemByDescription(txtItemSearch.Text.Trim());
+                    ViewState[ViewStateKeys.SearchResult] = _Items;
+                    BindItemsToGrid();
+                }
 
             }
             catch (Exception)
@@ -185,54 +188,40 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                var itemID = gridItems.DataKeys[e.RowIndex]["ItemID"].ToString();
-
-                TextBoxItemDescription = gridItems.Rows[e.RowIndex].FindControl("txtUpdateItemDescription") as TextBox;
-                TextBoxPartNumber = gridItems.Rows[e.RowIndex].FindControl("txtUpdatePartNumber") as TextBox;
-
-                DropDownCategories = gridItems.Rows[e.RowIndex].FindControl("ddlEditCategory") as DropDownList;
-                DropDownBrands = gridItems.Rows[e.RowIndex].FindControl("ddlEditBrand") as DropDownList;
-                DropDownItemTypes = gridItems.Rows[e.RowIndex].FindControl("ddlEditItemType") as DropDownList;
-
-                ValidateItem();
-
-                _itemRepository.UpdateItem(new ItemVM()
+                if (IsValid)
                 {
-                    ItemID = int.Parse(itemID),
-                    Description = TextBoxItemDescription.Text,
-                    PartNumber = TextBoxPartNumber.Text,
-                    BrandID = int.Parse(DropDownBrands.SelectedValue),
-                    CategoryID = int.Parse(DropDownCategories.SelectedValue),
-                    ItemTypeID = int.Parse(DropDownItemTypes.SelectedValue)
-                });
-                SetGridRowIndexToMinusOne();
-                ClearFormData();
-                BindItemsToGrid();
-                ucInformation.ShowModifyInfomationMessage();
+                    var itemID = gridItems.DataKeys[e.RowIndex]["ItemID"].ToString();
+
+                    TextBoxItemDescription = gridItems.Rows[e.RowIndex].FindControl("txtUpdateItemDescription") as TextBox;
+                    TextBoxPartNumber = gridItems.Rows[e.RowIndex].FindControl("txtUpdatePartNumber") as TextBox;
+
+                    DropDownCategories = gridItems.Rows[e.RowIndex].FindControl("ddlEditCategory") as DropDownList;
+                    DropDownBrands = gridItems.Rows[e.RowIndex].FindControl("ddlEditBrand") as DropDownList;
+                    DropDownItemTypes = gridItems.Rows[e.RowIndex].FindControl("ddlEditItemType") as DropDownList;
+
+                    _itemRepository.UpdateItem(new ItemVM()
+                    {
+                        ItemID = int.Parse(itemID),
+                        Description = TextBoxItemDescription.Text,
+                        PartNumber = TextBoxPartNumber.Text,
+                        BrandID = int.Parse(DropDownBrands.SelectedValue),
+                        CategoryID = int.Parse(DropDownCategories.SelectedValue),
+                        ItemTypeID = int.Parse(DropDownItemTypes.SelectedValue)
+                    });
+                    SetGridRowIndexToMinusOne();
+                    ClearFormData();
+                    BindItemsToGrid();
+                    ucInformation.ShowModifyInfomationMessage();
+                }
             }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
-            }
+
             catch (Exception)
             {
                 ucInformation.ShowErrorMessage();
             }
         }
 
-        private void ValidateItem()
-        {
-            if (string.IsNullOrWhiteSpace(TextBoxItemDescription.Text))
-                throw new ApplicationException("The item description field is required.");
-            if (string.IsNullOrWhiteSpace(TextBoxPartNumber.Text))
-                throw new ApplicationException("The part number field is required.");
-            if (DropDownCategories.SelectedIndex == 0)
-                throw new ApplicationException("The category field is required.");
-            if (DropDownBrands.SelectedIndex == 0)
-                throw new ApplicationException("The brand field is required.");
-            if (DropDownItemTypes.SelectedIndex == 0)
-                throw new ApplicationException("The item type field is required.");
-        }
+
 
         protected void gridItems_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
@@ -312,26 +301,25 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                SetFooterData();
-                ValidateItem();
-                _itemRepository.CreateNewItem(new ItemVM()
+                if (IsValid)
                 {
-                    Description = TextBoxItemDescription.Text.Trim(),
-                    PartNumber = TextBoxPartNumber.Text.Trim(),
-                    BrandID = int.Parse(DropDownBrands.SelectedValue),
-                    CategoryID = int.Parse(DropDownCategories.SelectedValue),
-                    ItemTypeID = int.Parse(DropDownItemTypes.SelectedValue)
-                });
+                    SetFooterData();
+                    _itemRepository.CreateNewItem(new ItemVM()
+                    {
+                        Description = TextBoxItemDescription.Text.Trim(),
+                        PartNumber = TextBoxPartNumber.Text.Trim(),
+                        BrandID = int.Parse(DropDownBrands.SelectedValue),
+                        CategoryID = int.Parse(DropDownCategories.SelectedValue),
+                        ItemTypeID = int.Parse(DropDownItemTypes.SelectedValue)
+                    });
 
-                SetGridRowIndexToMinusOne();
-                ClearFormData();
-                BindItemsToGrid();
-                ucInformation.ShowSaveInfomationMessage();
+                    SetGridRowIndexToMinusOne();
+                    ClearFormData();
+                    BindItemsToGrid();
+                    ucInformation.ShowSaveInfomationMessage();
+                }
             }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
-            }
+            
             catch (Exception)
             {
                 ucInformation.ShowErrorMessage();
