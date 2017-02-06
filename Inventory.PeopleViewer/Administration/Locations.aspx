@@ -33,27 +33,27 @@
                                         CssClass="table table-striped table-bordered table-hover" runat="server" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>"
                                         OnRowDeleting="gridLocation_RowDeleting" OnRowUpdating="gridLocation_RowUpdating" AllowSorting="true"
                                         OnRowCancelingEdit="gridLocation_RowCancelingEdit" OnPageIndexChanging="gridLocation_PageIndexChanging"
-                                        OnRowEditing="gridLocation_RowEditing" OnRowDataBound="gridLocation_RowDataBound" EmptyDataText="No Records Found.">
+                                        OnRowEditing="gridLocation_RowEditing" ItemType="Inventory.ViewModels.Administration.LocationVM" OnRowDataBound="gridLocation_RowDataBound" EmptyDataText="No Records Found.">
                                         <Columns>
                                             <asp:TemplateField HeaderText="Location ID">
                                                 <ItemTemplate>
-                                                    <%# Eval("LocationID") %>
+                                                    <%#: Item.LocationID %>
                                                 </ItemTemplate>
                                                 <EditItemTemplate>
-                                                    <%# Eval("LocationID") %>
+                                                    <%#: Item.LocationID %>
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Location Name">
                                                 <ItemTemplate>
-                                                    <%# Eval("Name") %>
+                                                    <%#: Item.Name %>
                                                 </ItemTemplate>
                                                 <FooterTemplate>
-                                                    <asp:TextBox ID="txtNewLocation" ValidationGroup="Create" placeholder="New Location Name" CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtNewLocation" TextMode="Search" ValidationGroup="Create" placeholder="New Location Name" CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Create" runat="server" ControlToValidate="txtNewLocation"
                                                         CssClass="text-danger" ErrorMessage="The location name field is required." />
                                                 </FooterTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:TextBox ID="txtUpdateLocation" ValidationGroup="Update" Text='<%# Eval("Name") %>' CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtUpdateLocation" TextMode="Search" placeholder="Location Name" ValidationGroup="Update" Text='<%#: Item.Name %>' CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdateLocation"
                                                         CssClass="text-danger" ErrorMessage="The location name field is required." />
                                                 </EditItemTemplate>

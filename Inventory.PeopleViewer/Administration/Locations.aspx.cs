@@ -66,14 +66,12 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                ValidateLocation(txtLocationSearch);
-                _Locations = _LocationRepository.SearchLocationByName(txtLocationSearch.Text.Trim());
-                ViewState[ViewStateKeys.SearchResult] = _Locations;
-                BindLocationDataToGrid();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    _Locations = _LocationRepository.SearchLocationByName(txtLocationSearch.Text.Trim());
+                    ViewState[ViewStateKeys.SearchResult] = _Locations;
+                    BindLocationDataToGrid();
+                }
             }
             catch (Exception)
             {
@@ -85,17 +83,15 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                SetFooterData();
-                ValidateLocation(textBoxLocation);
-                _LocationRepository.CreateNewLocation(new LocationVM() { Name = textBoxLocation.Text.Trim() });
-                SetGridRowIndexToMinusOne();
-                ClearFormData();
-                BindLocationDataToGrid();
-                ucInformation.ShowSaveInfomationMessage();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    SetFooterData();
+                    _LocationRepository.CreateNewLocation(new LocationVM() { Name = textBoxLocation.Text.Trim() });
+                    SetGridRowIndexToMinusOne();
+                    ClearFormData();
+                    BindLocationDataToGrid();
+                    ucInformation.ShowSaveInfomationMessage();
+                }
             }
             catch (Exception)
             {
@@ -136,18 +132,16 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                var locationID = int.Parse(gridLocation.DataKeys[e.RowIndex]["LocationID"].ToString());
-                textBoxLocation = gridLocation.Rows[e.RowIndex].FindControl("txtUpdateLocation") as TextBox;
-                ValidateLocation(textBoxLocation);
-                _LocationRepository.UpdateLocation(new LocationVM() { LocationID = locationID, Name = textBoxLocation.Text.Trim() });
-                SetGridRowIndexToMinusOne();
-                ClearFormData();
-                BindLocationDataToGrid();
-                ucInformation.ShowModifyInfomationMessage();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    var locationID = int.Parse(gridLocation.DataKeys[e.RowIndex]["LocationID"].ToString());
+                    textBoxLocation = gridLocation.Rows[e.RowIndex].FindControl("txtUpdateLocation") as TextBox;
+                    _LocationRepository.UpdateLocation(new LocationVM() { LocationID = locationID, Name = textBoxLocation.Text.Trim() });
+                    SetGridRowIndexToMinusOne();
+                    ClearFormData();
+                    BindLocationDataToGrid();
+                    ucInformation.ShowModifyInfomationMessage();
+                }
             }
             catch (Exception)
             {
@@ -213,12 +207,6 @@ namespace Inventory.PeopleViewer.Administration
                 if (e.Row.RowType == DataControlRowType.DataRow)
                     e.Row.Visible = false;
 
-        }
-
-        private void ValidateLocation(TextBox textBoxLocation)
-        {
-            if (textBoxLocation == null || string.IsNullOrWhiteSpace(textBoxLocation.Text.Trim()))
-                throw new ApplicationException("The location field is required.");
         }
     }
 }
