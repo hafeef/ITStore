@@ -31,21 +31,21 @@
                                 <div class="col-md-12">
                                     <asp:GridView ID="gridBrand" DataKeyNames="BrandID" AutoGenerateColumns="false" ShowFooter="true"
                                         CssClass="table table-striped table-bordered table-hover" runat="server" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>"
-                                        OnRowDeleting="gridBrand_RowDeleting" OnRowUpdating="gridBrand_RowUpdating" AllowSorting="true"
+                                        OnRowDeleting="gridBrand_RowDeleting" ItemType="Inventory.ViewModels.Administration.BrandVM" OnRowUpdating="gridBrand_RowUpdating"
                                         OnRowCancelingEdit="gridBrand_RowCancelingEdit" OnPageIndexChanging="gridBrand_PageIndexChanging"
                                         OnRowEditing="gridBrand_RowEditing" OnRowDataBound="gridBrand_RowDataBound" EmptyDataText="No Records Found.">
                                         <Columns>
                                             <asp:TemplateField HeaderText="Brand ID">
                                                 <ItemTemplate>
-                                                    <%# Eval("BrandID") %>
+                                                    <%#: Item.BrandID %>
                                                 </ItemTemplate>
                                                 <EditItemTemplate>
-                                                    <%# Eval("BrandID") %>
+                                                    <%#: Item.BrandID %>
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Brand Name">
                                                 <ItemTemplate>
-                                                    <%# Eval("Name") %>
+                                                    <%#: Item.Name %>
                                                 </ItemTemplate>
                                                 <FooterTemplate>
                                                     <asp:TextBox ID="txtNewBrand" placeholder="New Brand Name" ValidationGroup="Create" CssClass="form-control" runat="server" />
@@ -53,7 +53,7 @@
                                                         CssClass="text-danger" ErrorMessage="The brand name field is required." />
                                                 </FooterTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:TextBox ID="txtUpdateBrand" ValidationGroup="Update" Text='<%# Eval("Name") %>' CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtUpdateBrand" ValidationGroup="Update" Text='<%#: Item.Name %>' CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdateBrand"
                                                         CssClass="text-danger" ErrorMessage="The brand name field is required." />
                                                 </EditItemTemplate>

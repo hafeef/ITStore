@@ -5,6 +5,7 @@ using Inventory.Repositories.Administration;
 using Inventory.ViewModels.Administration;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -61,14 +62,12 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                ValidateBrand(txtBrandSearch);
-                _Brands = _BrandRepository.SearchBrandByName(txtBrandSearch.Text.Trim());
-                ViewState[ViewStateKeys.SearchResult] = _Brands;
-                BindBrandsToGrid();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    _Brands = _BrandRepository.SearchBrandByName(txtBrandSearch.Text.Trim());
+                    ViewState[ViewStateKeys.SearchResult] = _Brands;
+                    BindBrandsToGrid();
+                }
             }
             catch (Exception)
             {
@@ -104,12 +103,15 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                var brandID = gridBrand.DataKeys[e.RowIndex]["BrandID"].ToString();
-                _BrandRepository.DeleteBrand(int.Parse(brandID));
-                SetGridEditIndexToMinusOne();
-                ClearFormData();
-                BindBrandsToGrid();
-                ucInformation.ShowDeleteInfomationMessage();
+                if (IsValid)
+                {
+                    var brandID = gridBrand.DataKeys[e.RowIndex]["BrandID"].ToString();
+                    _BrandRepository.DeleteBrand(int.Parse(brandID));
+                    SetGridEditIndexToMinusOne();
+                    ClearFormData();
+                    BindBrandsToGrid();
+                    ucInformation.ShowDeleteInfomationMessage();
+                }
             }
             catch (Exception)
             {
@@ -121,19 +123,16 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                var brandID = int.Parse(gridBrand.DataKeys[e.RowIndex]["BrandID"].ToString());
-                TextBoxBrand = gridBrand.Rows[e.RowIndex].FindControl("txtUpdateBrand") as TextBox;
-                ValidateBrand(TextBoxBrand);
-                _BrandRepository.UpdateBrand(new BrandVM() { BrandID = brandID, Name = TextBoxBrand.Text.Trim() });
-                SetGridEditIndexToMinusOne();
-                ClearFormData();
-                BindBrandsToGrid();
-                ucInformation.ShowModifyInfomationMessage();
-
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    var brandID = int.Parse(gridBrand.DataKeys[e.RowIndex]["BrandID"].ToString());
+                    TextBoxBrand = gridBrand.Rows[e.RowIndex].FindControl("txtUpdateBrand") as TextBox;
+                    _BrandRepository.UpdateBrand(new BrandVM() { BrandID = brandID, Name = TextBoxBrand.Text.Trim() });
+                    SetGridEditIndexToMinusOne();
+                    ClearFormData();
+                    BindBrandsToGrid();
+                    ucInformation.ShowModifyInfomationMessage();
+                }
             }
             catch (Exception)
             {
@@ -182,17 +181,16 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                SetFooterData();
-                ValidateBrand(TextBoxBrand);
-                _BrandRepository.CreateNewBrand(new BrandVM() { Name = TextBoxBrand.Text.Trim() });
-                ucInformation.ShowSaveInfomationMessage();
-                SetGridEditIndexToMinusOne();
-                ClearFormData();
-                BindBrandsToGrid();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    SetFooterData();
+                    _BrandRepository.CreateNewBrand(new BrandVM() { Name = TextBoxBrand.Text.Trim() });
+                    ucInformation.ShowSaveInfomationMessage();
+                    SetGridEditIndexToMinusOne();
+                    ClearFormData();
+                    BindBrandsToGrid();
+                }
+
             }
             catch (Exception)
             {
@@ -206,10 +204,7 @@ namespace Inventory.PeopleViewer.Administration
                 TextBoxBrand = gridBrand.FooterRow.FindControl("txtNewBrand") as TextBox;
         }
 
-        private void ValidateBrand(TextBox textBoxBrand)
-        {
-            if (string.IsNullOrWhiteSpace(textBoxBrand.Text) || textBoxBrand == null)
-                throw new ApplicationException("The brand name field is required.");
-        }
+
+
     }
 }

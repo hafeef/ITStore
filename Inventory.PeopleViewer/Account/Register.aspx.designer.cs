@@ -22,15 +22,6 @@ namespace Inventory.PeopleViewer.Account {
         protected global::System.Web.UI.UpdatePanel updatePanelRegister;
         
         /// <summary>
-        /// ucInformation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Inventory.PeopleViewer.Controls.UCInformation ucInformation;
-        
-        /// <summary>
         /// txtFirstName control.
         /// </summary>
         /// <remarks>
@@ -92,15 +83,6 @@ namespace Inventory.PeopleViewer.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblInfo;
-        
-        /// <summary>
-        /// linkButtonSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton linkButtonSearch;
         
         /// <summary>
         /// linkButtonSave control.

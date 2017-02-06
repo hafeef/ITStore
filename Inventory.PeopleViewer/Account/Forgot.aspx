@@ -21,7 +21,7 @@
                                         <asp:TextBox runat="server" ID="txtEmail" placeholder="Email" CssClass="form-control" TextMode="Email" />
                                     </div>
                                     <div class="col-md-3">
-                                        <asp:RequiredFieldValidator runat="server" ValidationGroup="Create" ControlToValidate="txtEmail"
+                                        <asp:RequiredFieldValidator runat="server" ControlToValidate="txtEmail"
                                             CssClass="text-danger" ErrorMessage="The email field is required." />
                                     </div>
                                 </div>
@@ -32,7 +32,7 @@
                                         <asp:TextBox runat="server" ID="txtPassword" placeholder="Password" TextMode="Password" CssClass="form-control" />
                                     </div>
                                     <div class="col-md-3">
-                                        <asp:RequiredFieldValidator runat="server" ValidationGroup="Create" ControlToValidate="txtPassword"
+                                        <asp:RequiredFieldValidator runat="server" ControlToValidate="txtPassword"
                                             CssClass="text-danger" ErrorMessage="The password field is required." />
                                     </div>
                                 </div>
@@ -44,18 +44,18 @@
                                     </div>
                                     <div class="col-md-3">
                                         <asp:RequiredFieldValidator runat="server" ControlToValidate="txtConfirmPassword"
-                                            CssClass="text-danger" Display="Dynamic" ValidationGroup="Create" ErrorMessage="The confirm password field is required." />
+                                            CssClass="text-danger" Display="Dynamic" ErrorMessage="The confirm password field is required." />
                                         <asp:CompareValidator runat="server" ControlToCompare="txtPassword" ControlToValidate="txtConfirmPassword"
-                                            CssClass="text-danger" Display="Dynamic" ValidationGroup="Create" ErrorMessage="The password and confirmation password do not match." />
+                                            CssClass="text-danger" Display="Dynamic" ErrorMessage="The password and confirmation password do not match." />
                                     </div>
                                 </div>
                                 <br />
                                 <div class="row">
                                     <div class="col-md-offset-2 col-md-4">
-                                        <asp:LinkButton CssClass="btn btn-primary" ID="linkButtonSave" ValidationGroup="Create" OnClick="linkButtonSave_Click" runat="server">
+                                        <asp:LinkButton CssClass="btn btn-primary" CausesValidation="true"  ID="linkButtonSave" OnClick="linkButtonSave_Click" runat="server">
                                             <span class="glyphicon glyphicon-floppy-save"></span> Change
                                         </asp:LinkButton>
-                                        <asp:LinkButton CssClass="btn btn-primary" CausesValidation="false" ID="linkButtonReset" OnClick="linkButtonReset_Click" runat="server">
+                                        <asp:LinkButton CssClass="btn btn-primary" CausesValidation="false" ValidateRequestMode="Disabled" ID="linkButtonReset" OnClick="linkButtonReset_Click" runat="server">
                                           <span class="glyphicon glyphicon glyphicon-repeat"></span> Reset
                                         </asp:LinkButton>
                                     </div>

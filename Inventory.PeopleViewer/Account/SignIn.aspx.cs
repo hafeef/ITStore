@@ -1,4 +1,5 @@
-﻿using Inventory.PeopleViewer.Models;
+﻿using Core.Common.ErrorMessages;
+using Inventory.PeopleViewer.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -20,23 +21,32 @@ namespace Inventory.PeopleViewer.Account
         protected void linkButtonLogin_Click(object sender, EventArgs e)
         {
 
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            var signinManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
-
-            var userIdentiry = manager.CreateIdentity(manager.FindByName(Email.Text), DefaultAuthenticationTypes.ApplicationCookie);
-
-            var result = signinManager.PasswordSignIn(Email.Text, Password.Text, RememberMe.Checked, shouldLockout: false);
-
-            switch (result)
+            try
             {
-                case SignInStatus.Success:
-                        FormsAuthentication.RedirectFromLoginPage(Email.Text, RememberMe.Checked);
-                    break;
+                Page.Validate();
+                if (Page.IsValid)
+                {
+                    var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                    var signinManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
+                    var result = signinManager.PasswordSignIn(Email.Text, Password.Text, RememberMe.Checked, shouldLockout: false);
 
-                default:
-                    FailureText.Text = "Invalid login attempt";
-                    ErrorMessage.Visible = true;
-                    break;
+                    switch (result)
+                    {
+                        case SignInStatus.Success:
+                            FormsAuthentication.RedirectFromLoginPage(Email.Text, RememberMe.Checked);
+                            break;
+
+                        default:
+                            FailureText.Text = "<strong>Invalid login attempt</strong>";
+                            ErrorMessage.Visible = true;
+                            break;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                FailureText.Text = $"<strong>{InformationHelper.GenericErrorMessage}</strong>";
+                ErrorMessage.Visible = true;
             }
 
         }

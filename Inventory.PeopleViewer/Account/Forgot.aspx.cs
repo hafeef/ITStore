@@ -11,15 +11,17 @@ namespace Inventory.PeopleViewer.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+                ClearControls();
         }
 
-        protected void Forgot(object sender, EventArgs e)
+        protected void linkButtonSave_Click(object sender, EventArgs e)
         {
             if (IsValid)
             {
                 var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 ApplicationUser user = manager.FindByName(txtEmail.Text);
-                if (user == null || !manager.IsEmailConfirmed(user.Id))
+                if (user == null)
                 {
                     ucInformation.ShowErrorMessage("The user does not exist.");
                     return;
@@ -27,12 +29,12 @@ namespace Inventory.PeopleViewer.Account
             }
         }
 
-        protected void linkButtonSave_Click(object sender, EventArgs e)
+        protected void linkButtonReset_Click(object sender, EventArgs e)
         {
-
+            ClearControls();
         }
 
-        protected void linkButtonReset_Click(object sender, EventArgs e)
+        private void ClearControls()
         {
             txtEmail.Text = txtConfirmPassword.Text = txtPassword.Text = string.Empty;
         }
