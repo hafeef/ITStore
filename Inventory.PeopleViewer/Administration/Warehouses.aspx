@@ -33,35 +33,35 @@
                                         CssClass="table table-striped table-bordered table-hover" runat="server"
                                         OnRowDeleting="gridWarehouse_RowDeleting" OnRowUpdating="gridWarehouse_RowUpdating" AllowSorting="true"
                                         OnRowCancelingEdit="gridWarehouse_RowCancelingEdit" OnRowEditing="gridWarehouse_RowEditing"
-                                        OnRowDataBound="gridWarehouse_RowDataBound" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>" OnPageIndexChanging="gridWarehouse_PageIndexChanging"
+                                        OnRowDataBound="gridWarehouse_RowDataBound" ItemType="Inventory.ViewModels.Administration.WareHouseVM" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>" OnPageIndexChanging="gridWarehouse_PageIndexChanging"
                                         EmptyDataText="No Records Found.">
                                         <Columns>
                                             <asp:TemplateField HeaderText="Warehouse ID">
                                                 <ItemTemplate>
-                                                    <%# Eval("WareHouseID") %>
+                                                    <%#: Item.WareHouseID %>
                                                 </ItemTemplate>
                                                 <EditItemTemplate>
-                                                    <%# Eval("WareHouseID") %>
+                                                    <%#: Item.WareHouseID %>
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Warehouse Name">
                                                 <ItemTemplate>
-                                                    <%# Eval("Name") %>
+                                                    <%#: Item.Name %>
                                                 </ItemTemplate>
                                                 <FooterTemplate>
-                                                    <asp:TextBox ID="txtNewWarehouse" placeholder="New Warehouse Name" ValidationGroup="Create" CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtNewWarehouse" TextMode="Search" placeholder="New Warehouse Name" ValidationGroup="Create" CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Create" runat="server" ControlToValidate="txtNewWarehouse"
                                                         CssClass="text-danger" ErrorMessage="The warehouse name is required." />
                                                 </FooterTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:TextBox ID="txtUpdateWarehouse" ValidationGroup="Update" Text='<%# Eval("Name") %>' CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtUpdateWarehouse" TextMode="Search" placeholder="Warehouse Name" ValidationGroup="Update" Text='<%# Eval("Name") %>' CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdateWarehouse"
                                                         CssClass="text-danger" ErrorMessage="The warehouse name is required." />
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Location">
                                                 <ItemTemplate>
-                                                    <%# Eval("LocationName") %>
+                                                    <%#: Item.LocationName %>
                                                 </ItemTemplate>
                                                 <FooterTemplate>
                                                     <asp:DropDownList ID="ddlFooterLocation" DataTextField="Name" DataValueField="LocationID" CssClass="form-control" ValidationGroup="Create" runat="server">

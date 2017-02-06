@@ -93,15 +93,12 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(txtWarehouseSearch.Text.Trim()))
-                    throw new ApplicationException("The warehouse name field is required.");
-                _WareHouses = _warehouseRepository.SearchWarehouseByName(txtWarehouseSearch.Text.Trim());
-                ViewState[ViewStateKeys.SearchResult] = _WareHouses;
-                BindWarehousesToGrid();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    _WareHouses = _warehouseRepository.SearchWarehouseByName(txtWarehouseSearch.Text.Trim());
+                    ViewState[ViewStateKeys.SearchResult] = _WareHouses;
+                    BindWarehousesToGrid();
+                }
             }
             catch (Exception)
             {
@@ -137,20 +134,19 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                var warehouseID = int.Parse(gridWarehouse.DataKeys[e.RowIndex]["WareHouseID"].ToString());
-                TextBoxWarehouse = gridWarehouse.Rows[e.RowIndex].FindControl("txtUpdateWarehouse") as TextBox;
-                DropDownLocation = gridWarehouse.Rows[e.RowIndex].FindControl("ddlEditLocation") as DropDownList;
-                ValidateWarehouse();
-                _warehouseRepository.UpdateWarehouse(new WareHouseVM() { WareHouseID = warehouseID, LocationID = int.Parse(DropDownLocation.SelectedItem.Value), Name = TextBoxWarehouse.Text.Trim() });
-                SetGridRowIndexToMinusOne();
-                ClearFormData();
-                BindWarehousesToGrid();
-                ucInformation.ShowModifyInfomationMessage();
+                if (IsValid)
+                {
+                    var warehouseID = int.Parse(gridWarehouse.DataKeys[e.RowIndex]["WareHouseID"].ToString());
+                    TextBoxWarehouse = gridWarehouse.Rows[e.RowIndex].FindControl("txtUpdateWarehouse") as TextBox;
+                    DropDownLocation = gridWarehouse.Rows[e.RowIndex].FindControl("ddlEditLocation") as DropDownList;
+                    _warehouseRepository.UpdateWarehouse(new WareHouseVM() { WareHouseID = warehouseID, LocationID = int.Parse(DropDownLocation.SelectedItem.Value), Name = TextBoxWarehouse.Text.Trim() });
+                    SetGridRowIndexToMinusOne();
+                    ClearFormData();
+                    BindWarehousesToGrid();
+                    ucInformation.ShowModifyInfomationMessage();
+                }
             }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
-            }
+
             catch (Exception)
             {
                 ucInformation.ShowErrorMessage();
@@ -233,30 +229,20 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                SetFooterData();
-                ValidateWarehouse();
-                _warehouseRepository.CreateNewWarehouse(new WareHouseVM() { Name = TextBoxWarehouse.Text.Trim(), LocationID = int.Parse(DropDownLocation.SelectedValue) });
-                SetGridRowIndexToMinusOne();
-                ClearFormData();
-                BindWarehousesToGrid();
-                ucInformation.ShowSaveInfomationMessage();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    SetFooterData();
+                    _warehouseRepository.CreateNewWarehouse(new WareHouseVM() { Name = TextBoxWarehouse.Text.Trim(), LocationID = int.Parse(DropDownLocation.SelectedValue) });
+                    SetGridRowIndexToMinusOne();
+                    ClearFormData();
+                    BindWarehousesToGrid();
+                    ucInformation.ShowSaveInfomationMessage();
+                }
             }
             catch (Exception)
             {
                 ucInformation.ShowErrorMessage();
             }
-        }
-
-        private void ValidateWarehouse()
-        {
-            if (TextBoxWarehouse == null || string.IsNullOrWhiteSpace(TextBoxWarehouse.Text))
-                throw new ApplicationException("The warehouse name field is required.");
-            if (DropDownLocation == null || DropDownLocation.SelectedIndex == 0)
-                throw new ApplicationException("The location field is required.");
         }
     }
 }
