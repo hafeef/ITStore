@@ -100,15 +100,12 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(txtVendorSearch.Text))
-                    throw new ApplicationException("The vendor name field is required.");
-                _Vendors = _vendorRepository.SearchVendorByName(txtVendorSearch.Text.Trim());
-                ViewState[ViewStateKeys.SearchResult] = _Vendors;
-                BindVendorsToGrid();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    _Vendors = _vendorRepository.SearchVendorByName(txtVendorSearch.Text.Trim());
+                    ViewState[ViewStateKeys.SearchResult] = _Vendors;
+                    BindVendorsToGrid();
+                }
             }
             catch (Exception)
             {
@@ -132,28 +129,26 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                var vendorID = gridVendor.DataKeys[e.RowIndex]["VendorID"].ToString();
-                txtVendorName = gridVendor.Rows[e.RowIndex].FindControl("txtUpdateVendor") as TextBox;
-                txtMobileNo = gridVendor.Rows[e.RowIndex].FindControl("txtUpdateMobileNo") as TextBox;
-                txtEmail = gridVendor.Rows[e.RowIndex].FindControl("txtUpdateEmail") as TextBox;
-                txtTelephoneNo = gridVendor.Rows[e.RowIndex].FindControl("txtUpdateTelePhoneNo") as TextBox;
-                ValidateVendor();
-                _vendorRepository.UpdateVendor(new VendorVM()
+                if (IsValid)
                 {
-                    VendorID = int.Parse(vendorID),
-                    Name = txtVendorName.Text,
-                    Email = txtEmail.Text,
-                    MobileNo = txtMobileNo.Text,
-                    TelephoneNo = txtTelephoneNo.Text
-                });
-                SetGridRowIndexToMinusOne();
-                ClearFormData();
-                BindVendorsToGrid();
-                ucInformation.ShowModifyInfomationMessage();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                    var vendorID = gridVendor.DataKeys[e.RowIndex]["VendorID"].ToString();
+                    txtVendorName = gridVendor.Rows[e.RowIndex].FindControl("txtUpdateVendor") as TextBox;
+                    txtMobileNo = gridVendor.Rows[e.RowIndex].FindControl("txtUpdateMobileNo") as TextBox;
+                    txtEmail = gridVendor.Rows[e.RowIndex].FindControl("txtUpdateEmail") as TextBox;
+                    txtTelephoneNo = gridVendor.Rows[e.RowIndex].FindControl("txtUpdateTelePhoneNo") as TextBox;
+                    _vendorRepository.UpdateVendor(new VendorVM()
+                    {
+                        VendorID = int.Parse(vendorID),
+                        Name = txtVendorName.Text,
+                        Email = txtEmail.Text,
+                        MobileNo = txtMobileNo.Text,
+                        TelephoneNo = txtTelephoneNo.Text
+                    });
+                    SetGridRowIndexToMinusOne();
+                    ClearFormData();
+                    BindVendorsToGrid();
+                    ucInformation.ShowModifyInfomationMessage();
+                }
             }
             catch (Exception)
             {
@@ -171,10 +166,6 @@ namespace Inventory.PeopleViewer.Administration
                 ClearFormData();
                 BindVendorsToGrid();
                 ucInformation.ShowDeleteInfomationMessage();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
             }
             catch (Exception)
             {
@@ -241,40 +232,26 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                SetFooterData();
-                ValidateVendor();
-                _vendorRepository.CreateNewVendor(new VendorVM()
+                if (IsValid)
                 {
-                    Email = txtEmail.Text,
-                    MobileNo = txtMobileNo.Text,
-                    Name = txtVendorName.Text,
-                    TelephoneNo = txtTelephoneNo.Text
-                });
-                SetGridRowIndexToMinusOne();
-                BindVendorsToGrid();
-                ClearFormData();
-                ucInformation.ShowSaveInfomationMessage();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                    SetFooterData();
+                    _vendorRepository.CreateNewVendor(new VendorVM()
+                    {
+                        Email = txtEmail.Text,
+                        MobileNo = txtMobileNo.Text,
+                        Name = txtVendorName.Text,
+                        TelephoneNo = txtTelephoneNo.Text
+                    });
+                    SetGridRowIndexToMinusOne();
+                    BindVendorsToGrid();
+                    ClearFormData();
+                    ucInformation.ShowSaveInfomationMessage();
+                }
             }
             catch (Exception)
             {
                 ucInformation.ShowErrorMessage();
             }
-        }
-
-        private void ValidateVendor()
-        {
-            if (string.IsNullOrWhiteSpace(txtEmail.Text) || txtEmail == null)
-                throw new ApplicationException("The email field is required.");
-            if (string.IsNullOrWhiteSpace(txtMobileNo.Text) || txtMobileNo == null)
-                throw new ApplicationException("The mobile no field is required.");
-            if (string.IsNullOrWhiteSpace(txtTelephoneNo.Text) || txtTelephoneNo == null)
-                throw new ApplicationException("The telephone no field is required.");
-            if (string.IsNullOrWhiteSpace(txtVendorName.Text) || txtVendorName == null)
-                throw new ApplicationException("The vendor name field is required.");
         }
     }
 }

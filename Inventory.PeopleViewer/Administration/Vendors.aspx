@@ -20,7 +20,7 @@
                                 <asp:Button runat="server" ValidationGroup="Search" ID="btnSearch" Text="Go!" CssClass="btn btn-default" OnClick="btnSearch_Click" />
                                 <asp:LinkButton CssClass="btn btn-default" CausesValidation="false" ID="linkButtonReset" OnClick="btnReset_Click" runat="server">
                                           <span class="glyphicon glyphicon glyphicon-repeat"></span> Reset
-                                    </asp:LinkButton>
+                                </asp:LinkButton>
                             </div>
                         </div>
                         <div class="row">
@@ -32,34 +32,34 @@
                                     CssClass="table table-striped table-bordered table-hover" runat="server" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>"
                                     OnRowDeleting="gridVendor_RowDeleting" OnRowUpdating="gridVendor_RowUpdating" AllowSorting="true"
                                     OnRowCancelingEdit="gridVendor_RowCancelingEdit" OnPageIndexChanging="gridVendor_PageIndexChanging"
-                                    OnRowEditing="gridVendor_RowEditing" OnRowDataBound="gridVendor_RowDataBound" EmptyDataText="No Records Found.">
+                                    OnRowEditing="gridVendor_RowEditing" ItemType="Inventory.ViewModels.Administration.VendorVM" OnRowDataBound="gridVendor_RowDataBound" EmptyDataText="No Records Found.">
                                     <Columns>
                                         <asp:TemplateField HeaderText="Vendor ID">
                                             <ItemTemplate>
-                                                <%# Eval("VendorID") %>
+                                                <%#: Item.VendorID %>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <%# Eval("VendorID") %>
+                                                <%#: Item.VendorID %>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Vendor Name">
                                             <ItemTemplate>
-                                                <%# Eval("Name") %>
+                                                <%#: Item.Name %>
                                             </ItemTemplate>
                                             <FooterTemplate>
-                                                <asp:TextBox ID="txtNewVendor" placeholder="Vendor Name" ValidationGroup="Create" CssClass="form-control" runat="server" />
+                                                <asp:TextBox ID="txtNewVendor" TextMode="Search" placeholder="New Vendor Name" ValidationGroup="Create" CssClass="form-control" runat="server" />
                                                 <asp:RequiredFieldValidator ValidationGroup="Create" runat="server" ControlToValidate="txtNewVendor"
                                                     CssClass="text-danger" ErrorMessage="The vendor name is required." />
                                             </FooterTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtUpdateVendor" placeholder="Vendor Name" ValidationGroup="Update" Text='<%# Eval("Name") %>' CssClass="form-control" runat="server" />
+                                                <asp:TextBox ID="txtUpdateVendor" TextMode="Search" placeholder="Vendor Name" ValidationGroup="Update" Text='<%#: Item.Name %>' CssClass="form-control" runat="server" />
                                                 <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdateVendor"
                                                     CssClass="text-danger" ErrorMessage="The vendor name is required." />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Mobile No">
                                             <ItemTemplate>
-                                                <%# Eval("MobileNo") %>
+                                                <%#: Item.MobileNo %>
                                             </ItemTemplate>
                                             <FooterTemplate>
                                                 <asp:TextBox ID="txtNewMobileNo" TextMode="Phone" placeholder="Mobile No" ValidationGroup="Create" CssClass="form-control" runat="server" />
@@ -70,17 +70,17 @@
                                                     ValidationExpression="[0-9]{10}"></asp:RegularExpressionValidator>
                                             </FooterTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtUpdateMobileNo" TextMode="Phone" placeholder="Mobile No" ValidationGroup="Update" Text='<%# Eval("MobileNo") %>' CssClass="form-control" runat="server" />
-                                                <asp:RequiredFieldValidator ValidationGroup="Create" Display="Dynamic" runat="server" ControlToValidate="txtUpdateMobileNo"
+                                                <asp:TextBox ID="txtUpdateMobileNo" TextMode="Phone" placeholder="Mobile No" ValidationGroup="Update" Text='<%#: Item.MobileNo %>' CssClass="form-control" runat="server" />
+                                                <asp:RequiredFieldValidator ValidationGroup="Update" Display="Dynamic" runat="server" ControlToValidate="txtUpdateMobileNo"
                                                     CssClass="text-danger" ErrorMessage="The mobile no is required." />
                                                 <asp:RegularExpressionValidator runat="server"
-                                                    ControlToValidate="txtUpdateMobileNo" CssClass="text-danger" Display="Dynamic" ValidationGroup="Create" ErrorMessage="Invalid mobile no."
+                                                    ControlToValidate="txtUpdateMobileNo" CssClass="text-danger" Display="Dynamic" ValidationGroup="Update" ErrorMessage="Invalid mobile no."
                                                     ValidationExpression="[0-9]{10}"></asp:RegularExpressionValidator>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="E-Mail">
                                             <ItemTemplate>
-                                                <%# Eval("Email") %>
+                                                <%#: Item.Email %>
                                             </ItemTemplate>
                                             <FooterTemplate>
                                                 <asp:TextBox ID="txtNewEmail" TextMode="Email" placeholder="E-Mail" ValidationGroup="Create" CssClass="form-control" runat="server" />
@@ -91,17 +91,17 @@
                                                     ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
                                             </FooterTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtUpdateEmail" TextMode="Email" placeholder="E-Mail" ValidationGroup="Update" Text='<%# Eval("Email") %>' CssClass="form-control" runat="server" />
+                                                <asp:TextBox ID="txtUpdateEmail" TextMode="Email" placeholder="E-Mail" ValidationGroup="Update" Text='<%#: Item.Email %>' CssClass="form-control" runat="server" />
                                                 <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdateEmail"
                                                     CssClass="text-danger" ErrorMessage="The email is required." />
                                                 <asp:RegularExpressionValidator runat="server"
-                                                    ControlToValidate="txtUpdateEmail" CssClass="text-danger" Display="Dynamic" ValidationGroup="Create" ErrorMessage="Invalid e-mail address."
+                                                    ControlToValidate="txtUpdateEmail" CssClass="text-danger" Display="Dynamic" ValidationGroup="Update" ErrorMessage="Invalid e-mail address."
                                                     ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Telephone No">
                                             <ItemTemplate>
-                                                <%# Eval("TelephoneNo") %>
+                                                <%#: Item.TelephoneNo %>
                                             </ItemTemplate>
                                             <FooterTemplate>
                                                 <asp:TextBox ID="txtNewTelePhoneNo" TextMode="Phone" placeholder="Telephone No" ValidationGroup="Create" CssClass="form-control" runat="server" />
@@ -109,7 +109,7 @@
                                                     CssClass="text-danger" ErrorMessage="The telephone no is required." />
                                             </FooterTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtUpdateTelePhoneNo" TextMode="Phone" placeholder="Telphone No" ValidationGroup="Update" Text='<%# Eval("TelephoneNo") %>' CssClass="form-control" runat="server" />
+                                                <asp:TextBox ID="txtUpdateTelePhoneNo" TextMode="Phone" placeholder="Telphone No" ValidationGroup="Update" Text='<%#: Item.TelephoneNo %>' CssClass="form-control" runat="server" />
                                                 <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdateTelePhoneNo"
                                                     CssClass="text-danger" ErrorMessage="The telephone no is required." />
                                             </EditItemTemplate>
