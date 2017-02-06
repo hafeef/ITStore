@@ -71,17 +71,15 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                SetFooterData();
-                ValidateRack(txtShelfName);
-                _shelfRepository.CreateNewShelf(new ShelfVM() { Name = txtShelfName.Text });
-                SetGridEditIndexToMinusOne();
-                ClearFormData();
-                BindShelvesToGrid();
-                ucInformation.ShowSaveInfomationMessage();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    SetFooterData();
+                    _shelfRepository.CreateNewShelf(new ShelfVM() { Name = txtShelfName.Text });
+                    SetGridEditIndexToMinusOne();
+                    ClearFormData();
+                    BindShelvesToGrid();
+                    ucInformation.ShowSaveInfomationMessage();
+                }
             }
             catch (Exception)
             {
@@ -104,14 +102,12 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                ValidateRack(txtShelfSearch);
-                _shelves = _shelfRepository.SearchShelfByName(txtShelfSearch.Text.Trim());
-                ViewState[ViewStateKeys.SearchResult] = _shelves;
-                BindShelvesToGrid();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    _shelves = _shelfRepository.SearchShelfByName(txtShelfSearch.Text.Trim());
+                    ViewState[ViewStateKeys.SearchResult] = _shelves;
+                    BindShelvesToGrid();
+                }
             }
             catch (Exception)
             {
@@ -140,18 +136,16 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                var shelfID = int.Parse(gridShelves.DataKeys[e.RowIndex]["ShelfID"].ToString());
-                txtShelfName = gridShelves.Rows[e.RowIndex].FindControl("txtUpdateShelf") as TextBox;
-                ValidateRack(txtShelfName);
-                _shelfRepository.UpdateShelf(new ShelfVM() { ShelfID = shelfID, Name = txtShelfName.Text.Trim() });
-                SetGridEditIndexToMinusOne();
-                ClearFormData();
-                BindShelvesToGrid();
-                ucInformation.ShowModifyInfomationMessage();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    var shelfID = int.Parse(gridShelves.DataKeys[e.RowIndex]["ShelfID"].ToString());
+                    txtShelfName = gridShelves.Rows[e.RowIndex].FindControl("txtUpdateShelf") as TextBox;
+                    _shelfRepository.UpdateShelf(new ShelfVM() { ShelfID = shelfID, Name = txtShelfName.Text.Trim() });
+                    SetGridEditIndexToMinusOne();
+                    ClearFormData();
+                    BindShelvesToGrid();
+                    ucInformation.ShowModifyInfomationMessage();
+                }
             }
             catch (Exception)
             {
@@ -182,12 +176,6 @@ namespace Inventory.PeopleViewer.Administration
             if (Convert.ToBoolean(ViewState[ViewStateKeys.IsEmpty]))
                 if (e.Row.RowType == DataControlRowType.DataRow)
                     e.Row.Visible = false;
-        }
-
-        private void ValidateRack(TextBox textBoxRack)
-        {
-            if (string.IsNullOrWhiteSpace(textBoxRack.Text) || textBoxRack == null)
-                throw new ApplicationException("The shelf name field is required.");
         }
     }
 }

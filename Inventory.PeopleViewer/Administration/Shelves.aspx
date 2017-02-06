@@ -33,27 +33,27 @@
                                         CssClass="table table-striped table-bordered table-hover" runat="server" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>"
                                         OnRowDeleting="gridShelves_RowDeleting" OnRowUpdating="gridShelves_RowUpdating" AllowSorting="true"
                                         OnRowCancelingEdit="gridShelves_RowCancelingEdit" OnPageIndexChanging="gridShelves_PageIndexChanging"
-                                        OnRowEditing="gridShelves_RowEditing" OnRowDataBound="gridShelves_RowDataBound" EmptyDataText="No Records Found.">
+                                        OnRowEditing="gridShelves_RowEditing" ItemType="Inventory.ViewModels.Administration.ShelfVM" OnRowDataBound="gridShelves_RowDataBound" EmptyDataText="No Records Found.">
                                         <Columns>
                                             <asp:TemplateField HeaderText="Shelf ID">
                                                 <ItemTemplate>
-                                                    <%# Eval("ShelfID") %>
+                                                    <%#: Item.ShelfID %>
                                                 </ItemTemplate>
                                                 <EditItemTemplate>
-                                                    <%# Eval("ShelfID") %>
+                                                    <%#: Item.ShelfID %>
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Shelf Name">
                                                 <ItemTemplate>
-                                                    <%# Eval("Name") %>
+                                                    <%#: Item.Name %>
                                                 </ItemTemplate>
                                                 <FooterTemplate>
-                                                    <asp:TextBox ID="txtNewShelf" placeholder="New Shelf Name" ValidationGroup="Create" CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtNewShelf" TextMode="Search" placeholder="New Shelf Name" ValidationGroup="Create" CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Create" runat="server" ControlToValidate="txtNewShelf"
                                                         CssClass="text-danger" ErrorMessage="The shelf name field is required." />
                                                 </FooterTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:TextBox ID="txtUpdateShelf" ValidationGroup="Update" Text='<%# Eval("Name") %>' CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtUpdateShelf" ValidationGroup="Update" TextMode="Search" placeholder="Shelf Name" Text='<%#: Item.Name %>' CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdateShelf"
                                                         CssClass="text-danger" ErrorMessage="The shelf name field is required." />
                                                 </EditItemTemplate>
