@@ -48,12 +48,12 @@
                                                 <%#: Item.Description %>
                                             </ItemTemplate>
                                             <FooterTemplate>
-                                                <asp:TextBox ID="txtNewItemDescription" placeholder="Item Description" ValidationGroup="Create" CssClass="form-control" runat="server" />
+                                                <asp:TextBox ID="txtNewItemDescription" TextMode="Search" placeholder="New Item Description" ValidationGroup="Create" CssClass="form-control" runat="server" />
                                                 <asp:RequiredFieldValidator ValidationGroup="Create" runat="server" ControlToValidate="txtNewItemDescription"
                                                     CssClass="text-danger" ErrorMessage="The item description field is required." />
                                             </FooterTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtUpdateItemDescription" ValidationGroup="Update" Text='<%#: Item.Description %>' CssClass="form-control" runat="server" />
+                                                <asp:TextBox ID="txtUpdateItemDescription" TextMode="Search" placeholder="Item Description" ValidationGroup="Update" Text='<%#: Item.Description %>' CssClass="form-control" runat="server" />
                                                 <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdateItemDescription"
                                                     CssClass="text-danger" ErrorMessage="The item description field is required." />
                                             </EditItemTemplate>
@@ -63,12 +63,12 @@
                                                 <%#: Item.PartNumber %>
                                             </ItemTemplate>
                                             <FooterTemplate>
-                                                <asp:TextBox ID="txtNewPartNumber" placeholder="Part Number" ValidationGroup="Create" CssClass="form-control" runat="server" />
+                                                <asp:TextBox ID="txtNewPartNumber" TextMode="Search" placeholder="New Part Number" ValidationGroup="Create" CssClass="form-control" runat="server" />
                                                 <asp:RequiredFieldValidator ValidationGroup="Create" runat="server" ControlToValidate="txtNewPartNumber"
                                                     CssClass="text-danger" ErrorMessage="The part number field is required." />
                                             </FooterTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtUpdatePartNumber" ValidationGroup="Update" Text='<%#: Item.PartNumber %>' CssClass="form-control" runat="server" />
+                                                <asp:TextBox ID="txtUpdatePartNumber" TextMode="Search" placeholder="Part Number" ValidationGroup="Update" Text='<%#: Item.PartNumber %>' CssClass="form-control" runat="server" />
                                                 <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdatePartNumber"
                                                     CssClass="text-danger" ErrorMessage="The part number field is required." />
                                             </EditItemTemplate>

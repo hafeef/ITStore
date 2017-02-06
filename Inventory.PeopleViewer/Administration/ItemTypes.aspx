@@ -33,27 +33,27 @@
                                         CssClass="table table-striped table-bordered table-hover" runat="server" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>"
                                         OnRowDeleting="gridItemType_RowDeleting" OnRowUpdating="gridItemType_RowUpdating" AllowSorting="true"
                                         OnRowCancelingEdit="gridItemType_RowCancelingEdit" OnPageIndexChanging="gridItemType_PageIndexChanging"
-                                        OnRowEditing="gridItemType_RowEditing" OnRowDataBound="gridItemType_RowDataBound" EmptyDataText="No Records Found.">
+                                        OnRowEditing="gridItemType_RowEditing" ItemType="Inventory.ViewModels.Administration.ItemTypeVM" OnRowDataBound="gridItemType_RowDataBound" EmptyDataText="No Records Found.">
                                         <Columns>
                                             <asp:TemplateField HeaderText="Item Type ID">
                                                 <ItemTemplate>
-                                                    <%# Eval("ItemTypeID") %>
+                                                    <%#: Item.ItemTypeID %>
                                                 </ItemTemplate>
                                                 <EditItemTemplate>
-                                                    <%# Eval("ItemTypeID") %>
+                                                    <%#: Item.ItemTypeID %>
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Item Type Name">
                                                 <ItemTemplate>
-                                                    <%# Eval("Name") %>
+                                                    <%#: Item.Name %>
                                                 </ItemTemplate>
                                                 <FooterTemplate>
-                                                    <asp:TextBox ID="txtNewItemType" placeholder="New Item Type Name" ValidationGroup="Create" CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtNewItemType" TextMode="Search" placeholder="New Item Type Name" ValidationGroup="Create" CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Create" runat="server" ControlToValidate="txtNewItemType"
                                                         CssClass="text-danger" ErrorMessage="The item type name field is required." />
                                                 </FooterTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:TextBox ID="txtUpdateItemType" ValidationGroup="Update" Text='<%# Eval("Name") %>' CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtUpdateItemType" TextMode="Search" placeholder="Item Type Name" ValidationGroup="Update" Text='<%#: Item.Name %>' CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdateItemType"
                                                         CssClass="text-danger" ErrorMessage="The item type name field is required." />
                                                 </EditItemTemplate>

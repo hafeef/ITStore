@@ -45,7 +45,7 @@
                                                         CssClass="text-danger" ErrorMessage="The employee name field is required." />
                                                 </FooterTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:TextBox ID="txtEmployeeName" ValidationGroup="Update" placeholder="Employee Name" Text='<%#: Item.Name %>' CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtEmployeeName" TextMode="Search" placeholder="Employee Name" ValidationGroup="Update" placeholder="Employee Name" Text='<%#: Item.Name %>' CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtEmployeeName"
                                                         CssClass="text-danger" ErrorMessage="The employee name field is required." />
                                                 </EditItemTemplate>
@@ -60,7 +60,7 @@
                                                         CssClass="text-danger" ErrorMessage="The civil id field is required." />
                                                 </FooterTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:TextBox ID="txtCivilID" ValidationGroup="Update" placeholder="Employee Civil ID" Text='<%#: Item.CivilID %>' CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtCivilID" ValidationGroup="Update" TextMode="Search" placeholder="Employee Civil ID" Text='<%#: Item.CivilID %>' CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtCivilID"
                                                         CssClass="text-danger" ErrorMessage="The civil id field is required." />
                                                 </EditItemTemplate>

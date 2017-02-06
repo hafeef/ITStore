@@ -54,7 +54,7 @@
                                                         CssClass="text-danger" ErrorMessage="The category name field is required." />
                                                 </FooterTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:TextBox ID="txtUpdateCategory" ValidationGroup="Update" Text='<%#: Item.Name %>' CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtUpdateCategory" TextMode="Search" placeholder="Category Name" ValidationGroup="Update" Text='<%#: Item.Name %>' CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdateCategory"
                                                         CssClass="text-danger" ErrorMessage="The category name field is required." />
                                                 </EditItemTemplate>

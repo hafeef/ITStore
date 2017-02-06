@@ -48,12 +48,12 @@
                                                     <%#: Item.Name %>
                                                 </ItemTemplate>
                                                 <FooterTemplate>
-                                                    <asp:TextBox ID="txtNewBrand" placeholder="New Brand Name" ValidationGroup="Create" CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtNewBrand" placeholder="New Brand Name" TextMode="Search" ValidationGroup="Create" CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Create" runat="server" ControlToValidate="txtNewBrand"
                                                         CssClass="text-danger" ErrorMessage="The brand name field is required." />
                                                 </FooterTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:TextBox ID="txtUpdateBrand" ValidationGroup="Update" Text='<%#: Item.Name %>' CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtUpdateBrand" placeholder="Brand Name" TextMode="Search" ValidationGroup="Update" Text='<%#: Item.Name %>' CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdateBrand"
                                                         CssClass="text-danger" ErrorMessage="The brand name field is required." />
                                                 </EditItemTemplate>

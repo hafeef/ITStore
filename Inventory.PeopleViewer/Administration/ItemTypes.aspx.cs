@@ -54,15 +54,14 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                ValidateItemType(txtItemTypeSearch);
-                _ItemTypes = _ItemTypeRepository.SearchItemTypeByName(txtItemTypeSearch.Text.Trim());
-                ViewState[ViewStateKeys.SearchResult] = _ItemTypes;
-                BindItemTypeToGrid();
+                if (IsValid)
+                {
+                    _ItemTypes = _ItemTypeRepository.SearchItemTypeByName(txtItemTypeSearch.Text.Trim());
+                    ViewState[ViewStateKeys.SearchResult] = _ItemTypes;
+                    BindItemTypeToGrid();
+                }
             }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
-            }
+
             catch (Exception)
             {
                 ucInformation.ShowErrorMessage();
@@ -117,18 +116,16 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                var itemTypeID = int.Parse(gridItemType.DataKeys[e.RowIndex]["ItemTypeID"].ToString());
-                TextBoxItemType = gridItemType.Rows[e.RowIndex].FindControl("txtUpdateItemType") as TextBox;
-                ValidateItemType(TextBoxItemType);
-                _ItemTypeRepository.UpdateItemType(new ItemTypeVM() { ItemTypeID = itemTypeID, Name = TextBoxItemType.Text.Trim() });
-                SetGridRowIndexToMinusOne();
-                ClearFormData();
-                BindItemTypeToGrid();
-                ucInformation.ShowModifyInfomationMessage();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    var itemTypeID = int.Parse(gridItemType.DataKeys[e.RowIndex]["ItemTypeID"].ToString());
+                    TextBoxItemType = gridItemType.Rows[e.RowIndex].FindControl("txtUpdateItemType") as TextBox;
+                    _ItemTypeRepository.UpdateItemType(new ItemTypeVM() { ItemTypeID = itemTypeID, Name = TextBoxItemType.Text.Trim() });
+                    SetGridRowIndexToMinusOne();
+                    ClearFormData();
+                    BindItemTypeToGrid();
+                    ucInformation.ShowModifyInfomationMessage();
+                }
             }
             catch (Exception)
             {
@@ -164,29 +161,20 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-
-                SetFooterData();
-                ValidateItemType(TextBoxItemType);
-                _ItemTypeRepository.CreateNewItemType(new ItemTypeVM() { Name = TextBoxItemType.Text.Trim() });
-                SetGridRowIndexToMinusOne();
-                ClearFormData();
-                BindItemTypeToGrid();
-                ucInformation.ShowSaveInfomationMessage();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    SetFooterData();
+                    _ItemTypeRepository.CreateNewItemType(new ItemTypeVM() { Name = TextBoxItemType.Text.Trim() });
+                    SetGridRowIndexToMinusOne();
+                    ClearFormData();
+                    BindItemTypeToGrid();
+                    ucInformation.ShowSaveInfomationMessage();
+                }
             }
             catch (Exception)
             {
                 ucInformation.ShowErrorMessage();
             }
-        }
-
-        private void ValidateItemType(TextBox itemTypeTextBox)
-        {
-            if (string.IsNullOrWhiteSpace(itemTypeTextBox.Text.Trim()))
-                throw new ApplicationException("The item type field is required.");
         }
 
         private void SetFooterData()
