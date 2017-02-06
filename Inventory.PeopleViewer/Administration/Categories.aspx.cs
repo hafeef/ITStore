@@ -55,14 +55,12 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                ValidateCategory(txtCategorySearch);
-                _Categories = _CategoryRepository.SearchCategoryByName(txtCategorySearch.Text.Trim());
-                ViewState[ViewStateKeys.SearchResult] = _Categories;
-                BindCategoriesToGrid();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    _Categories = _CategoryRepository.SearchCategoryByName(txtCategorySearch.Text.Trim());
+                    ViewState[ViewStateKeys.SearchResult] = _Categories;
+                    BindCategoriesToGrid();
+                }
             }
             catch (Exception)
             {
@@ -116,19 +114,18 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                textBoxCategory = gridCategory.Rows[e.RowIndex].FindControl("txtUpdateCategory") as TextBox;
-                var categoryID = int.Parse(gridCategory.DataKeys[e.RowIndex]["CategoryID"].ToString());
-                ValidateCategory(textBoxCategory);
-                _CategoryRepository.UpdateCategory(new CategoryVM() { CategoryID = categoryID, Name = textBoxCategory.Text.Trim() });
-                SetGridRowIndexToMinusOne();
-                ClearFormData();
-                BindCategoriesToGrid();
-                ucInformation.ShowModifyInfomationMessage();
+                if (IsValid)
+                {
+                    textBoxCategory = gridCategory.Rows[e.RowIndex].FindControl("txtUpdateCategory") as TextBox;
+                    var categoryID = int.Parse(gridCategory.DataKeys[e.RowIndex]["CategoryID"].ToString());
+                    _CategoryRepository.UpdateCategory(new CategoryVM() { CategoryID = categoryID, Name = textBoxCategory.Text.Trim() });
+                    SetGridRowIndexToMinusOne();
+                    ClearFormData();
+                    BindCategoriesToGrid();
+                    ucInformation.ShowModifyInfomationMessage();
+                }
             }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
-            }
+
             catch (Exception)
             {
                 ucInformation.ShowErrorMessage();
@@ -176,18 +173,17 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                SetFooterData();
-                ValidateCategory(textBoxCategory);
-                _CategoryRepository.CreateNewCategory(new CategoryVM() { Name = textBoxCategory.Text.Trim() });
-                SetGridRowIndexToMinusOne();
-                ClearFormData();
-                BindCategoriesToGrid();
-                ucInformation.ShowSaveInfomationMessage();
+                if (IsValid)
+                {
+                    SetFooterData();
+                    _CategoryRepository.CreateNewCategory(new CategoryVM() { Name = textBoxCategory.Text.Trim() });
+                    SetGridRowIndexToMinusOne();
+                    ClearFormData();
+                    BindCategoriesToGrid();
+                    ucInformation.ShowSaveInfomationMessage();
+                }
             }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
-            }
+
             catch (Exception)
             {
                 ucInformation.ShowErrorMessage();
@@ -198,12 +194,6 @@ namespace Inventory.PeopleViewer.Administration
         {
             if (gridCategory.FooterRow != null)
                 textBoxCategory = gridCategory.FooterRow.FindControl("txtNewCategory") as TextBox;
-        }
-
-        private void ValidateCategory(TextBox textBoxCategory)
-        {
-            if (textBoxCategory == null || string.IsNullOrWhiteSpace(textBoxCategory.Text))
-                throw new ApplicationException("The category name field is required.");
         }
     }
 }

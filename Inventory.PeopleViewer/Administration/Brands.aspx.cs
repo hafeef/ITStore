@@ -103,15 +103,12 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                if (IsValid)
-                {
-                    var brandID = gridBrand.DataKeys[e.RowIndex]["BrandID"].ToString();
-                    _BrandRepository.DeleteBrand(int.Parse(brandID));
-                    SetGridEditIndexToMinusOne();
-                    ClearFormData();
-                    BindBrandsToGrid();
-                    ucInformation.ShowDeleteInfomationMessage();
-                }
+                var brandID = gridBrand.DataKeys[e.RowIndex]["BrandID"].ToString();
+                _BrandRepository.DeleteBrand(int.Parse(brandID));
+                SetGridEditIndexToMinusOne();
+                ClearFormData();
+                BindBrandsToGrid();
+                ucInformation.ShowDeleteInfomationMessage();
             }
             catch (Exception)
             {

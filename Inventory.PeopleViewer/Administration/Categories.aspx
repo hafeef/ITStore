@@ -15,7 +15,7 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <asp:TextBox runat="server" ValidationGroup="Search" placeholder="Search Category" ID="txtCategorySearch" CssClass="form-control col-md-offset-1" />
-                                        <asp:RequiredFieldValidator ValidationGroup="Search" ID="rfvSearch" runat="server" ControlToValidate="txtCategorySearch"
+                                        <asp:RequiredFieldValidator ValidationGroup="Search" runat="server" ControlToValidate="txtCategorySearch"
                                             CssClass="text-danger col-md-offset-1" ErrorMessage="The category name field is required." />
                                     </div>
                                     <asp:Button runat="server" ValidationGroup="Search" ID="btnSearch" Text="Go!" CssClass="btn btn-default" OnClick="btnSearch_Click" />
@@ -31,30 +31,30 @@
                                 <div class="col-md-12">
                                     <asp:GridView ID="gridCategory" DataKeyNames="CategoryID" AutoGenerateColumns="false" ShowFooter="true"
                                         CssClass="table table-striped table-bordered table-hover" runat="server"
-                                        OnRowDeleting="gridCategory_RowDeleting" OnRowUpdating="gridCategory_RowUpdating" AllowSorting="true"
+                                        OnRowDeleting="gridCategory_RowDeleting" ItemType="Inventory.ViewModels.Administration.CategoryVM" OnRowUpdating="gridCategory_RowUpdating" AllowSorting="true"
                                         OnRowCancelingEdit="gridCategory_RowCancelingEdit" OnRowEditing="gridCategory_RowEditing"
                                         OnRowDataBound="gridCategory_RowDataBound" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>" OnPageIndexChanging="gridCategory_PageIndexChanging"
                                         EmptyDataText="No Records Found.">
                                         <Columns>
                                             <asp:TemplateField HeaderText="Category ID">
                                                 <ItemTemplate>
-                                                    <%# Eval("CategoryID") %>
+                                                    <%#: Item.CategoryID %>
                                                 </ItemTemplate>
                                                 <EditItemTemplate>
-                                                    <%# Eval("CategoryID") %>
+                                                    <%#: Item.CategoryID %>
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Category Name">
                                                 <ItemTemplate>
-                                                    <%# Eval("Name") %>
+                                                    <%#: Item.Name %>
                                                 </ItemTemplate>
                                                 <FooterTemplate>
-                                                    <asp:TextBox ID="txtNewCategory" placeholder="New Category Name" ValidationGroup="Create" CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtNewCategory" TextMode="Search" placeholder="New Category Name" ValidationGroup="Create" CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Create" runat="server" ControlToValidate="txtNewCategory"
                                                         CssClass="text-danger" ErrorMessage="The category name field is required." />
                                                 </FooterTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:TextBox ID="txtUpdateCategory" ValidationGroup="Update" Text='<%# Eval("Name") %>' CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtUpdateCategory" ValidationGroup="Update" Text='<%#: Item.Name %>' CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdateCategory"
                                                         CssClass="text-danger" ErrorMessage="The category name field is required." />
                                                 </EditItemTemplate>
