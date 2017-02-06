@@ -33,34 +33,34 @@
                                         CssClass="table table-striped table-bordered table-hover" runat="server" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>"
                                         OnRowDeleting="GridEmployee_RowDeleting" OnRowUpdating="GridEmployee_RowUpdating" AllowSorting="true"
                                         OnRowCancelingEdit="GridEmployee_RowCancelingEdit" OnPageIndexChanging="GridEmployee_PageIndexChanging"
-                                        OnRowEditing="GridEmployee_RowEditing" OnRowDataBound="GridEmployee_RowDataBound" EmptyDataText="No Records Found.">
+                                        OnRowEditing="GridEmployee_RowEditing" ItemType="Inventory.ViewModels.Administration.EmployeeVM" OnRowDataBound="GridEmployee_RowDataBound" EmptyDataText="No Records Found.">
                                         <Columns>
                                             <asp:TemplateField HeaderText="Employee Name">
                                                 <ItemTemplate>
-                                                    <%# Eval("Name") %>
+                                                    <%#: Item.Name %>
                                                 </ItemTemplate>
                                                 <FooterTemplate>
-                                                    <asp:TextBox ID="txtEmployeeName" placeholder="New Employee Name" ValidationGroup="Create" CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtEmployeeName" TextMode="Search" placeholder="New Employee Name" ValidationGroup="Create" CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Create" runat="server" ControlToValidate="txtEmployeeName"
                                                         CssClass="text-danger" ErrorMessage="The employee name field is required." />
                                                 </FooterTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:TextBox ID="txtEmployeeName" ValidationGroup="Update" placeholder="Employee Name" Text='<%# Eval("Name") %>' CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtEmployeeName" ValidationGroup="Update" placeholder="Employee Name" Text='<%#: Item.Name %>' CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtEmployeeName"
                                                         CssClass="text-danger" ErrorMessage="The employee name field is required." />
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Civil ID">
                                                 <ItemTemplate>
-                                                    <%# Eval("CivilID") %>
+                                                    <%#: Item.CivilID %>
                                                 </ItemTemplate>
                                                 <FooterTemplate>
-                                                    <asp:TextBox ID="txtCivilID" placeholder="Employee Civil ID" ValidationGroup="Create" CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtCivilID" TextMode="Search" placeholder="Employee Civil ID" ValidationGroup="Create" CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Create" runat="server" ControlToValidate="txtCivilID"
                                                         CssClass="text-danger" ErrorMessage="The civil id field is required." />
                                                 </FooterTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:TextBox ID="txtCivilID" ValidationGroup="Update" placeholder="Employee Civil ID" Text='<%# Eval("CivilID") %>' CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtCivilID" ValidationGroup="Update" placeholder="Employee Civil ID" Text='<%#: Item.CivilID %>' CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtCivilID"
                                                         CssClass="text-danger" ErrorMessage="The civil id field is required." />
                                                 </EditItemTemplate>

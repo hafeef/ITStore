@@ -103,20 +103,18 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                var employeeID = int.Parse(GridEmployee.DataKeys[e.RowIndex]["EmployeeID"].ToString());
-                TextBoxEmployeeName = GridEmployee.Rows[e.RowIndex].FindControl("txtEmployeeName") as TextBox;
-                TextBoxCivilID = GridEmployee.Rows[e.RowIndex].FindControl("txtCivilID") as TextBox;
-                ValidateEmployee();
-                _EmployeeRepository.UpdateEmployee(new EmployeeVM() { EmployeeID = employeeID, Name = TextBoxEmployeeName.Text.Trim(), CivilID = TextBoxCivilID.Text.Trim() });
-                SetGridEditIndexToMinusOne();
-                ClearFormData();
-                BindEmployeesToGrid();
-                ucInformation.ShowModifyInfomationMessage();
+                if (IsValid)
+                {
+                    var employeeID = int.Parse(GridEmployee.DataKeys[e.RowIndex]["EmployeeID"].ToString());
+                    TextBoxEmployeeName = GridEmployee.Rows[e.RowIndex].FindControl("txtEmployeeName") as TextBox;
+                    TextBoxCivilID = GridEmployee.Rows[e.RowIndex].FindControl("txtCivilID") as TextBox;
+                    _EmployeeRepository.UpdateEmployee(new EmployeeVM() { EmployeeID = employeeID, Name = TextBoxEmployeeName.Text.Trim(), CivilID = TextBoxCivilID.Text.Trim() });
+                    SetGridEditIndexToMinusOne();
+                    ClearFormData();
+                    BindEmployeesToGrid();
+                    ucInformation.ShowModifyInfomationMessage();
+                }
 
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
             }
             catch (Exception)
             {
@@ -167,18 +165,17 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                SetFooterData();
-                ValidateEmployee();
-                _EmployeeRepository.CreateEmployee(new EmployeeVM() { Name = TextBoxEmployeeName.Text.Trim(), CivilID = TextBoxCivilID.Text.Trim() });
-                ucInformation.ShowSaveInfomationMessage();
-                SetGridEditIndexToMinusOne();
-                ClearFormData();
-                BindEmployeesToGrid();
+                if (IsValid)
+                {
+                    SetFooterData();
+                    _EmployeeRepository.CreateEmployee(new EmployeeVM() { Name = TextBoxEmployeeName.Text.Trim(), CivilID = TextBoxCivilID.Text.Trim() });
+                    ucInformation.ShowSaveInfomationMessage();
+                    SetGridEditIndexToMinusOne();
+                    ClearFormData();
+                    BindEmployeesToGrid();
+                }
             }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
-            }
+           
             catch (Exception)
             {
                 ucInformation.ShowErrorMessage();
@@ -195,30 +192,18 @@ namespace Inventory.PeopleViewer.Administration
 
         }
 
-        private void ValidateEmployee()
-        {
-            if (string.IsNullOrWhiteSpace(TextBoxEmployeeName.Text) || TextBoxEmployeeName == null)
-                throw new ApplicationException("The employee name field is required.");
-            if (string.IsNullOrWhiteSpace(TextBoxCivilID.Text) || TextBoxCivilID == null)
-                throw new ApplicationException("The civil id field is required.");
-        }
+
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(txtEmployeeSearch.Text))
+                if (IsValid)
                 {
-                    throw new ApplicationException("The employee name field is required.");
+                    _Employee = _EmployeeRepository.SearchEmployeeByName(txtEmployeeSearch.Text.Trim());
+                    ViewState[ViewStateKeys.SearchResult] = _Employee;
+                    BindEmployeesToGrid();
                 }
-
-                _Employee = _EmployeeRepository.SearchEmployeeByName(txtEmployeeSearch.Text.Trim());
-                ViewState[ViewStateKeys.SearchResult] = _Employee;
-                BindEmployeesToGrid();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
             }
             catch (Exception)
             {
