@@ -33,27 +33,27 @@
                                         CssClass="table table-striped table-bordered table-hover" runat="server" AllowPaging="true" PageSize="<%$ appSettings:GridViewPageSize %>"
                                         OnRowDeleting="gridRack_RowDeleting" OnRowUpdating="gridRack_RowUpdating" AllowSorting="true"
                                         OnRowCancelingEdit="gridRack_RowCancelingEdit" OnPageIndexChanging="gridRack_PageIndexChanging"
-                                        OnRowEditing="gridRack_RowEditing" OnRowDataBound="gridRack_RowDataBound" EmptyDataText="No Records Found.">
+                                        OnRowEditing="gridRack_RowEditing" ItemType="Inventory.ViewModels.Administration.RackVM" OnRowDataBound="gridRack_RowDataBound" EmptyDataText="No Records Found.">
                                         <Columns>
                                             <asp:TemplateField HeaderText="Rack ID">
                                                 <ItemTemplate>
-                                                    <%# Eval("RackID") %>
+                                                    <%#: Item.RackID %>
                                                 </ItemTemplate>
                                                 <EditItemTemplate>
-                                                    <%# Eval("RackID") %>
+                                                    <%#: Item.RackID %>
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Rack Name">
                                                 <ItemTemplate>
-                                                    <%# Eval("Name") %>
+                                                    <%#: Item.Name %>
                                                 </ItemTemplate>
                                                 <FooterTemplate>
-                                                    <asp:TextBox ID="txtNewRack" ValidationGroup="Create" CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtNewRack" TextMode="Search" placeholder="New Rack" ValidationGroup="Create" CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Create" runat="server" ControlToValidate="txtNewRack"
                                                         CssClass="text-danger" ErrorMessage="The rack name field is required." />
                                                 </FooterTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:TextBox ID="txtUpdateRack" ValidationGroup="Update" Text='<%# Eval("Name") %>' CssClass="form-control" runat="server" />
+                                                    <asp:TextBox ID="txtUpdateRack" TextMode="Search" placeholder="Rack" ValidationGroup="Update" Text='<%#: Item.Name %>' CssClass="form-control" runat="server" />
                                                     <asp:RequiredFieldValidator ValidationGroup="Update" runat="server" ControlToValidate="txtUpdateRack"
                                                         CssClass="text-danger" ErrorMessage="The rack name field is required." />
                                                 </EditItemTemplate>

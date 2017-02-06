@@ -72,18 +72,17 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                SetFooterData();
-                ValidateRack(txtRackName);
-                _rackRepository.CreateNewRack(new RackVM() { Name = txtRackName.Text });
-                SetGridEditIndexToMinusOne();
-                BindRacksToGrid();
-                ClearFormData();
-                ucInformation.ShowSaveInfomationMessage();
+                if (IsValid)
+                {
+                    SetFooterData();
+                    _rackRepository.CreateNewRack(new RackVM() { Name = txtRackName.Text });
+                    SetGridEditIndexToMinusOne();
+                    BindRacksToGrid();
+                    ClearFormData();
+                    ucInformation.ShowSaveInfomationMessage();
+                }
             }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
-            }
+
             catch (Exception)
             {
                 ucInformation.ShowErrorMessage();
@@ -106,14 +105,12 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                ValidateRack(txtRackSearch);
-                _racks = _rackRepository.SearchRackByName(txtRackSearch.Text.Trim());
-                ViewState[ViewStateKeys.SearchResult] = _racks;
-                BindRacksToGrid();
-            }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
+                if (IsValid)
+                {
+                    _racks = _rackRepository.SearchRackByName(txtRackSearch.Text.Trim());
+                    ViewState[ViewStateKeys.SearchResult] = _racks;
+                    BindRacksToGrid();
+                }
             }
             catch (Exception)
             {
@@ -142,19 +139,18 @@ namespace Inventory.PeopleViewer.Administration
         {
             try
             {
-                var rackID = int.Parse(gridRack.DataKeys[e.RowIndex]["RackID"].ToString());
-                txtRackName = gridRack.Rows[e.RowIndex].FindControl("txtUpdateRack") as TextBox;
-                ValidateRack(txtRackName);
-                _rackRepository.UpdateRack(new RackVM() { RackID = rackID, Name = txtRackName.Text.Trim() });
-                SetGridEditIndexToMinusOne();
-                ClearFormData();
-                BindRacksToGrid();
-                ucInformation.ShowModifyInfomationMessage();
+                if (IsValid)
+                {
+                    var rackID = int.Parse(gridRack.DataKeys[e.RowIndex]["RackID"].ToString());
+                    txtRackName = gridRack.Rows[e.RowIndex].FindControl("txtUpdateRack") as TextBox;
+                    _rackRepository.UpdateRack(new RackVM() { RackID = rackID, Name = txtRackName.Text.Trim() });
+                    SetGridEditIndexToMinusOne();
+                    ClearFormData();
+                    BindRacksToGrid();
+                    ucInformation.ShowModifyInfomationMessage();
+                }
             }
-            catch (ApplicationException Ae)
-            {
-                ucInformation.ShowErrorMessage(Ae.Message);
-            }
+
             catch (Exception)
             {
                 ucInformation.ShowErrorMessage();
@@ -184,12 +180,6 @@ namespace Inventory.PeopleViewer.Administration
             if (Convert.ToBoolean(ViewState[ViewStateKeys.IsEmpty]))
                 if (e.Row.RowType == DataControlRowType.DataRow)
                     e.Row.Visible = false;
-        }
-
-        private void ValidateRack(TextBox textBoxRack)
-        {
-            if (string.IsNullOrWhiteSpace(textBoxRack.Text) || textBoxRack == null)
-                throw new ApplicationException("The rack name field is required.");
         }
     }
 }
